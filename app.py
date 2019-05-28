@@ -1,6 +1,16 @@
 from flask import Flask
+from pony.orm import Database
 app = Flask(__name__)
+db = Database()
+db.bind('postgres', 'postgres://localhost:5432/art-london')
+from models.Event import Event
+from models.User import User
+from models.Keyword import Keyword
+
+
 
 @app.route('/')
 def home():
     return 'Hello World!', 200
+
+db.generate_mapping(create_tables=True)
