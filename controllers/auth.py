@@ -23,3 +23,19 @@ def register():
     return jsonify({
         'message': 'Registration successful'
     })
+
+@router.route('/login', methods=['POST'])
+@db_session
+
+def login():
+
+    data = request.get_json()
+
+    user = User.get(email=data.get('email'))
+
+    if not user:
+        return jsonify({'message': 'Unauthorized'}), 401
+
+    return jsonify({
+        'message': f'Welcome back {user.username}'
+    })
