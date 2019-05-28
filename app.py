@@ -7,10 +7,8 @@ from models.Event import Event
 from models.User import User
 from models.Keyword import Keyword
 
+from config import routes
 
 
-@app.route('/')
-def home():
-    return 'Hello World!', 200
 
 db.generate_mapping(create_tables=True)
