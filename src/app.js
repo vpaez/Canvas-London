@@ -6,6 +6,8 @@ import 'bulma'
 import Navbar from './components/common/Navbar'
 import EventsIndex from './components/events/EventsIndex'
 import Home from './components/common/Home'
+import Register from './components/auth/Register'
+import Login from './components/auth/Login'
 
 
 class App extends React.Component {
@@ -16,6 +18,8 @@ class App extends React.Component {
           <Navbar />
           <Switch>
             <Route path='/events' component={EventsIndex} />
+            <Route path='/register' component={Register} />
+            <Route path='/login' component={Login} />
             <Route path='/' component={Home} />
           </Switch>
         </div>

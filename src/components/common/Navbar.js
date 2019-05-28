@@ -27,14 +27,14 @@ class Navbar extends React.Component {
 
           <div className="navbar-end">
             <div className="navbar-item">
-              <div className="buttons">
-                <a className="button is-primary">
-                  <strong>Register</strong>
-                </a>
-                <a className="button is-light">
-                  Log in
-                </a>
-              </div>
+              <Link to="/register" className="navbar-item">
+                <strong>Register</strong>
+              </Link>
+            </div>
+            <div className="navbar-item">
+              <Link to="/login" className="navbar-item">
+                <strong>Login</strong>
+              </Link>
             </div>
           </div>
         </div>
