@@ -1,12 +1,13 @@
 import React from 'react'
-
+import axios from 'axios'
 
 class Login extends React.Component {
 
   constructor(){
     super()
     this.state = {
-      data: {}
+      data: {},
+      error: ''
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -21,6 +22,12 @@ class Login extends React.Component {
   handleSubmit(e){
     e.preventDefault()
     console.log(this.state)
+    axios.post('/api/login', this.state.data)
+      .then(res => {
+        console.log(res.data)
+        this.props.history.push('/events')
+      })
+      .catch(() => this.setState({ error: 'Invalid credentials' }))
   }
 
 
@@ -54,6 +61,7 @@ class Login extends React.Component {
                   />
                 </div>
               </div>
+              {this.state.error && <div className="help is-danger">{this.state.error}</div>}
               <button className="button is-info">Submit</button>
             </form>
           </div>
