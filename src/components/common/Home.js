@@ -1,7 +1,6 @@
 import React from 'react'
-import SearchBar from 'react-native-elements'
-import FeaturedEvents from '../../components/events/FeaturedEvents.js'
-
+import FeaturedEvents from '../../components/events/FeaturedEvents'
+import SearchBar from '../../components/common/SearchBar'
 
 class Home extends React.Component {
   render(){
