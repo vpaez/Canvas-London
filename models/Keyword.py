@@ -10,9 +10,9 @@ class Keyword(db.Entity):
 class KeywordSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
-    events = fields.Nested('EventSchema', many=True, exclude=('keywords',), dump_only=True)
+    events = fields.Nested('EventSchema', many=True, exclude=('keywords', 'user'), dump_only=True)
     keyword_ids = fields.List(fields.Int(), load_only=True)
-    users = fields.Nested('UserSchema', many=True, exclude=('keywords',), dump_only=True)
+    users = fields.Nested('UserSchema', many=True, exclude=('keywords', 'events'), dump_only=True)
 
     @post_load
     def load_keywords(self, data):

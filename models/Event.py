@@ -27,9 +27,9 @@ class EventSchema(Schema):
     entry_fee = fields.Float(required=True)
     image = fields.Str()
     artists = fields.Str(many=True)
-    user = fields.Nested('UserSchema', exclude=('events','keywords'), dump_only=True)
+    user = fields.Nested('UserSchema', exclude=('events', 'keywords'), dump_only=True)
     user_id = fields.Int(load_only=True)
-    keywords = fields.Nested('KeywordSchema', many=True, exclude=('events','users',), dump_only=True)
+    keywords = fields.Nested('KeywordSchema', many=True, exclude=('events', 'users',), dump_only=True)
     keyword_ids = fields.List(fields.Int(), load_only=True)
 
     @post_load
