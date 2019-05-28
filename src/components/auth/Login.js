@@ -1,5 +1,5 @@
 import React from 'react'
-
+import axios from 'axios'
 
 class Login extends React.Component {
 
@@ -21,6 +21,8 @@ class Login extends React.Component {
   handleSubmit(e){
     e.preventDefault()
     console.log(this.state)
+    axios.post('/api/login', this.state.data)
+      .then(res => console.log(res.data))
   }
 
 
