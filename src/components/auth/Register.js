@@ -1,12 +1,13 @@
 import React from 'react'
-
+import axios from 'axios'
 
 class Register extends React.Component {
 
   constructor(){
     super()
     this.state = {
-      data: {}
+      data: {},
+      errors: {}
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -20,7 +21,9 @@ class Register extends React.Component {
 
   handleSubmit(e){
     e.preventDefault()
-    console.log(this.state)
+    axios.post('/api/register', this.state.data)
+      .then(res => console.log(res.data))
+      .catch(err => this.setState({errors: err.response.data.error}))
   }
 
 
@@ -42,6 +45,7 @@ class Register extends React.Component {
                     onChange={this.handleChange}
                   />
                 </div>
+                {this.state.errors.username && <div className="help is-danger">{this.state.errors.username}</div>}
               </div>
               <div className="field">
                 <label className="label">Email</label>
@@ -53,6 +57,7 @@ class Register extends React.Component {
                     onChange={this.handleChange}
                   />
                 </div>
+                {this.state.errors.email && <div className="help is-danger">{this.state.errors.email}</div>}
               </div>
               <div className="field">
                 <label className="label">Password</label>
@@ -71,7 +76,7 @@ class Register extends React.Component {
                   <input className="input"
                     type="password"
                     placeholder="Re-enter your password..."
-                    name="passwordConfirmation"
+                    name="password_confirmation"
                     onChange={this.handleChange}
                   />
                 </div>
