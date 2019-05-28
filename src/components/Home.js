@@ -1,10 +1,11 @@
 import React from 'react'
 
-
 class Home extends React.Component {
   render(){
     return(
-      <div>hi</div>
+      <div>
+      HOME
+      </div>
     )
   }
 }

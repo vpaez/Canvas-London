@@ -1,11 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Home from './components/Home'
+import Navbar from './components/common/Navbar'
+import EventsIndex from './components/events/EventsIndex'
+import 'bulma'
+
 
 class App extends React.Component {
   render(){
     return(
-      <Home />
+      <div>
+        <Navbar />
+        <EventsIndex />
+      </div>
     )
   }
 }
