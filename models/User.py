@@ -8,9 +8,10 @@ from app import db
 class User(db.Entity):
     username = Required(str, unique=True)
     email = Required(str, unique=True)
-    password_hash = Required(str)
+    password = Required(str)
+    password_confirmation = Required(str)
     events = Set('Event')
-    keywords
+    keywords = Set('Keyword')
 
 class UserSchema(Schema):
     id = fields.Int(dump_only=True)
@@ -19,3 +20,4 @@ class UserSchema(Schema):
     password = fields.Str(load_only=True)
     password_confirmation = fields.Str(load_only=True)
     events = fields.Nested('EventSchema', )
+    keywords = fields.Nested('KeywordSchema')
