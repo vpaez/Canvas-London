@@ -19,5 +19,5 @@ class UserSchema(Schema):
     email = fields.Str(required=True)
     password = fields.Str(load_only=True)
     password_confirmation = fields.Str(load_only=True)
-    events = fields.Nested('EventSchema', )
-    keywords = fields.Nested('KeywordSchema')
+    events = fields.Nested('EventSchema', exclude=('user',))
+    keywords = fields.Nested('KeywordSchema', exclude=('users',))

@@ -12,7 +12,7 @@ class KeywordSchema(Schema):
     name = fields.Str(required=True)
     events = fields.Nested('EventSchema', many=True, exclude=('keywords',), dump_only=True)
     keyword_ids = fields.List(fields.Int(), load_only=True)
-    users = fields.Nested('UserSchema', many=True, exclude=('users',), dump_only=True)
+    users = fields.Nested('UserSchema', many=True, exclude=('keywords',), dump_only=True)
 
     @post_load
     def load_keywords(self, data):
