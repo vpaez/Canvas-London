@@ -39,3 +39,5 @@ class EventSchema(Schema):
         del data['keyword_ids']
 
         return data
+
+    
