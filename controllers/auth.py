@@ -3,6 +3,7 @@ from models.User import User, UserSchema
 from app import db
 from pony.orm import db_session
 from marshmallow import ValidationError
+from lib.secure_route import secure_route
 
 
 router = Blueprint('auth', __name__)

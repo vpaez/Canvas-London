@@ -2,6 +2,7 @@ from flask import Blueprint, request, jsonify
 from pony.orm import db_session
 from marshmallow import ValidationError
 from app import db
+from lib.secure_route import secure_route
 
 from models.Event import Event, EventSchema
 
