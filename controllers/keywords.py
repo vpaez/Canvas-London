@@ -1,7 +1,8 @@
 from flask import Blueprint
 from pony.orm import db_session
 
-from models.Keyword import Keyword, KeywordSchema 
+from models.Keyword import Keyword, KeywordSchema
+from lib.secure_route import secure_route
 
 router = Blueprint(__name__, 'keywords') # creates a router for this controller
 

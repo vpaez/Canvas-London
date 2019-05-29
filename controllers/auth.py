@@ -21,7 +21,8 @@ def register():
         return jsonify({'error': error.messages}), 422
 
     return jsonify({
-        'message': 'Registration successful'
+        'message': 'Registration successful',
+        'token': user.generate_token()
     })
 
 @router.route('/login', methods=['POST'])
@@ -33,9 +34,10 @@ def login():
 
     user = User.get(email=data.get('email'))
 
-    if not user:
+    if not user or not user.is_password_valid(data.get('password')):
         return jsonify({'message': 'Unauthorized'}), 401
 
     return jsonify({
-        'message': f'Welcome back {user.username}'
+        'message': f'Welcome back {user.username}',
+        'token': user.generate_token()
     })
