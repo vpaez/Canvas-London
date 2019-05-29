@@ -23,7 +23,7 @@ class UserProfile extends React.Component {
     return(
       <section className="section">
         <h1 className="title is-2">Profile info</h1>
-        <p>Username: {this.state.user.username}</p>
+        <contentEditable value={`Username: ${this.state.user.username}`} />
         <p>Email: {this.state.user.email}</p>
         <hr />
         <h2 className="title is-4">Events created by you</h2>
