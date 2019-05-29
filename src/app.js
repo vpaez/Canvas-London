@@ -12,6 +12,7 @@ import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import EventsNew from './components/events/New'
 import EventsEdit from './components/events/EventsEdit'
+import UserProfile from './components/common/UserProfile'
 
 
 class App extends React.Component {
@@ -27,6 +28,7 @@ class App extends React.Component {
             <Route path='/events' component={EventsIndex} />
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
+            <SecureRoute path="/me" component={UserProfile} />
             <Route path='/' component={Home} />
           </Switch>
         </div>
