@@ -11,6 +11,7 @@ import Home from './components/common/Home'
 import Register from './components/auth/Register'
 import Login from './components/auth/Login'
 import EventsNew from './components/events/New'
+import EventsEdit from './components/events/EventsEdit'
 
 
 class App extends React.Component {
@@ -20,6 +21,7 @@ class App extends React.Component {
         <div>
           <Navbar />
           <Switch>
+            <SecureRoute path="/events/:id/edit" component={EventsEdit} />
             <SecureRoute path="/events/new" component={EventsNew} />
             <SecureRoute path='/events/:id' component={EventsShow} />
             <Route path='/events' component={EventsIndex} />
