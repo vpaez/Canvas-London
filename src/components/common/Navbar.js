@@ -36,6 +36,7 @@ class Navbar extends React.Component {
             <Link to="/events" className="navbar-item">
               Browse exhibitions
             </Link>
+            {Auth.isAuthenticated() && <Link to="/events/new" className="navbar-item">Add new event</Link>}
           </div>
 
 
