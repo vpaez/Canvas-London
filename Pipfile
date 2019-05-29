@@ -12,6 +12,7 @@ psycopg2-binary = "*"
 marshmallow = "*"
 datetime = "*"
 bcrypt = "*"
+pyjwt = "*"
 jwt = "*"
 
 [requires]
