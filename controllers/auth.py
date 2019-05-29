@@ -27,7 +27,6 @@ def register():
 
 @router.route('/login', methods=['POST'])
 @db_session
-
 def login():
 
     data = request.get_json()
