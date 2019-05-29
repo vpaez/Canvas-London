@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import {HashRouter as Router, Switch, Route} from 'react-router-dom'
 import 'bulma'
 
+import SecureRoute from './components/common/SecureRoute'
 import Navbar from './components/common/Navbar'
 import EventsIndex from './components/events/EventsIndex'
 import EventsShow from './components/events/EventsShow'
@@ -18,7 +19,7 @@ class App extends React.Component {
         <div>
           <Navbar />
           <Switch>
-            <Route path='/events/:id' component={EventsShow} />
+            <SecureRoute path='/events/:id' component={EventsShow} />
             <Route path='/events' component={EventsIndex} />
             <Route path='/register' component={Register} />
             <Route path='/login' component={Login} />
