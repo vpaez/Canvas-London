@@ -1,7 +1,9 @@
 from flask import Blueprint, request, jsonify, g, abort
 from pony.orm import db_session
+from flask import Blueprint, request, jsonify, g
 from marshmallow import ValidationError
 from app import db
+from lib.secure_route import secure_route
 
 from models.Event import Event, EventSchema
 
@@ -18,12 +20,13 @@ def index():
 
 @router.route('/events', methods=['POST'])
 @db_session
+@secure_route
 def create():
     schema = EventSchema()
 
     try:
         data = schema.load(request.get_json())
-        data['created_by'] = g.current_user
+        data['user'] = g.current_user
         event = Event(**data)
         db.commit()
     except ValidationError as err:
