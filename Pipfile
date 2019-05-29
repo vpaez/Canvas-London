@@ -13,6 +13,7 @@ marshmallow = "*"
 datetime = "*"
 bcrypt = "*"
 jwt = "*"
+pyjwt = "*"
 
 [requires]
 python_version = "3.7"
