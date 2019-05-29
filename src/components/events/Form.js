@@ -4,7 +4,7 @@ import Select from 'react-select'
 
 
 
-const Form = ({ handleChange, handleSubmit, data, errors}) => {
+const Form = ({ handleChange, handleSubmit, data, errors, options}) => {
   return (
     <section className="section">
       <div className="container is-fluid">
@@ -125,7 +125,7 @@ const Form = ({ handleChange, handleSubmit, data, errors}) => {
                   value={data.keywords || ''}
                 />
                 <Select
-                  options={this.state.keywords.map(keyword => keyword.name)}
+                  options={options}//.map(keyword => keyword.name)}
                   isMulti
 
 

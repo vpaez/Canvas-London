@@ -9,8 +9,8 @@ class New extends React.Component {
     super()
 
     this.state = {
-      data: null,
-      errors: null,
+      data: {},
+      errors: {},
       events: null,
       options: null
     }
@@ -41,7 +41,8 @@ class New extends React.Component {
     axios.get('/api/keywords')
       .then(res => {
         const keywords = res.data.map(keyword => {
-          return { value: keyword._id, label: keyword.title }
+          console.log(keyword)
+          return { value: keyword.id, label: keyword.name }
         })
         return keywords
       })
@@ -49,7 +50,8 @@ class New extends React.Component {
   }
 
   render() {
-    if (!this.state.data) return null
+    console.log(this.state)
+    if(!this.state.options) return null
     return (
       <section className="section">
         <div className="container">
@@ -60,6 +62,7 @@ class New extends React.Component {
                 handleSubmit={this.handleSubmit}
                 data={this.state.data}
                 errors={this.state.errors}
+                options={this.state.options}
               />
             </div>
           </div>
