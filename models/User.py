@@ -37,8 +37,8 @@ class UserSchema(Schema):
     email = fields.Str(required=True)
     password = fields.Str(load_only=True)
     password_confirmation = fields.Str(load_only=True)
-    events = fields.Nested('EventSchema', exclude=('user',))
-    keywords = fields.Nested('KeywordSchema', exclude=('users',))
+    events = fields.Nested('EventSchema', many=True, exclude=('user',))
+    keywords = fields.Nested('KeywordSchema', many=True, exclude=('users',))
 
     #basic method
     def generate_hash(self, plaintext):
