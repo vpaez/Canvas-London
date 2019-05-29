@@ -13,16 +13,14 @@ with db_session():
     gabe = User(
         username='gabelton',
         email='gabemcrrock@hotmail.co.uk',
-        password='pass',
-        password_confirmation='pass',
+        password_hash=schema.generate_hash('pass'),
         events=[],
         keywords=[]
     )
     v = User(
         username='vpaez',
         email='vpaez@hotmail.co.uk',
-        password='pass',
-        password_confirmation='pass',
+        password_hash=schema.generate_hash('pass'),
         events=[],
         keywords=[]
     )
