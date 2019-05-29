@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-
 import Form from './Form'
 import Auth from '../../lib/Auth'
 
@@ -10,14 +9,16 @@ class New extends React.Component {
     super()
 
     this.state = {
-      data: {},
-      errors: {},
-      vinyls: []
+      data: null,
+      errors: null,
+      events: null,
+      options: null
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
 
   handleChange(e) {
     const data = { ...this.state.data, [e.target.name]: e.target.value }
@@ -29,15 +30,26 @@ class New extends React.Component {
 
     const token = Auth.getToken()
 
-    axios.post('/api/vinyls', this.state.data, {
+    axios.post('/api/events', this.state.data, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
-      .then(() => this.props.history.push('/vinyls'))
+      .then(() => this.props.history.push('/events'))
       .catch(err => this.setState({ errors: err.response.data.errors }))
   }
 
-  render() {
+  componentDidMount() {
+    axios.get('/api/keywords')
+      .then(res => {
+        const keywords = res.data.map(keyword => {
+          return { value: keyword._id, label: keyword.title }
+        })
+        return keywords
+      })
+      .then(res => this.setState({ options: res }))
+  }
 
+  render() {
+    if (!this.state.data) return null
     return (
       <section className="section">
         <div className="container">

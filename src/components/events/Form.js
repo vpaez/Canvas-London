@@ -1,5 +1,6 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import Select from 'react-select'
 
 
 
@@ -114,17 +115,23 @@ const Form = ({ handleChange, handleSubmit, data, errors}) => {
               {errors.artists && <div className="help is-danger">{errors.artists}</div>}
             </div>
             <div className="field">
-              <label className="label">Artist(s)</label>
+              <label className="label">Keywords</label>
               <div className="control">
                 <input
                   className="input"
-                  name="artists"
+                  name="keywords"
                   placeholder="eg: https://www.tate.org.uk/sites/default/files/styles/width-420/public/le_jardin_v.2_1.jpg"
                   onChange={handleChange}
-                  value={data.artists || ''}
+                  value={data.keywords || ''}
+                />
+                <Select
+                  options={this.state.keywords.map(keyword => keyword.name)}
+                  isMulti
+
+
                 />
               </div>
-              {errors.artists && <div className="help is-danger">{errors.artists}</div>}
+              {errors.keywords && <div className="help is-danger">{errors.keywords}</div>}
             </div>
             {/* ADD DROPDOWN KEYWORDS */}
           </form>
