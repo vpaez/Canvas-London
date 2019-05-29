@@ -11,7 +11,7 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount(){
-    axios.get()
+    axios.get('')
   }
   render(){
     return(
