@@ -30,11 +30,14 @@ with db_session():
     painting = Keyword(name='Painting', events=[], users=gabe)
     photography = Keyword(name='Photography', events=[], users=v)
     ny = Keyword(name='New York', events=[], users=v)
+    performance_art = Keyword(name='Performance art', events=[], users=v)
 
 
-    Event(name='Van Gogh in Britain', start_date='27-03-19', end_date='11-08-19', venue='Tate Britain', area='Central', keywords=[post_impressionism, dutch, painting], entry_fee=22, user=gabe)
+    Event(name='Van Gogh in Britain', start_date='27-03-19', end_date='11-08-19', venue='Tate Britain', area='Central', keywords=[post_impressionism, dutch, painting], entry_fee=22, user=gabe, image="https://www.tate.org.uk/sites/default/files/styles/width-600/public/van_gogh_self_portrait.jpg")
 
-    Event(name='diane arbus: in the beginning', start_date='13-02-19', end_date='06-05-19', venue='Hayward Gallery', area='Central', keywords=[photography, ny], entry_fee=15.5, user=v)
+    Event(name='Block Universe 2019', start_date='25-05-19', end_date='2-06-19', venue='Somerset House', area='Central', keywords=[performance_art], entry_fee=22, user=gabe, image="https://img.artrabbit.com/events/block-universe-2019/images/j81L5lSARmXl/1500x937/web-background-01.webp")
+
+    Event(name='diane arbus: in the beginning', start_date='13-02-19', end_date='06-05-19', venue='Hayward Gallery', area='Central', keywords=[photography, ny], entry_fee=15.5, user=v, image="https://www.bjp-online.com/wp-content/uploads/2018/10/DP356754-P1-jack-dracula.jpg")
     #Event(name='Manga', start_date='23-05-19', end_date='26-08-19', venue='British Museum', area='Central', keywords=['comics', 'manga', 'Japan', 'illustration'], entry_fee=20, artists=['Osamu Tezuka', 'Oda Eiichiro', 'Noda Satoru'])
 
     db.commit()
