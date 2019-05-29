@@ -1,6 +1,5 @@
 import React from 'react'
 import axios from 'axios'
-
 import Form from './Form'
 import Auth from '../../lib/Auth'
 
@@ -12,12 +11,14 @@ class New extends React.Component {
     this.state = {
       data: {},
       errors: {},
-      vinyls: []
+      events: null,
+      options: null
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
   }
+
 
   handleChange(e) {
     const data = { ...this.state.data, [e.target.name]: e.target.value }
@@ -29,15 +30,28 @@ class New extends React.Component {
 
     const token = Auth.getToken()
 
-    axios.post('/api/vinyls', this.state.data, {
+    axios.post('/api/events', this.state.data, {
       headers: { 'Authorization': `Bearer ${token}` }
     })
-      .then(() => this.props.history.push('/vinyls'))
+      .then(() => this.props.history.push('/events'))
       .catch(err => this.setState({ errors: err.response.data.errors }))
   }
 
-  render() {
+  componentDidMount() {
+    axios.get('/api/keywords')
+      .then(res => {
+        const keywords = res.data.map(keyword => {
+          console.log(keyword)
+          return { value: keyword.id, label: keyword.name }
+        })
+        return keywords
+      })
+      .then(res => this.setState({ options: res }))
+  }
 
+  render() {
+    console.log(this.state)
+    if(!this.state.options) return null
     return (
       <section className="section">
         <div className="container">
@@ -48,6 +62,7 @@ class New extends React.Component {
                 handleSubmit={this.handleSubmit}
                 data={this.state.data}
                 errors={this.state.errors}
+                options={this.state.options}
               />
             </div>
           </div>
