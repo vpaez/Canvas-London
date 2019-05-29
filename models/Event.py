@@ -32,7 +32,6 @@ class EventSchema(Schema):
     user = fields.Nested('UserSchema', exclude=('events', 'email', 'keywords'), dump_only=True)
     @post_load
     def load_keywords(self, data):
-        # data['categories'] = map(lambda category_id: Category.get(id=category_id), data['category_ids'])
         data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']]
         del data['keyword_ids']
 
