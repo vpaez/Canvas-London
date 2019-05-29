@@ -39,3 +39,50 @@ class UserSchema(Schema):
     password_confirmation = fields.Str(load_only=True)
     events = fields.Nested('EventSchema', exclude=('user',))
     keywords = fields.Nested('KeywordSchema', exclude=('users',))
+
+    #basic method
+    def generate_hash(self, plaintext):
+        return bcrypt.hashpw(plaintext.encode('utf8'), bcrypt.gensalt(8)).decode('utf8')
+
+
+    @validates_schema
+    def check_passwords(self, data):
+        if data['password'] and data['password'] != data['password_confirmation']:
+            raise ValidationError(
+                field_name='password_confirmation',
+                message=['Does not match']
+            )
+
+    # validates_schema used for custom validations
+    @validates_schema
+    def validate_username(self, data):
+        user = User.get(username=data.get('username'))
+
+        if user:
+            raise ValidationError(
+                field_name='username',
+                message=['Must be unique']
+            )
+
+
+    @validates_schema
+    def validate_email(self, data):
+        user = User.get(email=data.get('email'))
+
+        if user:
+            raise ValidationError(
+                field_name='email',
+                message=['Must be unique']
+            )
+
+    # logic to perform after validation, but BEFORE save
+    # modify the data in some way
+    @post_load
+    def hash_password(self, data):
+        if data['password']:
+            data['password_hash'] = self.generate_hash(data['password'])
+
+            del data['password']
+            del data['password_confirmation']
+
+        return data
