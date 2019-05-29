@@ -29,7 +29,7 @@ class EventSchema(Schema):
     artists = fields.Str(many=True)
     keywords = fields.Nested('KeywordSchema', many=True, exclude=('events', 'users',), dump_only=True)
     keyword_ids = fields.List(fields.Int(), load_only=True)
-
+    user = fields.Nested('UserSchema', exclude=('events', 'email', 'keywords'), dump_only=True)
     @post_load
     def load_keywords(self, data):
         # data['categories'] = map(lambda category_id: Category.get(id=category_id), data['category_ids'])

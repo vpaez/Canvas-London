@@ -18,8 +18,8 @@ with db_session():
         keywords=[]
     )
     v = User(
-        username='vpaez',
-        email='vpaez@hotmail.co.uk',
+        username='violeta',
+        email='violepaez@gmail.com',
         password_hash=schema.generate_hash('pass'),
         events=[],
         keywords=[]
