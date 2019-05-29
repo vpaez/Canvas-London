@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import Auth from '../../lib/Auth'
 
 class Login extends React.Component {
 
@@ -24,7 +25,7 @@ class Login extends React.Component {
     console.log(this.state)
     axios.post('/api/login', this.state.data)
       .then(res => {
-        console.log(res.data)
+        Auth.setToken(res.data.token)
         this.props.history.push('/events')
       })
       .catch(() => this.setState({ error: 'Invalid credentials' }))
