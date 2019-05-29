@@ -1,9 +1,24 @@
 import React from 'react'
 import FeaturedEvents from '../../components/events/FeaturedEvents'
 import SearchBar from '../../components/common/SearchBar'
+import axios from 'axios'
 
 class Home extends React.Component {
+
+  constructor(){
+    super()
+    this.state = {
+      exhibitions: null
+    }
+  }
+
+  componentDidMount(){
+    axios.get('/api/events')
+      .then(res => this.setState({exhibitions: res.data}))
+  }
+
   render(){
+    if(!this.state.exhibitions) return null
     return(
       <div>
         <section className="hero is-fullheight video">
@@ -18,7 +33,8 @@ class Home extends React.Component {
             </div>
           </div>
         </section>
-        <FeaturedEvents />
+        <FeaturedEvents
+          exhibitions={this.state.exhibitions}/>
         <SearchBar />
       </div>
     )
