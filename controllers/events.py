@@ -38,7 +38,6 @@ def create():
 def show(event_id):
     schema = EventSchema()
     event = Event.get(id=event_id)
-
     if not event:
         abort(404)
     return schema.dumps(event)

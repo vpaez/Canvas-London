@@ -50,15 +50,21 @@ def profile():
     schema = UserSchema()
     return schema.dumps(g.current_user)
 
-@router.route('/me', methods=['POST'])
+@router.route('/me', methods=['PUT'])
 @db_session
 @secure_route
 def edit_profile():
     schema = UserSchema()
 
     data = request.get_json()
-    data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']]
+
+    print(g.current_user.keywords)
+    previousKeywords = []
+    for keyword in g.current_user.keywords:
+        previousKeywords.append(keyword)
+    data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']] + previousKeywords
     del data['keyword_ids']
+
     g.current_user.set(**data)
     db.commit()
     return schema.dumps(g.current_user)

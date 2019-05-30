@@ -13,11 +13,15 @@ class UserProfile extends React.Component {
     super()
 
     this.state = {
-      options: []
+      options: [],
+      data: {}
     }
     this.getOptions = this.getOptions.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
+    this.handleSave = this.handleSave.bind(this)
   }
+
+
   getOptions(){
     let options = []
     axios.get('/api/keywords')
@@ -27,8 +31,19 @@ class UserProfile extends React.Component {
       .then(() => this.setState({ options }))
   }
 
-  handleSelect(e){
-    console.log(e.value)
+  handleSelect(keywords){
+    const keywordIds = keywords.map(keyword => parseInt(keyword.value))
+    const data = { ...this.state.data, keyword_ids: keywordIds }
+    this.setState({ data })
+  }
+
+  handleSave(){
+    const token = Auth.getToken()
+    axios.put('api/me', this.state.data, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
   }
   componentDidMount(){
     const token = Auth.getToken()
@@ -49,6 +64,12 @@ class UserProfile extends React.Component {
         <h1 className="title is-4">Email:</h1>
         <EditableEmail name="email" value={this.state.user.email} />
         <hr />
+        <h2 className="title is-4">Your preferences</h2>
+        <div className="tags are-medium">
+          {this.state.user.keywords.map(keyword =>
+            <span className="tag is-primary" key={keyword.id}>{keyword.name}</span>
+          )}
+        </div>
         <h2 className="title is-4">Add preferences</h2>
         <p>Set type of exhibitions you would like to be displayed first</p>
         <div>
@@ -58,7 +79,7 @@ class UserProfile extends React.Component {
             options={this.state.options}
             onChange={this.handleSelect}
           />
-          <button className="button">Save</button>
+          <button className="button" onClick={this.handleSave}>Save</button>
         </div>
         <hr />
         <h2 className="title is-4">Events created by you</h2>
