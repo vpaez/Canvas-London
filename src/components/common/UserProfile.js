@@ -21,7 +21,7 @@ class UserProfile extends React.Component {
     this.handleSelect = this.handleSelect.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.handlePreferences = this.handlePreferences.bind(this)
-    this.getKeywords = this.getKeywords.bind(this)
+    this.getUser = this.getUser.bind(this)
   }
 
 
@@ -58,7 +58,7 @@ class UserProfile extends React.Component {
   }
 
 
-  getKeywords(){
+  getUser(){
     const token = Auth.getToken()
     axios.get('/api/me', {
       headers: {
@@ -68,7 +68,7 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount(){
-    this.getKeywords()
+    this.getUser()
     this.getOptions()
   }
 
