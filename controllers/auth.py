@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, g
 from models.User import User, UserSchema
+from models.Keyword import Keyword
 from app import db
 from pony.orm import db_session
 from marshmallow import ValidationError
@@ -30,9 +31,7 @@ def register():
 @router.route('/login', methods=['POST'])
 @db_session
 def login():
-
     data = request.get_json()
-
     user = User.get(email=data.get('email'))
 
     if not user or not user.is_password_valid(data.get('password')):
@@ -49,4 +48,23 @@ def login():
 @secure_route
 def profile():
     schema = UserSchema()
+    return schema.dumps(g.current_user)
+
+@router.route('/me', methods=['PUT'])
+@db_session
+@secure_route
+def edit_profile():
+    schema = UserSchema()
+
+    data = request.get_json()
+
+    print(g.current_user.keywords)
+    previousKeywords = []
+    for keyword in g.current_user.keywords:
+        previousKeywords.append(keyword)
+    data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']] + previousKeywords
+    del data['keyword_ids']
+
+    g.current_user.set(**data)
+    db.commit()
     return schema.dumps(g.current_user)
