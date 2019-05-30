@@ -1,5 +1,6 @@
 from flask import Blueprint, request, jsonify, g
 from models.User import User, UserSchema
+from models.Keyword import Keyword
 from app import db
 from pony.orm import db_session
 from marshmallow import ValidationError
@@ -30,9 +31,7 @@ def register():
 @router.route('/login', methods=['POST'])
 @db_session
 def login():
-
     data = request.get_json()
-
     user = User.get(email=data.get('email'))
 
     if not user or not user.is_password_valid(data.get('password')):
@@ -56,26 +55,10 @@ def profile():
 @secure_route
 def edit_profile():
     schema = UserSchema()
-    user = User.get(id=g.current_user.id)
-    data = schema.load(request.get_json())
-    user.set(**data)
+
+    data = request.get_json()
+    data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']]
+    del data['keyword_ids']
+    g.current_user.set(**data)
     db.commit()
-    return schema.dumps(user)
-
-
-    #
-    #
-    # schema = EventSchema()
-    # event = Event.get(id=event_id)
-    # if not event:
-    #     return jsonify({'message': 'Event not found'}), 404
-    # if not event.user.id == g.current_user.id:
-    #     return jsonify({'message': 'User not authorized'}), 404
-    # try:
-    #     data = schema.load(request.get_json())
-    #     event.set(**data)
-    #     db.commit()
-    # except ValidationError as err:
-    #     return jsonify({'message': 'Validation failed', 'errors': err.messages}), 422
-    #
-    # return schema.dumps(event)
+    return schema.dumps(g.current_user)

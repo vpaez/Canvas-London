@@ -8,27 +8,32 @@ function contentEditable(WrappedComponent) {
 
       this.state = {
         editable: false,
-        button: 'Edit'
+        button: false,
+        user: {}
       }
-      this.buttonClick = this.buttonClick.bind(this)
+      this.handleClick = this.handleClick.bind(this)
+      this.handleSave = this.handleSave.bind(this)
+      this.handleChange = this.handleChange.bind(this)
     }
-
-    buttonClick(e){
+    handleChange(e){
       console.log(e)
-      this.state.button? this.setState({button: null, editable: true}) : this.setState({button: 'Edit', editable: false})
-      if(this.state.button === null) {
-        axios.get('')
-      }
+    }
+    handleClick(){
+      this.setState({button: !this.state.button})
+    }
+    handleSave(e){
+      console.log(e)
+      this.setState({editable: false})
+
+      axios.post('/api/me')
     }
 
     render(){
       return(
         <WrappedComponent
-          {...this.props}
-          contentEditable={this.state.editable}
-        >
-          {this.props.value}
-          <button className="button is-success" onClick={this.buttonClick}>{this.state.button? this.state.button: 'Save'}</button>
+          {...this.props}>
+          <div contentEditable={this.state.editable} >{this.props.value}</div>
+          {this.state.button && <button className="button is-success" onClick={this.handleSave}>Save</button> }
         </WrappedComponent>
       )
     }

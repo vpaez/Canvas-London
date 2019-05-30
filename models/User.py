@@ -5,6 +5,7 @@ from pony.orm import Required, Set
 from marshmallow import Schema, fields, post_load, validates_schema, ValidationError
 from app import db
 from config.environment import secret
+from .Keyword import Keyword
 
 class User(db.Entity):
     username = Required(str, unique=True)
@@ -38,9 +39,10 @@ class UserSchema(Schema):
     password = fields.Str(load_only=True)
     password_confirmation = fields.Str(load_only=True)
     events = fields.Nested('EventSchema', many=True, exclude=('user',))
-    keywords = fields.Nested('KeywordSchema', many=True, exclude=('users',))
+    keywords = fields.Nested('KeywordSchema', many=True, exclude=('users',), dump_only=True)
+    keyword_ids = fields.List(fields.Int(), load_only=True)
 
-    #basic method
+
     def generate_hash(self, plaintext):
         return bcrypt.hashpw(plaintext.encode('utf8'), bcrypt.gensalt(8)).decode('utf8')
 
@@ -84,5 +86,12 @@ class UserSchema(Schema):
 
             del data['password']
             del data['password_confirmation']
+
+        return data
+
+    @post_load
+    def load_keywords(self, data):
+        data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']]
+        del data['keyword_ids']
 
         return data
