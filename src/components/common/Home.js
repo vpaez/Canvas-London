@@ -3,6 +3,7 @@ import FeaturedEvents from '../../components/events/FeaturedEvents'
 import RecommendedEvents from '../../components/events/RecommendedEvents'
 import SearchBar from '../../components/common/SearchBar'
 import axios from 'axios'
+import Auth from '../../lib/Auth'
 
 
 function whatsOn(arr) {
@@ -80,7 +81,7 @@ class Home extends React.Component {
         </section>
         <FeaturedEvents
           exhibitions={currentSorted}/>
-        <RecommendedEvents />
+        {Auth.getToken() && <RecommendedEvents />}
         <SearchBar />
       </div>
     )

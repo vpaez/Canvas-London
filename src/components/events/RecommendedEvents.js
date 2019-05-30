@@ -38,6 +38,7 @@ class RecommendedEvents extends React.Component {
 
   render(){
     if(!this.state.exhibitions) return null
+    if(this.state.keywords.length === 0) return null
     return(
       <div className="container">
         <h1 className="title">Recommended for you</h1>
