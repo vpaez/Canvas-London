@@ -57,7 +57,7 @@ with db_session():
 
     Event(name='Buddhism', start_date=datetime.date(2019, 10, 25).strftime("%d/%m/%Y"), end_date=datetime.date(2020, 2, 23).strftime("%d/%m/%Y"), venue='British Library', area='Central', keywords=[japan, illustration, manuscripts, india], entry_fee=14, user=gabe, image='https://www.bl.uk/britishlibrary/~/media/bl/global/whats%20on/exhibitions/buddhism/buddhism_624x351.jpg?crop=1&cropX=0&cropY=0&cropW=624&cropH=351&w=624&h=351&dispW=624&dispH=351')
 
-    Event(name='Don McCullin', start_date=datetime.date(2019, 2, 5).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 5, 6).strftime("%d/%m/%Y"), venue='British Library', area='Central', keywords=[photography, doc, war], entry_fee=20, user=gabe, image='https://www.artfund.org/thumbnail/908/assets/what-to-see/exhibitions/2019/05/manga/golden-kamuy.jpg')
+    Event(name='Don McCullin', start_date=datetime.date(2019, 2, 5).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 5, 6).strftime("%d/%m/%Y"), venue='British Library', area='Central', keywords=[photography, doc, war], entry_fee=20, user=gabe, image='https://www.tate.org.uk/sites/default/files/styles/width-720/public/id_145.jpg')
 
     #artists=['Osamu Tezuka', 'Oda Eiichiro', 'Noda Satoru']
 
