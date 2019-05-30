@@ -14,11 +14,13 @@ class UserProfile extends React.Component {
 
     this.state = {
       options: [],
-      data: {}
+      data: {},
+      editpreferences: false
     }
     this.getOptions = this.getOptions.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
     this.handleSave = this.handleSave.bind(this)
+    this.handlePreferences = this.handlePreferences.bind(this)
   }
 
 
@@ -37,6 +39,10 @@ class UserProfile extends React.Component {
     this.setState({ data })
   }
 
+  handlePreferences(){
+    this.setState({ editpreferences: true })
+  }
+
   handleSave(){
     const token = Auth.getToken()
     axios.put('api/me', this.state.data, {
@@ -44,7 +50,10 @@ class UserProfile extends React.Component {
         'Authorization': `Bearer ${token}`
       }
     })
+    this.setState({ editpreferences: false })
+    this.forceUpdate()
   }
+  
   componentDidMount(){
     const token = Auth.getToken()
     axios.get('/api/me', {
@@ -70,17 +79,23 @@ class UserProfile extends React.Component {
             <span className="tag is-primary" key={keyword.id}>{keyword.name}</span>
           )}
         </div>
-        <h2 className="title is-4">Add preferences</h2>
-        <p>Set type of exhibitions you would like to be displayed first</p>
-        <div>
-          <Select
-            isMulti
-            name="keywords"
-            options={this.state.options}
-            onChange={this.handleSelect}
-          />
-          <button className="button" onClick={this.handleSave}>Save</button>
-        </div>
+        <hr />
+        {!this.state.editpreferences && <button className="button" onClick={this.handlePreferences}>Add more preferences</button>}
+        {this.state.editpreferences &&
+          <div>
+            <h2 className="title is-4">Add preferences</h2>
+            <p>Set type of exhibitions you would like to be displayed first</p>
+            <div>
+              <Select
+                isMulti
+                name="keywords"
+                options={this.state.options}
+                onChange={this.handleSelect}
+              />
+              <button className="button" onClick={this.handleSave}>Save</button>
+            </div>
+          </div>
+        }
         <hr />
         <h2 className="title is-4">Events created by you</h2>
         <div className="columns">
