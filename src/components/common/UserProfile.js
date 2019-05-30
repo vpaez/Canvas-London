@@ -54,7 +54,7 @@ class UserProfile extends React.Component {
       }
     })
     this.setState({ editpreferences: false })
-    this.getKeywords()
+    this.getUser()
   }
 
 

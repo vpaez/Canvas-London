@@ -6,7 +6,9 @@ class Register extends React.Component {
   constructor(){
     super()
     this.state = {
-      data: {},
+      data: {
+        keyword_ids: []
+      },
       errors: {}
     }
 

@@ -4,6 +4,7 @@ import RecommendedEvents from '../../components/events/RecommendedEvents'
 import SearchBar from '../../components/common/SearchBar'
 import axios from 'axios'
 
+
 function whatsOn(arr) {
   return arr.filter(exhib => {
 
