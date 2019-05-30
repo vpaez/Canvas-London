@@ -71,13 +71,12 @@ function orderByDate(arr) {
 }
 
 
-
-
 class EventsIndex extends React.Component {
   constructor(){
     super()
     this.state = {
       options: [
+        {label: 'All', value: 'All'},
         {label: 'Past', value: 'Past'},
         {label: 'Current', value: 'Current'},
         {label: 'Upcoming', value: 'Upcoming'}
@@ -88,7 +87,6 @@ class EventsIndex extends React.Component {
   }
 
   componentDidMount(){
-    console.log(this)
     axios.get('/api/events')
       .then(res => this.setState({exhibitions: res.data}))
   }
@@ -106,7 +104,7 @@ class EventsIndex extends React.Component {
         } else if (e.label === 'Past') {
           const past = alreadyGone(res.data)
           this.setState({exhibitions: past})
-        }
+        } else this.setState({exhibitions: res.data})
       })
   }
 
