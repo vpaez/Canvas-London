@@ -24,6 +24,34 @@ function whatsOn(arr) {
   })
 }
 
+function comingSoon(arr){
+  return arr.filter(exhib => {
+
+    const startSplitDate = exhib.start_date.split('/')
+    const startMonth = startSplitDate[1] - 1
+    const startDate = new Date(startSplitDate[2], startMonth, startSplitDate[0])
+
+    const startParsed = Date.parse(startDate)
+    const currentParsed = Date.parse(new Date())
+
+    if (currentParsed < startParsed ) return exhib
+  })
+}
+
+function alreadyGone(arr){
+  return arr.filter(exhib => {
+    const endSplitDate = exhib.end_date.split('/')
+    const endMonth = endSplitDate[1] - 1
+    const endDate = new Date(endSplitDate[2], endMonth, endSplitDate[0])
+
+    const endParsed = Date.parse(endDate)
+    const currentParsed = Date.parse(new Date())
+
+    if (currentParsed > endParsed) return exhib
+
+  })
+}
+
 function orderByDate(arr) {
   return arr.slice().sort(function (a, b) {
 
@@ -43,13 +71,12 @@ function orderByDate(arr) {
 }
 
 
-
-
 class EventsIndex extends React.Component {
   constructor(){
     super()
     this.state = {
       options: [
+        {label: 'All', value: 'All'},
         {label: 'Past', value: 'Past'},
         {label: 'Current', value: 'Current'},
         {label: 'Upcoming', value: 'Upcoming'}
@@ -60,21 +87,24 @@ class EventsIndex extends React.Component {
   }
 
   componentDidMount(){
-    console.log(this)
     axios.get('/api/events')
       .then(res => this.setState({exhibitions: res.data}))
   }
 
   handleChange(e){
-    console.log(e)
     axios.get('/api/events')
       .then(res => {
         if (e.label === 'Current'){
           const current = whatsOn(res.data)
           const currentSorted = orderByDate(current)
-          console.log(this)
           this.setState({exhibitions: currentSorted})
-        }
+        } else if (e.label === 'Upcoming') {
+          const upcoming = comingSoon(res.data)
+          this.setState({exhibitions: upcoming})
+        } else if (e.label === 'Past') {
+          const past = alreadyGone(res.data)
+          this.setState({exhibitions: past})
+        } else this.setState({exhibitions: res.data})
       })
   }
 
