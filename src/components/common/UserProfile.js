@@ -83,6 +83,7 @@ class UserProfile extends React.Component {
         <EditableEmail name="email" value={this.state.user.email} />
         <hr />
         <h2 className="title is-4">Your preferences</h2>
+        {this.state.user.keywords.length === 0 && <p>You have no preferences set up yet...</p>}
         <div className="tags are-medium">
           {this.state.user.keywords.map(keyword =>
             <span className="tag is-primary" key={keyword.id}>{keyword.name}</span>
