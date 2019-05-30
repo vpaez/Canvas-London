@@ -38,7 +38,7 @@ function comingSoon(arr){
   })
 }
 
-function past(){
+function alreadyGone(arr){
   return arr.filter(exhib => {
     const endSplitDate = exhib.end_date.split('/')
     const endMonth = endSplitDate[1] - 1
@@ -47,7 +47,7 @@ function past(){
     const endParsed = Date.parse(endDate)
     const currentParsed = Date.parse(new Date())
 
-
+    if (currentParsed > endParsed) return exhib
 
   })
 }
@@ -103,7 +103,10 @@ class EventsIndex extends React.Component {
         } else if (e.label === 'Upcoming') {
           const upcoming = comingSoon(res.data)
           this.setState({exhibitions: upcoming})
-        } 
+        } else if (e.label === 'Past') {
+          const past = alreadyGone(res.data)
+          this.setState({exhibitions: past})
+        }
       })
   }
 
