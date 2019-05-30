@@ -1,7 +1,11 @@
 import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
+import editableContent from './editableContent'
 
+
+const EditableUsername = editableContent('div')
+const EditableEmail = editableContent('div')
 class UserProfile extends React.Component {
 
   constructor(){
@@ -23,8 +27,10 @@ class UserProfile extends React.Component {
     return(
       <section className="section">
         <h1 className="title is-2">Profile info</h1>
-        <p>Username: {this.state.user.username}</p>
-        <p>Email: {this.state.user.email}</p>
+        <h1 className="title is-4">Username:</h1>
+        <EditableUsername value={this.state.user.username} />
+        <h1 className="title is-4">Email:</h1>
+        <EditableEmail value={this.state.user.email} />
         <hr />
         <h2 className="title is-4">Events created by you</h2>
         <div className="columns">
