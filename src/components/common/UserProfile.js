@@ -21,6 +21,7 @@ class UserProfile extends React.Component {
     this.handleSelect = this.handleSelect.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.handlePreferences = this.handlePreferences.bind(this)
+    this.getKeywords = this.getKeywords.bind(this)
   }
 
 
@@ -34,9 +35,11 @@ class UserProfile extends React.Component {
   }
 
   handleSelect(keywords){
-    const keywordIds = keywords.map(keyword => parseInt(keyword.value))
-    const data = { ...this.state.data, keyword_ids: keywordIds }
-    this.setState({ data })
+    if(keywords !== null) {
+      const keywordIds = keywords.map(keyword => parseInt(keyword.value))
+      const data = { ...this.state.data, keyword_ids: keywordIds }
+      this.setState({ data })
+    }
   }
 
   handlePreferences(){
@@ -51,18 +54,24 @@ class UserProfile extends React.Component {
       }
     })
     this.setState({ editpreferences: false })
-    this.forceUpdate()
+    this.getKeywords()
   }
-  
-  componentDidMount(){
+
+
+  getKeywords(){
     const token = Auth.getToken()
     axios.get('/api/me', {
       headers: {
         'Authorization': `Bearer ${token}` }
     })
       .then(res => this.setState({user: res.data}))
-      .then(this.getOptions())
   }
+
+  componentDidMount(){
+    this.getKeywords()
+    this.getOptions()
+  }
+
   render(){
     if(!this.state.user) return null
     return(
