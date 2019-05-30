@@ -60,7 +60,6 @@ with db_session():
 
     Event(name='Don McCullin', start_date=datetime.date(2019, 2, 5).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 5, 6).strftime("%d/%m/%Y"), venue='British Library', area='Central', keywords=[photography, doc, war], entry_fee=20, user=gabe, image='https://www.tate.org.uk/sites/default/files/styles/width-720/public/id_145.jpg')
 
-    Event(name='SHOULD NOT APPEAR', start_date=datetime.date(2019, 2, 5).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 5, 6).strftime("%d/%m/%Y"), venue='British Library', area='Central', keywords=[extra], entry_fee=20, user=gabe, image='https://www.tate.org.uk/sites/default/files/styles/width-720/public/id_145.jpg')
 
     #artists=['Osamu Tezuka', 'Oda Eiichiro', 'Noda Satoru']
 
