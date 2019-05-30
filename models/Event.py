@@ -1,7 +1,9 @@
 from app import db
+from datetime import date
 from pony.orm import Required, Optional, Set
 from marshmallow import Schema, fields, post_load
 from .Keyword import Keyword
+
 
 class Event(db.Entity):
     name = Required(str)
