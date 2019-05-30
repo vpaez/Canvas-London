@@ -17,17 +17,20 @@ class New extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSelect = this.handleSelect.bind(this)
   }
 
+  handleSelect(keywords){
+    const keywordIds = keywords.map(keyword => keyword.value)
+    const data = { ...this.state.data, keyword_ids: keywordIds }
+    this.setState({ data })
+  }
 
   handleChange(e) {
     const data = { ...this.state.data, [e.target.name]: e.target.value }
     this.setState({ data })
   }
-
-  handleSubmit(e) {
-    e.preventDefault()
-
+  postToDb(){
     const token = Auth.getToken()
 
     axios.post('/api/events', this.state.data, {
@@ -35,6 +38,15 @@ class New extends React.Component {
     })
       .then(() => this.props.history.push('/events'))
       .catch(err => this.setState({ errors: err.response.data.errors }))
+  }
+
+  handleSubmit(e) {
+    e.preventDefault()
+
+    const data = { ...this.state.data, keyword_ids: this.state.keywords}
+    this.setState({ data }, this.postToDb() )
+    console.log(this.state.data)
+
   }
 
   componentDidMount() {
@@ -58,6 +70,7 @@ class New extends React.Component {
           <div className="columns is-centered">
             <div className="column is-half-desktop is-two-thirds-tablet">
               <Form
+                handleSelect={this.handleSelect}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleSubmit}
                 data={this.state.data}

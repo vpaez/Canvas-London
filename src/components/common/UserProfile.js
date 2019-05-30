@@ -4,7 +4,6 @@ import Auth from '../../lib/Auth'
 import editableContent from './editableContent'
 import Select from 'react-select'
 
-const options = [{label: 'hi', value: 'asd'}]
 
 const EditableUsername = editableContent('div')
 const EditableEmail = editableContent('div')

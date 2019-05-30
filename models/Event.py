@@ -1,7 +1,9 @@
 from app import db
+from datetime import date
 from pony.orm import Required, Optional, Set
 from marshmallow import Schema, fields, post_load
 from .Keyword import Keyword
+
 
 class Event(db.Entity):
     name = Required(str)
@@ -32,7 +34,6 @@ class EventSchema(Schema):
     user = fields.Nested('UserSchema', exclude=('events', 'email', 'keywords'), dump_only=True)
     @post_load
     def load_keywords(self, data):
-        # data['categories'] = map(lambda category_id: Category.get(id=category_id), data['category_ids'])
         data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']]
         del data['keyword_ids']
 

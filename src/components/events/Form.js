@@ -4,7 +4,7 @@ import Select from 'react-select'
 
 
 
-const Form = ({ handleChange, handleSubmit, data, errors, options}) => {
+const Form = ({ handleSelect, handleChange, handleSubmit, data, errors, options}) => {
   return (
     <section className="section">
       <div className="container is-fluid">
@@ -15,39 +15,39 @@ const Form = ({ handleChange, handleSubmit, data, errors, options}) => {
               <div className="control">
                 <input
                   className="input"
-                  name="exhibition"
+                  name="name"
                   placeholder="eg: Pierre Bonnard: The Colour of Memory"
                   onChange={handleChange}
-                  value={data.exhibition || ''}
+                  value={data.name || ''}
                 />
               </div>
-              {errors.exhibition && <div className="help is-danger">{errors.exhibition}</div>}
+              {errors.name && <div className="help is-danger">{errors.name}</div>}
             </div>
             <div className="field">
               <label className="label">Start Date</label>
               <div className="control">
                 <input
                   className="input"
-                  name="startDate"
+                  name="start_date"
                   placeholder="eg: 05/03/19"
                   onChange={handleChange}
-                  value={data.startDate || ''}
+                  value={data.start_date || ''}
                 />
               </div>
-              {errors.startDate && <div className="help is-danger">{errors.startDate}</div>}
+              {errors.start_date && <div className="help is-danger">{errors.start_date}</div>}
             </div>
             <div className="field">
               <label className="label">End Date</label>
               <div className="control">
                 <input
                   className="input"
-                  name="endDate"
+                  name="end_date"
                   placeholder="eg: 05/05/19"
                   onChange={handleChange}
-                  value={data.endDate || ''}
+                  value={data.end_date || ''}
                 />
               </div>
-              {errors.endDate && <div className="help is-danger">{errors.endDate}</div>}
+              {errors.end_date && <div className="help is-danger">{errors.end_date}</div>}
             </div>
             <div className="field">
               <label className="label">Venue</label>
@@ -80,13 +80,14 @@ const Form = ({ handleChange, handleSubmit, data, errors, options}) => {
               <div className="control">
                 <input
                   className="input"
-                  name="entryFee"
+                  name="entry_fee"
+                  type="number"
                   placeholder="eg: 15"
                   onChange={handleChange}
-                  value={data.entryFee || ''}
+                  value={data.entry_fee || ''}
                 />
               </div>
-              {errors.entryFee && <div className="help is-danger">{errors.entryFee}</div>}
+              {errors.entry_fee && <div className="help is-danger">{errors.entry_fee}</div>}
             </div>
             <div className="field">
               <label className="label">Image (optional)</label>
@@ -117,23 +118,17 @@ const Form = ({ handleChange, handleSubmit, data, errors, options}) => {
             <div className="field">
               <label className="label">Keywords</label>
               <div className="control">
-                <input
-                  className="input"
-                  name="keywords"
-                  placeholder="eg: https://www.tate.org.uk/sites/default/files/styles/width-420/public/le_jardin_v.2_1.jpg"
-                  onChange={handleChange}
-                  value={data.keywords || ''}
-                />
                 <Select
+                  name="keywords"
                   options={options}//.map(keyword => keyword.name)}
                   isMulti
-
-
+                  onChange={handleSelect}
+                  //value={data.keywords || ''}
                 />
               </div>
               {errors.keywords && <div className="help is-danger">{errors.keywords}</div>}
             </div>
-            {/* ADD DROPDOWN KEYWORDS */}
+            <button className="button is-dark">Submit</button>
           </form>
         </div>
 

@@ -30,16 +30,18 @@ class EventsIndex extends React.Component {
         <div className="container">
           <div className="columns is-multiline">
             {this.state.exhibitions.map(exhibition =>
-              <Link to={`/events/${exhibition.id}`} key={exhibition.id} className="column is-one-quarter-desktop is-one-third-tablet">
-                <figure>
-                  <img src={exhibition.image} alt={exhibition.name}/>
-                </figure>
+              <div className="column is-one-quarter-desktop is-one-third-tablet" key={exhibition.id}>
+                <Link to={`/events/${exhibition.id}`}>
+                  <figure>
+                    <img src={exhibition.image} alt={exhibition.name}/>
+                  </figure>
+                </Link>
                 <h2 className="title is-4">{exhibition.name}</h2>
                 <p>Date: {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
                 <p>{exhibition.venue}</p>
                 <p>{exhibition.area}</p>
                 <p>Entry fee: {exhibition.entry_fee}</p>
-              </Link>
+              </div>
             )}
           </div>
         </div>
