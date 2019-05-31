@@ -11,6 +11,7 @@ class User(db.Entity):
     username = Required(str, unique=True)
     email = Required(str, unique=True)
     password_hash = Required(str)
+    concession = Required(bool)
     events = Set('Event')
     keywords = Set('Keyword')
 
@@ -38,6 +39,7 @@ class UserSchema(Schema):
     email = fields.Str(required=True)
     password = fields.Str(load_only=True)
     password_confirmation = fields.Str(load_only=True)
+    concession = fields.Bool(required=True)
     events = fields.Nested('EventSchema', many=True, exclude=('user',))
     keywords = fields.Nested('KeywordSchema', many=True, exclude=('users',), dump_only=True)
     keyword_ids = fields.List(fields.Int(), load_only=True)

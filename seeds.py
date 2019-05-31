@@ -16,37 +16,63 @@ with db_session():
     gabe = User(
         username='gabelton',
         email='gabemcrrock@hotmail.co.uk',
-        password_hash=schema.generate_hash('pass')
+        password_hash=schema.generate_hash('pass'),
+        concession=True
     )
-    v = User(
+    violeta = User(
         username='violeta',
         email='violepaez@gmail.com',
-        password_hash=schema.generate_hash('pass')
+        password_hash=schema.generate_hash('pass'),
+        concession=False
+    )
+    ade = User(
+        username='ade',
+        email='ade@gmail.com',
+        password_hash=schema.generate_hash('pass'),
+        concession=True
+    )
+    aiman = User(
+        username='aiman',
+        email='aiman@gmail.com',
+        password_hash=schema.generate_hash('pass'),
+        concession=False
+    )
+    valeria = User(
+        username='valeria',
+        email='valeria@gmail.com',
+        password_hash=schema.generate_hash('pass'),
+        concession=True
+    )
+    paul = User(
+        username='paul',
+        email='paul@gmail.com',
+        password_hash=schema.generate_hash('pass'),
+        concession=False
     )
 
     post_impressionism = Keyword(name='Post-Impressionism', events=[], users=gabe)
     dutch = Keyword(name='Dutch', events=[], users=gabe)
     painting = Keyword(name='Painting', events=[], users=gabe)
-    photography = Keyword(name='Photography', events=[], users=v)
-    ny = Keyword(name='New York', events=[], users=v)
-    performance_art = Keyword(name='Performance art', events=[], users=v)
-    textiles = Keyword(name='Textiles', events=[], users=v)
+    photography = Keyword(name='Photography', events=[], users=violeta)
+    ny = Keyword(name='New York', events=[], users=violeta)
+    performance_art = Keyword(name='Performance art', events=[], users=violeta)
+    textiles = Keyword(name='Textiles', events=[], users=violeta)
     comics = Keyword(name='Comics', events=[], users=gabe)
     manga = Keyword(name='Manga', events=[], users=gabe)
     japan = Keyword(name='Japan', events=[], users=gabe)
     illustration = Keyword(name='Illustration', events=[], users=gabe)
     manuscripts = Keyword(name='Manuscripts', events=[], users=gabe)
-    india = Keyword(name='India', events=[], users=v)
+    india = Keyword(name='India', events=[], users=violeta)
     doc = Keyword(name='Documentary', events=[], users=gabe)
-    war = Keyword(name='War', events=[], users=v)
-    sculpture = Keyword(name='Sculpture', events=[], users=v)
-    emerging_artists = Keyword(name='Emerging artists', events=[], users=v)
-    sound = Keyword(name='Sound', events=[], users=v)
-    installation = Keyword(name='Installation', events=[], users=v)
-    video = Keyword(name='Video', events=[], users=v)
-    site_specific = Keyword(name='Site specific', events=[], users=v)
-    abstract = Keyword(name='Abstract', events=[], users=v)
-    drawing = Keyword(name='Drawing', events=[], users=v)
+    war = Keyword(name='War', events=[], users=violeta)
+    sculpture = Keyword(name='Sculpture', events=[], users=violeta)
+    emerging_artists = Keyword(name='Emerging artists', events=[], users=violeta)
+    sound = Keyword(name='Sound', events=[], users=violeta)
+    installation = Keyword(name='Installation', events=[], users=violeta)
+    video = Keyword(name='Video', events=[], users=violeta)
+    site_specific = Keyword(name='Site specific', events=[], users=violeta)
+    abstract = Keyword(name='Abstract', events=[], users=violeta)
+    drawing = Keyword(name='Drawing', events=[], users=violeta)
 
     van_gogh = Artist(name='Vincent Van Gogh', description='Vincent Willem van Gogh was a Dutch post-impressionist painter who is among the most famous and influential figures in the history of Western art.', image='https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg/220px-Vincent_van_Gogh_-_Self-Portrait_-_Google_Art_Project_%28454045%29.jpg', dob='30 March 1853', dod='29 July 1890')
     arbus = Artist(name='Diane Arbus', description='Diane Arbus was an American photographer. Arbus famously worked to normalize marginalized groups and highlight the importance of proper representation of all people. She worked with a wide range of subjects including members of the LGBTQ+ community, strippers, carnival performers, nudists, dwarves, children, mothers, couples, elderly people, and middle-class families.', image='https://upload.wikimedia.org/wikipedia/en/thumb/a/ac/Diane-Arbus-1949.jpg/220px-Diane-Arbus-1949.jpg', dob='March 14, 1923 ', dod='July 26, 1971')
@@ -79,9 +105,9 @@ with db_session():
 
     Event(name='Block Universe 2019', start_date=datetime.date(2019, 5, 25).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 6, 2).strftime("%d/%m/%Y"), venue='Somerset House', area='Central', keywords=[performance_art], entry_fee=22, user=gabe, image="https://img.artrabbit.com/events/block-universe-2019/images/j81L5lSARmXl/1500x937/web-background-01.webp", artists=[lippard])
 
-    Event(name='diane arbus: in the beginning', start_date=datetime.date(2019, 2, 13).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 5, 6).strftime("%d/%m/%Y"), venue='Hayward Gallery', area='Central', keywords=[photography, ny], entry_fee=15.5, user=v, image="https://www.bjp-online.com/wp-content/uploads/2018/10/DP356754-P1-jack-dracula.jpg", artists=[arbus])
+    Event(name='diane arbus: in the beginning', start_date=datetime.date(2019, 2, 13).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 5, 6).strftime("%d/%m/%Y"), venue='Hayward Gallery', area='Central', keywords=[photography, ny], entry_fee=15.5, user=violeta, image="https://www.bjp-online.com/wp-content/uploads/2018/10/DP356754-P1-jack-dracula.jpg", artists=[arbus])
 
-    Event(name='Susan Hefuna: TEXTILES', start_date=datetime.date(2019, 5, 24).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 6, 22).strftime("%d/%m/%Y"), venue='Pi Artworks', area='North London', keywords=[textiles], entry_fee=15.5, user=v, image="https://img.artrabbit.com/events/susan-hefuna-textiles-pi-artworks/images/HlTR29VrdtxI/815x699/Stand-Up-2019-Felt-Gaze-Thread-55-x-64-cm.webp", artists=[hefuna])
+    Event(name='Susan Hefuna: TEXTILES', start_date=datetime.date(2019, 5, 24).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 6, 22).strftime("%d/%m/%Y"), venue='Pi Artworks', area='North London', keywords=[textiles], entry_fee=15.5, user=violeta, image="https://img.artrabbit.com/events/susan-hefuna-textiles-pi-artworks/images/HlTR29VrdtxI/815x699/Stand-Up-2019-Felt-Gaze-Thread-55-x-64-cm.webp", artists=[hefuna])
 
     Event(name='Manga', start_date=datetime.date(2019, 5, 23).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 8, 26).strftime("%d/%m/%Y"), venue='British Museum', area='Central', keywords=[comics, manga, japan, illustration], entry_fee=20, user=gabe, image='https://www.artfund.org/thumbnail/908/assets/what-to-see/exhibitions/2019/05/manga/golden-kamuy.jpg', artists=[satoru])
 
