@@ -15,13 +15,17 @@ class UserProfile extends React.Component {
     this.state = {
       options: [],
       data: {},
-      editpreferences: false
+      editpreferences: false,
+      dropdown: false
     }
     this.getOptions = this.getOptions.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
     this.handleSave = this.handleSave.bind(this)
+    this.toggleDropdown = this.toggleDropdown.bind(this)
     this.handlePreferences = this.handlePreferences.bind(this)
+    this.handleAdmissionType = this.handleAdmissionType.bind(this)
     this.getUser = this.getUser.bind(this)
+    this.editUser = this.editUser.bind(this)
   }
 
 
@@ -42,18 +46,32 @@ class UserProfile extends React.Component {
     }
   }
 
+  toggleDropdown(){
+    this.setState({ dropdown: !this.state.dropdown })
+  }
+
   handlePreferences(){
     this.setState({ editpreferences: true })
   }
 
-  handleSave(){
+  editUser(data){
     const token = Auth.getToken()
-    axios.put('api/me', this.state.data, {
+    axios.put('api/me', data, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
+  }
+
+  handleSave(){
+    this.editUser(this.state.data)
     this.setState({ editpreferences: false })
+    this.getUser()
+  }
+
+  handleAdmissionType(e){
+    const admission = {concession: e.target.value}
+    this.editUser(admission)
     this.getUser()
   }
 
@@ -74,6 +92,7 @@ class UserProfile extends React.Component {
 
   render(){
     if(!this.state.user) return null
+    const admissionType = this.state.user.concession? 'Concession': 'Full'
     return(
       <section className="section">
         <h1 className="title is-2">Profile info</h1>
@@ -81,6 +100,20 @@ class UserProfile extends React.Component {
         <EditableUsername name="username" value={this.state.user.username} />
         <h1 className="title is-4">Email:</h1>
         <EditableEmail name="email" value={this.state.user.email} />
+        <h1 className="title is-4">Admission type:</h1>
+        <p>Tickets are currently displayed at <strong>{admissionType}</strong>.</p>
+        <button onClick={this.toggleDropdown}>Change</button>
+        {this.state.dropdown &&
+          <div className="control">
+            <label className="radio">
+              <input type="radio" name="concession" value={'True'} onClick={this.handleAdmissionType}/>
+              Concession
+            </label>
+            <label className="radio">
+              <input type="radio" name="concession" value={'False'} onClick={this.handleAdmissionType}/>
+              Full Price
+            </label>
+          </div>}
         <hr />
         <h2 className="title is-4">Your preferences</h2>
         {this.state.user.keywords.length === 0 && <p>You have no preferences set up yet...</p>}

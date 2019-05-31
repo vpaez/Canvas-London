@@ -46,6 +46,9 @@ class EventsShow extends React.Component {
     console.log(this.state.exhibition)
     console.log(this.state)
     if(!this.state.exhibition || !this.state.coordinates || !mapBoxToken) return null
+    const entryFee = this.state.exhibition.entry_fee
+    const concessionFee = this.state.exhibition.concession_fee
+    const {concession} = this.state.exhibition.user
     const {name, image, artists, venue, area, keywords, id} = this.state.exhibition
     return(
       <section className="section">
@@ -63,6 +66,11 @@ class EventsShow extends React.Component {
               <p>{venue}</p>
               <p>{area}</p>
               <p>{keywords[0].name}</p>
+              {concession && <div>
+                <p>Concession ticket: £{concessionFee}</p>
+                <p className="is-size-7 has-text-danger">This is a concession fee. If you would like full price tickets displayed, you can change your preferences in your profile page.</p>
+              </div>}
+              {!concession && <p>Admission price: {entryFee}</p>}
               <hr />
               <h1 className="title is-6">Artists:</h1>
               <nav className="level">
