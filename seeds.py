@@ -3,6 +3,7 @@ from app import db
 from models.Event import Event
 from models.User import User, UserSchema
 from models.Keyword import Keyword
+from models.Artist import Artist
 import datetime
 from datetime import date
 
@@ -47,6 +48,9 @@ with db_session():
     abstract = Keyword(name='Abstract', events=[], users=v)
     drawing = Keyword(name='Drawing', events=[], users=v)
 
+    van_gogh = Artist(name='Vincent Van Gogh')
+    arbus = Artist(name='Diane Arbus')
+    hefuna = Artist(name='Susan Hefuna')
 
 
     Event(name='Van Gogh in Britain', start_date=datetime.date(2019, 3, 27).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 11, 8).strftime("%d/%m/%Y"), venue='Tate Britain', area='Central', keywords=[post_impressionism, dutch, painting], entry_fee=22, user=gabe, image="https://www.tate.org.uk/sites/default/files/styles/width-600/public/van_gogh_self_portrait.jpg")
