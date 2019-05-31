@@ -45,7 +45,10 @@ class EventsShow extends React.Component {
                       {artist.image && <figure>
                         <img src={artist.image} alt={artist.name}/>
                       </figure>}
-                      <Link to={`/artists/${artist.id}`} className="link is-info">{artist.name}</Link>
+                      <Link to={`/artists/${artist.id}`}
+                        className="link is-info">
+                        {artist.name}
+                      </Link>
                     </div>
                   </div>
                 )}
