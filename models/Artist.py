@@ -18,4 +18,4 @@ class ArtistSchema(Schema):
     dob = fields.Str()
     dob = fields.Str()
     dod = fields.Str()
-    events = fields.Nested('UserSchema', many=True, exclude=('keywords', 'artists', 'user'))
+    events = fields.Nested('EventSchema', many=True, exclude=('keywords', 'artists', 'user'))
