@@ -5,6 +5,7 @@ from marshmallow import Schema, fields
 
 class Artist(db.Entity):
     name = Required(str)
+    image = Optional(str)
     description = Optional(str)
     dob = Optional(str)
     dod = Optional(str)
@@ -14,6 +15,7 @@ class Artist(db.Entity):
 class ArtistSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
+    image = fields.Str()
     description = fields.Str()
     dob = fields.Str()
     dob = fields.Str()

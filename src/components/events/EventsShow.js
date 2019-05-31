@@ -35,10 +35,21 @@ class EventsShow extends React.Component {
             </div>
             <div className="column is-half-desktop">
               <h1 className="title is-3">{name}</h1>
-              <p>{artists}</p>
               <p>{venue}</p>
               <p>{area}</p>
               <p>{keywords[0].name}</p>
+              <nav className="level">
+                {artists.map(artist =>
+                  <div key={artist.id} className="level-left">
+                    <div className="level-item has-text-centered">
+                      {artist.image && <figure>
+                        <img src={artist.image} alt={artist.name}/>
+                      </figure>}
+                      <Link to={`/artists/${artist.id}`} className="link is-info">{artist.name}</Link>
+                    </div>
+                  </div>
+                )}
+              </nav>
             </div>
           </div>
         </div>
