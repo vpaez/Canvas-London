@@ -63,13 +63,12 @@ class EventsShow extends React.Component {
               <p>{venue}</p>
               <p>{area}</p>
               <p>{keywords[0].name}</p>
+              <hr />
+              <h1 className="title is-6">Artists:</h1>
               <nav className="level">
                 {artists.map(artist =>
                   <div key={artist.id} className="level-left">
                     <div className="level-item has-text-centered">
-                      {artist.image && <figure>
-                        <img src={artist.image} alt={artist.name}/>
-                      </figure>}
                       <Link to={`/artists/${artist.id}`}
                         className="link is-info">
                         {artist.name}

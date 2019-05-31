@@ -18,12 +18,16 @@ class ArtistShow extends React.Component {
     if(!this.state.artist) return null
     return(
       <section className="section">
-        <div>
-          <h1 className="title is-2">{artist.name}</h1>
-          <p>{artist.description? artist.description :'No description available for this artist' }</p>
-          {artist.image && <figure>
-            <img src={artist.image} alt={artist.name} />
-          </figure>}
+        <div className='columns'>
+          <div className='column'></div>
+          <div className='column has-text-centered'>
+            <h1 className="title is-2">{artist.name}</h1>
+            {artist.image && <figure>
+              <img src={artist.image} alt={artist.name} />
+            </figure>}
+            <p>{artist.description? artist.description :'No description available for this artist' }</p>
+          </div>
+          <div className='column'></div>
         </div>
       </section>
     )
