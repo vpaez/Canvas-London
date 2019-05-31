@@ -21,7 +21,7 @@ class UserProfile extends React.Component {
     this.handleSelect = this.handleSelect.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.handlePreferences = this.handlePreferences.bind(this)
-    this.getKeywords = this.getKeywords.bind(this)
+    this.getUser = this.getUser.bind(this)
   }
 
 
@@ -54,11 +54,11 @@ class UserProfile extends React.Component {
       }
     })
     this.setState({ editpreferences: false })
-    this.getKeywords()
+    this.getUser()
   }
 
 
-  getKeywords(){
+  getUser(){
     const token = Auth.getToken()
     axios.get('/api/me', {
       headers: {
@@ -68,7 +68,7 @@ class UserProfile extends React.Component {
   }
 
   componentDidMount(){
-    this.getKeywords()
+    this.getUser()
     this.getOptions()
   }
 
@@ -83,6 +83,7 @@ class UserProfile extends React.Component {
         <EditableEmail name="email" value={this.state.user.email} />
         <hr />
         <h2 className="title is-4">Your preferences</h2>
+        {this.state.user.keywords.length === 0 && <p>You have no preferences set up yet...</p>}
         <div className="tags are-medium">
           {this.state.user.keywords.map(keyword =>
             <span className="tag is-primary" key={keyword.id}>{keyword.name}</span>
