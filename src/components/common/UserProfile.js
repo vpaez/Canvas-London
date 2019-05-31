@@ -54,25 +54,25 @@ class UserProfile extends React.Component {
     this.setState({ editpreferences: true })
   }
 
-  editUser(data){
+  editUser(data, state){
     const token = Auth.getToken()
     axios.put('api/me', data, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
+      .then(()=> this.setState({state}))
+      .then(() => this.getUser())
   }
 
   handleSave(){
-    this.editUser(this.state.data)
-    this.setState({ editpreferences: false })
-    this.getUser()
+    this.editUser(this.state.data, { editpreferences: false })
   }
 
   handleAdmissionType(e){
     const admission = {concession: e.target.value}
     this.editUser(admission)
-    this.getUser()
+
   }
 
 
@@ -106,11 +106,11 @@ class UserProfile extends React.Component {
         {this.state.dropdown &&
           <div className="control">
             <label className="radio">
-              <input type="radio" name="concession" value={'True'} onClick={this.handleAdmissionType}/>
+              <input type="radio" name="concession" value='true' onClick={this.handleAdmissionType}/>
               Concession
             </label>
             <label className="radio">
-              <input type="radio" name="concession" value={'False'} onClick={this.handleAdmissionType}/>
+              <input type="radio" name="concession" value='false' onClick={this.handleAdmissionType}/>
               Full Price
             </label>
           </div>}

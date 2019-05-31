@@ -56,7 +56,7 @@ def profile():
 def edit_profile():
     schema = UserSchema()
     data = request.get_json()
-    if data['concession']:
+    if data.get('concession'):
         data['concession'] = data['concession'] == 'true'
     if data.get('keyword_ids'):
         print(g.current_user.keywords)
