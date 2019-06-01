@@ -50,10 +50,17 @@ def profile():
     schema = UserSchema()
     return schema.dumps(g.current_user)
 
+
+
+
+
+
+
 @router.route('/me', methods=['PUT'])
 @db_session
 @secure_route
 def edit_profile():
+
     schema = UserSchema()
     data = request.get_json()
     if data.get('concession'):
@@ -67,4 +74,5 @@ def edit_profile():
         del data['keyword_ids']
     g.current_user.set(**data)
     db.commit()
-    return schema.dumps(g.current_user)
+    user_info = g.current_user
+    return schema.dumps(user_info)
