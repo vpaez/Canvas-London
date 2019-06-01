@@ -16,15 +16,11 @@ def index():
 
 
     def match_users(keyword):
-        print(keyword.id)
-        if keyword.id in current_user_keywords:
-            print('PASS', keyword.name)
-            return True
-        return False
+        return keyword.id in current_user_keywords
 
-    schema = UserSchema(many=True)
     users = User.select()
     matched_users = []
+    shared_interests = []
     current_user_keywords = []
     for keyword in g.current_user.keywords:
         current_user_keywords.append(keyword.id)
@@ -33,8 +29,14 @@ def index():
         if not user.id == g.current_user.id:
             user_match = list(filter(match_users, user.keywords))
         if user_match:
-            user = {'username': user.username, 'contact': 'email'}
+            print(user_match[0].name, 'AJDAS')
+            for keyword in user_match:
+                if not keyword.name in shared_interests:
+                    shared_interests.append(keyword.name)
+            print(shared_interests)
+            user = {'username': user.username, 'contact': 'email', 'shared interests': shared_interests}
             matched_users.append(user)
+        shared_interests = []
         print(not user_match, 'MATCH?')
     print(g.current_user.keywords, 'main user')
     return jsonify({'data': matched_users})
