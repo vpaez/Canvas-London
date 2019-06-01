@@ -50,9 +50,9 @@ with db_session():
         concession=False
     )
 
-    post_impressionism = Keyword(name='Post-Impressionism', events=[], users=gabe)
-    dutch = Keyword(name='Dutch', events=[], users=gabe)
-    painting = Keyword(name='Painting', events=[], users=gabe)
+    post_impressionism = Keyword(name='Post-Impressionism', events=[], users=ade)
+    dutch = Keyword(name='Dutch', events=[], users=valeria)
+    painting = Keyword(name='Painting', events=[], users=paul)
     photography = Keyword(name='Photography', events=[], users=violeta)
     ny = Keyword(name='New York', events=[], users=violeta)
     performance_art = Keyword(name='Performance art', events=[], users=violeta)
@@ -62,7 +62,7 @@ with db_session():
     japan = Keyword(name='Japan', events=[], users=gabe)
     illustration = Keyword(name='Illustration', events=[], users=gabe)
     manuscripts = Keyword(name='Manuscripts', events=[], users=gabe)
-    india = Keyword(name='India', events=[], users=violeta)
+    india = Keyword(name='India', events=[], users=[aiman, violeta])
     doc = Keyword(name='Documentary', events=[], users=gabe)
     war = Keyword(name='War', events=[], users=violeta)
     sculpture = Keyword(name='Sculpture', events=[], users=violeta)

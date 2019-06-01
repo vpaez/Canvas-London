@@ -101,7 +101,7 @@ class UserProfile extends React.Component {
         <h1 className="title is-4">Email:</h1>
         <EditableEmail name="email" value={this.state.user.email} />
         <h1 className="title is-4">Admission type:</h1>
-        <p>Tickets are currently displayed at <strong>{admissionType}</strong>.</p>
+        <p>Tickets are currently displayed at <strong>{admissionType}</strong> price.</p>
         <button onClick={this.toggleDropdown}>Change</button>
         {this.state.dropdown &&
           <div className="control">
