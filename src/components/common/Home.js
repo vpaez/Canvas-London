@@ -70,7 +70,7 @@ class Home extends React.Component {
         <section className="hero is-fullheight video">
           <div className="hero-video">
             <video poster="https://img.artrabbit.com/events/a-painted-touch-of-life/images/anCzLibCkeak/1080x1080/artrabbit.webp" id="home-video" playsInline autoPlay muted loop>
-              <source src="" type="video/webm" />
+              <source src="../../assets/hero.mov" type="video/webm" />
             </video>
             <div className="container">
               <h1 className="title">

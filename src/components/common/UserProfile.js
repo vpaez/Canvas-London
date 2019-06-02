@@ -16,35 +16,27 @@ class UserProfile extends React.Component {
     this.state = {
       options: [],
       data: {},
-      editpreferences: false,
-      dropdown: false
+      editPreferences: false,
+      dropdown: false,
+      defaultValue: {value: null, label: 'Select'}
     }
-    this.getOptions = this.getOptions.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
     this.handleSave = this.handleSave.bind(this)
     this.toggleDropdown = this.toggleDropdown.bind(this)
     this.handlePreferences = this.handlePreferences.bind(this)
     this.handleAdmissionType = this.handleAdmissionType.bind(this)
-    this.getUser = this.getUser.bind(this)
     this.editUser = this.editUser.bind(this)
   }
 
 
-  getOptions(){
-    let options = []
-    axios.get('/api/keywords')
-      .then(res => options = res.data.map(keyword =>{
-        return {label: keyword.name, value: keyword.id}
-      }))
-      .then(() => this.setState({ options }))
-  }
 
   handleSelect(keywords){
     if(keywords !== null) {
       const keywordIds = keywords.map(keyword => parseInt(keyword.value))
       const data = { ...this.state.data, keyword_ids: keywordIds }
-      this.setState({ data })
+      this.setState({ data, selectedOptions: keywords })
     }
+    console.log(keywords)
   }
 
   toggleDropdown(){
@@ -52,22 +44,24 @@ class UserProfile extends React.Component {
   }
 
   handlePreferences(){
-    this.setState({ editpreferences: true })
+    this.setState({ editPreferences: true })
   }
 
-  editUser(data, state){
+  editUser(data){
     const token = Auth.getToken()
     axios.put('api/me', data, {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(()=> this.setState({state}))
-      .then(() => this.getUser())
+      .then((res)=> {
+        this.setState({data: {...this.state.data, user: res.data}})
+      })
   }
 
   handleSave(){
-    this.editUser(this.state.data, { editpreferences: false })
+    this.editUser({keyword_ids: this.state.data.keyword_ids})
+    this.setState({editPreferences: false, selectedOptions: null})
   }
 
   handleAdmissionType(e){
@@ -77,28 +71,25 @@ class UserProfile extends React.Component {
   }
 
 
-  getUser(){
+
+  componentDidMount(){
     const token = Auth.getToken()
     const headers = { headers: {'Authorization': `Bearer ${token}` }}
     Promise.props({
       user: axios.get('/api/me', {...headers}).then(res => res.data),
-      contacts: axios.get('/api/contacts', {...headers}).then(res => res.data.contacts)
+      contacts: axios.get('/api/contacts', {...headers}).then(res => res.data.contacts),
+      keywords: axios.get('/api/keywords').then(res => res.data =  res.data.map(keyword =>{
+        return {label: keyword.name, value: keyword.id}
+      }))
     })
-      .then(res => this.setState({ data: {...this.state.data, user: {...res.user, contacts: res.contacts}}}))
-      .then(() => console.log(this.state))
+      .then(res => this.setState({ data: {...this.state.data, options: res.keywords, user: res.user, contacts: res.contacts}}))
+      .then(() =>console.log(this.state))
       .catch(err => console.log(err))
-
-  }
-
-
-  componentDidMount(){
-    this.getUser()
-    this.getOptions()
   }
 
   render(){
     if(!this.state.data.user) return null
-    const { user } = this.state.data
+    const { user, contacts } = this.state.data
     const admissionType = user.concession? 'Concession': 'Full'
     return(
       <section className="section">
@@ -130,8 +121,8 @@ class UserProfile extends React.Component {
           )}
         </div>
         <hr />
-        {!this.state.editpreferences && <button className="button" onClick={this.handlePreferences}>Add more preferences</button>}
-        {this.state.editpreferences &&
+        {!this.state.editPreferences && <button className="button" onClick={this.handlePreferences}>Add more preferences</button>}
+        {this.state.editPreferences &&
           <div>
             <h2 className="title is-4">Add preferences</h2>
             <p>Set type of exhibitions you would like to be displayed first</p>
@@ -139,7 +130,7 @@ class UserProfile extends React.Component {
               <Select
                 isMulti
                 name="keywords"
-                options={this.state.options}
+                options={this.state.data.options}
                 onChange={this.handleSelect}
               />
               <button className="button" onClick={this.handleSave}>Save</button>
@@ -147,9 +138,9 @@ class UserProfile extends React.Component {
           </div>
         }
         <hr />
-        {user.contacts && <div>
+        {contacts && <div>
           <h2 className="title is-4">Other users with similar taste</h2>
-          {user.contacts.map(contact =>
+          {contacts.map(contact =>
             <div key={contact.id}>
               <h1 className="title">{contact.username}</h1>
               <div className="tags are-normal">{contact.interests.map(interest =>
