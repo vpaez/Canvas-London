@@ -66,11 +66,10 @@ class EventsShow extends React.Component {
               <p>{venue}</p>
               <p>{area}</p>
               <p>{keywords[0].name}</p>
-              {concession && <div>
-                <p>Concession ticket: £{concessionFee}</p>
-                <p className="is-size-7 has-text-danger">This is a concession fee. If you would like full price tickets displayed, you can change your preferences in your profile page.</p>
-              </div>}
-              {!concession && <p>Admission price: {entryFee}</p>}
+              {concession && concessionFee? <div>
+                <p>Concession ticket: £{concessionFee > 0? `£${concessionFee}`: 'Free'}</p>
+                <p className="is-size-7 has-text-danger">This is a concession fee. If you would like to see full price tickets displayed, you can change your preferences in your profile page.</p>
+              </div>: <p>Admission price: {entryFee > 0? `£${entryFee}`: 'Free'}</p>}
               <hr />
               <h1 className="title is-6">Artists:</h1>
               <nav className="level">
