@@ -7,18 +7,34 @@
   margin-top: auto;
 }
 
-.user-profile {
-  .container {
-    margin-top: 50px;
+.user-page {
+  margin-top: 50px;
+  .admission-preferences {
+    padding-top: 100px;
   }
 }
-
+.contacts {
+  .columns {
+    .column {
+      margin: 30px;
+      padding: 40px 0;
+      border: 1px solid black;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      .image {
+        margin: 20px;
+      }
+    }
+  }
+}
 .user-avatar {
   margin-bottom: 20px;
 }
 
 .profile-info {
-  max-height: 325px;
+  height: 60vh;
   padding-top: 100px;
   width: 300px;
   margin-bottom: 80px;

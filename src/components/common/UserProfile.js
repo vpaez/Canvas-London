@@ -78,23 +78,22 @@ class UserProfile extends React.Component {
 
     Promise.props({
       user: axios.get('/api/me', {...headers}).then(res => res.data),
-      contacts: axios.get('/api/contacts', {...headers}).then(res => res.contacts),
+      contacts: axios.get('/api/contacts', {...headers}).then(res => res.data),
       keywords: axios.get('/api/keywords').then(res => res.data =  res.data.map(keyword =>{
         return {label: keyword.name, value: keyword.id}
       }))
     })
-      .then(res => console.log(res))
-      // .then(res => this.setState({ data: {...this.state.data, options: res.keywords, user: res.user, contacts: res.contacts}}))
+      .then(res => this.setState({ data: {...this.state.data, options: res.keywords, user: res.user, contacts: res.contacts}}))
       .then(() =>console.log(this.state))
       .catch(err => console.log(err))
   }
 
   render(){
-    if(!this.state.data.user) return null
+    if(!this.state.data.contacts) return null
     const { user, contacts } = this.state.data
     const admissionType = user.concession? 'Concession': 'Full'
     return(
-      <section className="section user-profile">
+      <section className="section user-page">
         <div className="columns">
           <div className="column is-one-third-desktop has-text-centered">
             <div className="container profile-info">
@@ -104,9 +103,7 @@ class UserProfile extends React.Component {
             </div>
           </div>
           <div className="column is-two-thirds-desktop">
-            <div className="container">
-
-
+            <div className="container admission-preferences">
               <h1 className="title is-4 is-spaced">Admission type</h1>
               <p className="subtitle is-6">Tickets are currently displayed at <strong>{admissionType}</strong> price. <a className="subtitle is-6 has-text-link" onClick={this.toggleDropdown}>Change</a></p>
               {this.state.dropdown &&
@@ -122,22 +119,20 @@ class UserProfile extends React.Component {
                   </label>
                 </div>
               </form>}
-            </div>
-
-          <div className="container">
-          <div className="columns">
-            <div className="column">
-            <h2 className="title is-4">Your preferences</h2>
-            {user.keywords.length === 0 && <p>You have no preferences set up yet...</p>}
-            <div className="tags are-medium">
-              {user.keywords.map(keyword =>
-                <span className="tag is-dark is-rounded" key={keyword.id}>{keyword.name}</span>
-              )}
-            </div>
-              <div className="column">
-              {!this.state.editPreferences && <button className="button" onClick={this.handlePreferences}>Add more preferences</button>}
-              </div>
-            {this.state.editPreferences &&
+              <hr />
+              <div className="columns">
+                <div className="column">
+                  <h2 className="title is-4">Your preferences</h2>
+                  {user.keywords.length === 0 && <p>You have no preferences set up yet...</p>}
+                  <div className="tags are-medium">
+                    {user.keywords.map(keyword =>
+                      <span className="tag is-dark is-rounded" key={keyword.id}>{keyword.name}</span>
+                    )}
+                  </div>
+                  <div className="column">
+                    {!this.state.editPreferences && <button className="button" onClick={this.handlePreferences}>Add more preferences</button>}
+                  </div>
+                  {this.state.editPreferences &&
                   <div>
                     <h2 className="title is-4">Add preferences</h2>
                     <p>Set type of exhibitions you would like to be displayed first</p>
@@ -151,26 +146,28 @@ class UserProfile extends React.Component {
                       <button className="button" onClick={this.handleSave}>Save</button>
                     </div>
                   </div>
-            }
-            </div>
-            </div>
+                  }
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        {contacts && <div>
-          <h2 className="title is-4">Other users with similar taste</h2>
-          {contacts.map(contact =>
-            <div key={contact.id}>
-              <h1 className="title">{contact.username}</h1>
-              <div className="tags are-normal">{contact.interests.map(interest =>
-                <span className="tag is-primary"key={interest}>{interest}</span>)}
+        {contacts && <div className="container has-text-centered contacts">
+          <h2 className="title is-3">Other users with similar taste</h2>
+          <div className="columns">
+            {contacts.map(contact =>
+              <div className="column has-text-centered" key={contact.id}>
+                <figure className="image is-128x128">
+                  <img src={`/../../../assets/${contact.avatar}`} />
+                </figure>
+                <h1 className="subtitle is-4">{contact.username}</h1>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
         }
         <hr />
-        <h2 className="title is-4">Events created by you</h2>
+        <h2 className="title is-3 has-text-centered">Events created by you</h2>
         <div className="columns">
           {user.events.map(exhibition=>
             <div key={exhibition.id} className="column is-one-quarter-desktop">
