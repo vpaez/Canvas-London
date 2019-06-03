@@ -83,7 +83,7 @@ class UserProfile extends React.Component {
         return {label: keyword.name, value: keyword.id}
       }))
     })
-      .then(res => this.setState({ data: {...this.state.data, options: res.keywords, user: res.user, contacts: res.contacts}}))
+      .then(res => this.setState({ data: {...this.state.data, options: res.keywords, user: res.user, contacts: [...res.contacts.users]}}))
       .then(() =>console.log(this.state))
       .catch(err => console.log(err))
   }
@@ -161,6 +161,9 @@ class UserProfile extends React.Component {
                   <img src={`/../../../assets/${contact.avatar}`} />
                 </figure>
                 <h1 className="subtitle is-4">{contact.username}</h1>
+                {contact.matches.map(keyword =>
+                  <p key={keyword.id}>{keyword.name}</p>
+                )}
               </div>
             )}
           </div>

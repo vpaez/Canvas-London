@@ -24,6 +24,6 @@ def get_contacts():
         keywords = [{'id': keyword.id, 'name': keyword.name} for keyword in keywords if keyword in g.current_user.keywords]
         return keywords
 
-    users = list(map(lambda user: {'username': user.username, 'matches': get_keywords(user.keywords)}, users))
+    users = list(map(lambda user: {'username': user.username, 'matches': get_keywords(user.keywords), 'id': user.id, 'avatar': user.avatar}, users))
 
     return jsonify({'users': users})
