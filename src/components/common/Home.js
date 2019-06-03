@@ -1,6 +1,7 @@
 import React from 'react'
 import FeaturedEvents from '../../components/events/FeaturedEvents'
 import RecommendedEvents from '../../components/events/RecommendedEvents'
+import NearMe from '../../components/events/NearMe'
 import SearchBar from '../../components/common/SearchBar'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
@@ -82,6 +83,7 @@ class Home extends React.Component {
         <FeaturedEvents
           exhibitions={currentSorted}/>
         {Auth.getToken() && <RecommendedEvents />}
+        <NearMe />
         <SearchBar />
       </div>
     )
