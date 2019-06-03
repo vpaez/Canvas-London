@@ -12,6 +12,7 @@ def geolocate(record):
         'key': os.getenv('OPENCAGE_KEY')
     }
     res = requests.get('https://api.opencagedata.com/geocode/v1/json', params)
+    print(res)
     json = res.json()
 
     record.lat = json['results'][0]['geometry']['lat']

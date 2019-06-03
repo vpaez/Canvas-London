@@ -30,7 +30,8 @@ class NearMe extends React.Component {
           const { latitude, longitude } = position.coords
           console.log(this.state)
           const nearby = this.state.exhibitions.filter(exhibition =>{
-            console.log(longitude, exhibition.venue.lng)
+            console.log(longitude, exhibition.lng)
+            console.log('yoooooo')
             return (calculateDistance(longitude, latitude, exhibition.lng, exhibition.lat, 3 ) < 2000)
 
           })
