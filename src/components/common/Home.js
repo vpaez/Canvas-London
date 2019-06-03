@@ -7,6 +7,7 @@ import axios from 'axios'
 import Auth from '../../lib/Auth'
 
 
+
 function whatsOn(arr) {
   return arr.filter(exhib => {
 
