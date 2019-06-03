@@ -1,13 +1,16 @@
 from flask import Flask
 from pony.orm import Database
-app = Flask(__name__)
+from config.environment import db_uri
+app = Flask(__name__, static_folder='public')
 db = Database()
-db.bind('postgres', 'postgres://localhost:5432/art-london')
+db.bind('postgres', db_uri)
 # from models.Event import Event
 # from models.User import User
 # from models.Keyword import Keyword
 
+
 from config import routes
+
 
 
 

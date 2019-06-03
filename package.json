@@ -8,7 +8,10 @@
   "scripts": {
     "run:client": "webpack-dev-server --mode=development",
     "run:server": "pipenv run flask run --port 4000",
-    "build": "webpack -p"
+    "build": "webpack -p",
+    "postinstall": "[ \"$NODE_ENV\" = \"production\" ] && yarn build || exit 0",
+    "serve:react": "webpack-dev-server",
+    "serve:flask": "pipenv run flask run -p 4000"
   },
   "dependencies": {
     "@babel/core": "^7.4.5",
