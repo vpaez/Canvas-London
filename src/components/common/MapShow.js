@@ -11,28 +11,28 @@ const MapShow = ({ data, scrollLocationOnMarkerClick, toggleSidebarClick, popUpS
 
 
   if (!data) return <h1>Loading...</h1>
- return (
-   <div className="location">
-     <Map
-       style='mapbox://styles/mapbox/streets-v10'
-       center={data.center}
-       zoom={[15]}
-       containerStyle={{
-         height: '100%',
-         width: '100vw'
-       }}>
+  return (
+    <div className="location">
+      <Map
+        style='mapbox://styles/mapbox/streets-v10'
+        center={data.center}
+        zoom={[15]}
+        containerStyle={{
+          height: '100%',
+          width: '100vw'
+        }}>
 
        {data.locations.map(marker =>
-         <Marker key={marker._id}
-           coordinates={[marker.coordinates.lng, marker.coordinates.lat]}
-           anchor="bottom">
-           <img
-             src={`/images/${toggleMarker(marker)}.png`}
-             onClick={() => popUpShow(marker)}
-             className= {toggleMarker(marker)}
-           />
-         </Marker>
-       )}
+        <Marker key={marker._id}
+          coordinates={[marker.coordinates.lng, marker.coordinates.lat]}
+          anchor="bottom">
+          <img
+            src={`/images/${toggleMarker(marker)}.png`}
+            onClick={() => popUpShow(marker)}
+            className= {toggleMarker(marker)}
+          />
+        </Marker>
+      )}
 
        {data.markerClick &&
            <Popup

@@ -11,7 +11,7 @@ const Form = ({ handleSelect, handleChange, handleSubmit, data, errors, options}
         <div className="formBox">
           <form onSubmit={handleSubmit}>
             <div className="field">
-              <label className="label">Exhbition Name</label>
+              <label className="label">Exhibition Name</label>
               <div className="control">
                 <input
                   className="input"
@@ -120,10 +120,9 @@ const Form = ({ handleSelect, handleChange, handleSubmit, data, errors, options}
               <div className="control">
                 <Select
                   name="keywords"
-                  options={options}//.map(keyword => keyword.name)}
+                  options={options}
                   isMulti
                   onChange={handleSelect}
-                  //value={data.keywords || ''}
                 />
               </div>
               {errors.keywords && <div className="help is-danger">{errors.keywords}</div>}
