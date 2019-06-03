@@ -23,8 +23,6 @@ class EventsShow extends React.Component {
     axios.get(`api/events/${this.props.match.params.id}`)
       .then(res => {
         this.setState({ exhibition: res.data })
-        console.log(res.data, 'res.data')
-        console.log(this.state)
       })
       .then( () => {
         axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${this.state.exhibition.venue}&key=7be1f0737d694364bb498795cd346bf3`)

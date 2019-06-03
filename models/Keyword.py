@@ -1,5 +1,5 @@
 from app import db
-from pony.orm import Required, Optional, Set
+from pony.orm import Required, Set
 from marshmallow import Schema, fields, post_load
 
 class Keyword(db.Entity):
