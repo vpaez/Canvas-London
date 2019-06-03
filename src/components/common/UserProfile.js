@@ -5,7 +5,7 @@ import editableContent from './editableContent'
 import Select from 'react-select'
 import Promise from 'bluebird'
 import Avatar from 'react-avatar'
-
+import { Link } from 'react-router-dom'
 
 const EditableUsername = editableContent('div')
 const EditableEmail = editableContent('div')
@@ -119,7 +119,7 @@ class UserProfile extends React.Component {
                   </label>
                 </div>
               </form>}
-              <hr />
+              <hr className='line-break' />
               <div className="columns">
                 <div className="column">
                   <h2 className="title is-4">Your preferences</h2>
@@ -160,7 +160,7 @@ class UserProfile extends React.Component {
                 <figure className="image is-128x128">
                   <img src={`/../../../assets/${contact.avatar}`} />
                 </figure>
-                <h1 className="subtitle is-4">{contact.username}</h1>
+                <h1 className="title is-4">{contact.username}</h1>
                 {contact.matches.map(keyword =>
                   <p key={keyword.id}>{keyword.name}</p>
                 )}
@@ -171,15 +171,19 @@ class UserProfile extends React.Component {
         }
         <hr />
         <h2 className="title is-3 has-text-centered">Events created by you</h2>
-        <div className="columns">
+        <div className="columns events-by-you">
           {user.events.map(exhibition=>
             <div key={exhibition.id} className="column is-one-quarter-desktop">
               <h1 className="title is-6">{exhibition.name}</h1>
-              <figure>
+              <figure className="image is-3by4">
                 <img src={exhibition.image} alt={exhibition.name} />
               </figure>
             </div>
           )}
+          {user.events.length < 4 && <div className="column new-event-link is-one-quarter-desktop">
+            <p>This looks a bit empty</p>
+            <Link to='/events/new'><p>add a new event</p></Link>
+          </div>}
         </div>
       </section>
     )

@@ -39,3 +39,26 @@
   width: 300px;
   margin-bottom: 80px;
 }
+
+
+.events-by-you {
+  .columns {
+    .column {
+      height: 450px;
+      .image {
+        max-height: 400px;
+      }
+    }
+    .new-event-link {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+    }    
+  }
+}
+
+.line-break {
+  max-width: 500px;
+}
