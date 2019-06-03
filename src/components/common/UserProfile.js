@@ -74,7 +74,7 @@ class UserProfile extends React.Component {
   componentDidMount(){
     const token = Auth.getToken()
     const headers = { headers: {'Authorization': `Bearer ${token}` }}
-    
+
     Promise.props({
       user: axios.get('/api/me', {...headers}).then(res => res.data),
       contacts: axios.get('/api/contacts', {...headers}).then(res => res.data.contacts),
