@@ -10,44 +10,56 @@ from datetime import date
 db.drop_all_tables(with_all_data=True)
 db.create_tables()
 
+
+avatar_1 = 'avatar1.jpg'
+avatar_2 = 'avatar2.jpg'
+avatar_3 = 'avatar3.jpg'
+avatar_4 = 'avatar4.jpg'
 with db_session():
 
     schema = UserSchema()
     gabe = User(
-        username='gabelton',
+        username='Gabelton',
         email='gabemcrrock@hotmail.co.uk',
         password_hash=schema.generate_hash('pass'),
-        concession=True
+        concession=True,
+        avatar=avatar_1
+
     )
     violeta = User(
-        username='violeta',
+        username='Violeta',
         email='violepaez@gmail.com',
         password_hash=schema.generate_hash('pass'),
-        concession=False
+        concession=False,
+        avatar=avatar_2
     )
     ade = User(
-        username='ade',
+        username='Ade',
         email='ade@gmail.com',
         password_hash=schema.generate_hash('pass'),
-        concession=True
+        concession=True,
+        avatar=avatar_3
     )
     aiman = User(
-        username='aiman',
+        username='Aiman',
         email='aiman@gmail.com',
         password_hash=schema.generate_hash('pass'),
-        concession=False
+        concession=False,
+        avatar=avatar_4
     )
     valeria = User(
-        username='valeria',
+        username='Valeria',
         email='valeria@gmail.com',
         password_hash=schema.generate_hash('pass'),
-        concession=True
+        concession=True,
+        avatar=avatar_1
     )
     paul = User(
-        username='paul',
+        username='Paul',
         email='paul@gmail.com',
         password_hash=schema.generate_hash('pass'),
-        concession=False
+        concession=False,
+        avatar=avatar_2
     )
 
     post_impressionism = Keyword(name='Post-Impressionism', events=[], users=[ade, violeta])

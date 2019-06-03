@@ -3,6 +3,23 @@
   flex-direction: column;
 }
 
-.venueMap{
+.venueMap {
   margin-top: auto;
+}
+
+.user-profile {
+  .container {
+    margin-top: 50px;
+  }
+}
+
+.user-avatar {
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  max-height: 325px;
+  padding-top: 100px;
+  width: 300px;
+  margin-bottom: 80px;
 }
