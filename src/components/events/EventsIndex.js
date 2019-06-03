@@ -113,25 +113,28 @@ class EventsIndex extends React.Component {
     if(!this.state.exhibitions) return null
     console.log(this.state.options)
     return(
-      <section className="section">
+      <section className="section events-index">
         <Select
           options={this.state.options}
           onChange={this.handleChange}
+          className="options-menu"
         />
         <div className="container">
           <div className="columns is-multiline">
             {this.state.exhibitions.map(exhibition =>
               <div className="column is-one-quarter-desktop is-one-third-tablet" key={exhibition.id}>
                 <Link to={`/events/${exhibition.id}`}>
-                  <figure>
-                    <img src={exhibition.image} alt={exhibition.name}/>
+                  <figure className="image">
+                    <img className="image" src={exhibition.image} alt={exhibition.name}/>
                   </figure>
                 </Link>
-                <h2 className="title is-4">{exhibition.name}</h2>
-                <p>Date: {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
-                <p>{exhibition.venue}</p>
-                <p>{exhibition.area}</p>
-                <p>Entry fee: {exhibition.entry_fee}</p>
+                <div className="container exhibition-description">
+                  <h2 className="title is-4">{exhibition.name}</h2>
+                  <p>Date: {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
+                  <p>{exhibition.venue}</p>
+                  <p>{exhibition.area}</p>
+                  <p>Entry fee: {exhibition.entry_fee}</p>
+                </div>
               </div>
             )}
           </div>
