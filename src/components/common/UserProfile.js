@@ -94,19 +94,20 @@ class UserProfile extends React.Component {
     const admissionType = user.concession? 'Concession': 'Full'
     return(
       <section className="section user-page">
-        <div className="columns">
-          <div className="column is-one-third-desktop has-text-centered">
-            <div className="container profile-info">
-              <Avatar name={user.username} value="100%" size="200" round={true} src={`../assets/${user.avatar}`} className="user-avatar"/>
-              <EditableUsername className="title is-2" name="username" value={user.username}/>
-              <EditableEmail className="subtitle" name="email" value={user.email} />
+        <section className="section user-info">
+          <div className="columns">
+            <div className="column is-one-third-desktop has-text-centered">
+              <div className="container profile-info">
+                <Avatar name={user.username} value="100%" size="200" round={true} src={`../assets/${user.avatar}`} className="user-avatar"/>
+                <EditableUsername className="title is-2" name="username" value={user.username}/>
+                <EditableEmail className="subtitle" name="email" value={user.email} />
+              </div>
             </div>
-          </div>
-          <div className="column is-two-thirds-desktop">
-            <div className="container admission-preferences">
-              <h1 className="title is-4 is-spaced">Admission type</h1>
-              <p className="subtitle is-6">Tickets are currently displayed at <strong>{admissionType}</strong> price. <a className="subtitle is-6 has-text-link" onClick={this.toggleDropdown}>Change</a></p>
-              {this.state.dropdown &&
+            <div className="column is-two-thirds-desktop">
+              <div className="container admission-preferences">
+                <h1 className="title is-4 is-spaced">Admission type</h1>
+                <p className="subtitle is-6">Tickets are currently displayed at <strong>{admissionType}</strong> price. <a className="subtitle is-6 has-text-link" onClick={this.toggleDropdown}>Change</a></p>
+                {this.state.dropdown &&
               <form>
                 <div className="control has-addons-centered">
                   <label className="radio">
@@ -119,23 +120,23 @@ class UserProfile extends React.Component {
                   </label>
                 </div>
               </form>}
-              <hr className='line-break' />
-              <div className="columns">
-                <div className="column">
-                  <h2 className="title is-4">Your preferences</h2>
-                  {user.keywords.length === 0 && <p>You have no preferences set up yet...</p>}
-                  <div className="tags are-medium">
-                    {user.keywords.map(keyword =>
-                      <span className="tag is-dark is-rounded" key={keyword.id}>{keyword.name}</span>
-                    )}
-                  </div>
+                <hr className='line-break' />
+                <div className="columns">
                   <div className="column">
-                    {!this.state.editPreferences && <button className="button" onClick={this.handlePreferences}>Add more preferences</button>}
-                  </div>
-                  {this.state.editPreferences &&
+                    <h2 className="title is-4">Your preferences</h2>
+                    {user.keywords.length === 0 && <p>You have no preferences set up yet...</p>}
+                    <div className="tags are-medium">
+                      {user.keywords.map(keyword =>
+                        <span className="tag is-dark is-rounded" key={keyword.id}>{keyword.name}</span>
+                      )}
+                    </div>
+                    <div className="column">
+                      {!this.state.editPreferences && <button className="button" onClick={this.handlePreferences}>Add more preferences</button>}
+                    </div>
+                    {this.state.editPreferences &&
                   <div>
-                    <h2 className="title is-4">Add preferences</h2>
-                    <p>Set type of exhibitions you would like to be displayed first</p>
+                    <h2 className="title is-4 is-spaced">Add preferences</h2>
+                    <p className="subtitle is-6">Set type of exhibitions you would like to be displayed in your recomended list</p>
                     <div>
                       <Select
                         isMulti
@@ -143,48 +144,52 @@ class UserProfile extends React.Component {
                         options={this.state.data.options}
                         onChange={this.handleSelect}
                       />
-                      <button className="button" onClick={this.handleSave}>Save</button>
+                      <button className="button is-light" onClick={this.handleSave}>Save</button>
                     </div>
                   </div>
-                  }
+                    }
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        {contacts && <div className="container has-text-centered contacts">
-          <h2 className="title is-3">Other users with similar taste</h2>
-          <div className="columns">
-            {contacts.map(contact =>
-              <div className="column has-text-centered" key={contact.id}>
-                <figure className="image is-128x128">
-                  <img src={`/../../../assets/${contact.avatar}`} />
+        </section>
+        <section className="section contacts">
+          {contacts && <div className="container has-text-centered contacts">
+            <h2 className="title heading-section is-3">Other users with similar taste</h2>
+            <div className="columns">
+              {contacts.map(contact =>
+                <div className="column has-text-centered" key={contact.id}>
+                  <figure className="image is-128x128">
+                    <img src={`/../../../assets/${contact.avatar}`} />
+                  </figure>
+                  <h1 className="title is-4">{contact.username}</h1>
+                  {contact.matches.map(keyword =>
+                    <p key={keyword.id}>{keyword.name}</p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+          }
+        </section>
+        <section className="section events-created">
+          <h2 className="title is-3 heading-section has-text-centered">Events created by you</h2>
+          <div className="columns events-by-you">
+            {user.events.map(exhibition=>
+              <div key={exhibition.id} className="column is-one-quarter-desktop">
+                <h1 className="title is-6">{exhibition.name}</h1>
+                <figure className="image is-3by4">
+                  <img src={exhibition.image} alt={exhibition.name} />
                 </figure>
-                <h1 className="title is-4">{contact.username}</h1>
-                {contact.matches.map(keyword =>
-                  <p key={keyword.id}>{keyword.name}</p>
-                )}
               </div>
             )}
+            {user.events.length < 4 && <div className="column new-event-link is-one-quarter-desktop">
+              <p>This looks a bit empty</p>
+              <Link to='/events/new'><p>add a new event</p></Link>
+            </div>}
           </div>
-        </div>
-        }
-        <hr />
-        <h2 className="title is-3 has-text-centered">Events created by you</h2>
-        <div className="columns events-by-you">
-          {user.events.map(exhibition=>
-            <div key={exhibition.id} className="column is-one-quarter-desktop">
-              <h1 className="title is-6">{exhibition.name}</h1>
-              <figure className="image is-3by4">
-                <img src={exhibition.image} alt={exhibition.name} />
-              </figure>
-            </div>
-          )}
-          {user.events.length < 4 && <div className="column new-event-link is-one-quarter-desktop">
-            <p>This looks a bit empty</p>
-            <Link to='/events/new'><p>add a new event</p></Link>
-          </div>}
-        </div>
+        </section>
       </section>
     )
   }
