@@ -44,6 +44,9 @@ class EventsShow extends React.Component {
     console.log(this.state.exhibition)
     console.log(this.state)
     if(!this.state.exhibition || !this.state.coordinates || !mapBoxToken) return null
+    const entryFee = this.state.exhibition.entry_fee
+    const concessionFee = this.state.exhibition.concession_fee
+    const {concession} = this.state.exhibition.user
     const {name, image, artists, venue, area, keywords, id} = this.state.exhibition
     return(
       <section className="section">
@@ -58,29 +61,46 @@ class EventsShow extends React.Component {
             </div>
             <div className="column is-half-desktop" id='flexColumn'>
               <h1 className="title is-3">{name}</h1>
-              <p>{artists}</p>
               <p>{venue}</p>
               <p>{area}</p>
               <p>{keywords[0].name}</p>
+              {concession && concessionFee? <div>
+                <p>Concession ticket: £{concessionFee > 0? `£${concessionFee}`: 'Free'}</p>
+                <p className="is-size-7 has-text-danger">This is a concession fee. If you would like to see full price tickets displayed, you can change your preferences in your profile page.</p>
+              </div>: <p>Admission price: {entryFee > 0? `£${entryFee}`: 'Free'}</p>}
+              <hr />
+              <h1 className="title is-6">Artists:</h1>
+              <nav className="level">
+                {artists.map(artist =>
+                  <div key={artist.id} className="level-left">
+                    <div className="level-item has-text-centered">
+                      <Link to={`/artists/${artist.id}`}
+                        className="link is-info">
+                        {artist.name}
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </nav>
 
-                <Map
-                  className='venueMap'
-                  style='mapbox://styles/mapbox/streets-v10'
-                  center={this.state.coordinates}
-                  zoom={[15]}
-                  containerStyle={{
-                    height: '400px',
-                    width: '400px'
-                  }}
 
 
-                >
-                  <Marker key={this.state.exhibition.id}
-                    coordinates={[this.state.coordinates.lng, this.state.coordinates.lat]}
-                    anchor="bottom">
-                  </Marker>
+              <Map
+                className='venueMap'
+                style='mapbox://styles/mapbox/streets-v10'
+                center={this.state.coordinates}
+                zoom={[15]}
+                containerStyle={{
+                  height: '400px',
+                  width: '400px'
+                }}
+              >
+                <Marker key={this.state.exhibition.id}
+                  coordinates={[this.state.coordinates.lng, this.state.coordinates.lat]}
+                  anchor="bottom">
+                </Marker>
 
-                </Map>
+              </Map>
 
             </div>
           </div>

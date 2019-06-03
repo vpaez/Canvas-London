@@ -22,6 +22,7 @@ class Register extends React.Component {
   }
 
   handleSubmit(e){
+    console.log(this.state.data)
     e.preventDefault()
     axios.post('/api/register', this.state.data)
       .then(() => this.props.history.push('/login'))
@@ -81,6 +82,22 @@ class Register extends React.Component {
                     name="password_confirmation"
                     onChange={this.handleChange}
                   />
+                </div>
+              </div>
+              <div className="field">
+                <label className="label">Are you a student?</label>
+                <p className="is-size-7 has-text-grey">
+                We asked this to show you discounted ticket prices when available. You can edit this preference later from your profile page.
+                </p>
+                <div className="control">
+                  <label className="radio">
+                    <input type="radio" name="concession" value={'True'} onClick={this.handleChange}/>
+                    Yes
+                  </label>
+                  <label className="radio">
+                    <input type="radio" name="concession" value={'False'} onClick={this.handleChange}/>
+                    No
+                  </label>
                 </div>
               </div>
               <button className="button is-info">Submit</button>

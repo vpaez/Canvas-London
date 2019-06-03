@@ -50,21 +50,29 @@ def profile():
     schema = UserSchema()
     return schema.dumps(g.current_user)
 
+
+
+
+
+
+
 @router.route('/me', methods=['PUT'])
 @db_session
 @secure_route
 def edit_profile():
+
     schema = UserSchema()
-
     data = request.get_json()
-
-    print(g.current_user.keywords)
-    previousKeywords = []
-    for keyword in g.current_user.keywords:
-        previousKeywords.append(keyword)
-    data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']] + previousKeywords
-    del data['keyword_ids']
-
+    if data.get('concession'):
+        data['concession'] = data['concession'] == 'true'
+    if data.get('keyword_ids'):
+        print(g.current_user.keywords)
+        previousKeywords = []
+        for keyword in g.current_user.keywords:
+            previousKeywords.append(keyword)
+        data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']] + previousKeywords
+        del data['keyword_ids']
     g.current_user.set(**data)
     db.commit()
-    return schema.dumps(g.current_user)
+    user_info = g.current_user
+    return schema.dumps(user_info)

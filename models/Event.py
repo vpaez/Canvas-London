@@ -3,6 +3,7 @@ from datetime import date
 from pony.orm import Required, Optional, Set
 from marshmallow import Schema, fields, post_load
 from .Keyword import Keyword
+from .Artist import Artist
 
 
 class Event(db.Entity):
@@ -12,8 +13,9 @@ class Event(db.Entity):
     venue = Required(str)
     area = Required(str)
     entry_fee = Required(float)
+    concession_fee = Optional(float)
     image = Optional(str)
-    artists = Optional(str)
+    artists = Set('Artist')
     user = Required('User')
     keywords = Set('Keyword')
 
@@ -27,8 +29,9 @@ class EventSchema(Schema):
     venue = fields.Str(required=True)
     area = fields.Str(required=True)
     entry_fee = fields.Float(required=True)
+    concession_fee = fields.Float()
     image = fields.Str()
-    artists = fields.Str(many=True)
+    artists = fields.Nested('ArtistSchema', many=True, exclude=('events', ), dump_only=True)
     keywords = fields.Nested('KeywordSchema', many=True, exclude=('events', 'users',), dump_only=True)
     keyword_ids = fields.List(fields.Int(), load_only=True)
     user = fields.Nested('UserSchema', exclude=('events', 'email', 'keywords'), dump_only=True)
