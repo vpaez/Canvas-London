@@ -36,7 +36,6 @@ class UserProfile extends React.Component {
       const data = { ...this.state.data, keyword_ids: keywordIds }
       this.setState({ data, selectedOptions: keywords })
     }
-    console.log(keywords)
   }
 
   toggleDropdown(){
@@ -75,6 +74,7 @@ class UserProfile extends React.Component {
   componentDidMount(){
     const token = Auth.getToken()
     const headers = { headers: {'Authorization': `Bearer ${token}` }}
+    
     Promise.props({
       user: axios.get('/api/me', {...headers}).then(res => res.data),
       contacts: axios.get('/api/contacts', {...headers}).then(res => res.data.contacts),

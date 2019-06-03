@@ -1,10 +1,10 @@
-from pony.orm import db_session
+import datetime
 from app import db
 from models.Event import Event
 from models.User import User, UserSchema
 from models.Keyword import Keyword
 from models.Artist import Artist
-import datetime
+from pony.orm import db_session
 from datetime import date
 
 db.drop_all_tables(with_all_data=True)
