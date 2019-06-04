@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 Math.radians = function(degrees) {
@@ -23,40 +24,22 @@ class NearMe extends React.Component {
     this.state = {}
   }
   componentDidMount(){
-    navigator.geolocation.watchPosition((position) => {
-      const { latitude, longitude } = position.coords
-      this.setState({ location: { lat: latitude, lon: longitude } })
-    })
     axios.get('/api/events')
-      .then(res => {
+      .then(res => this.setState({exhibitions: res.data }))
+      .then(() => {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords
+          console.log(this.state)
+          const nearby = this.state.exhibitions.filter(exhibition =>{
+            console.log(longitude, exhibition.lng)
+            console.log('yoooooo')
+            return (calculateDistance(longitude, latitude, exhibition.lng, exhibition.lat, 3 ) < 2000)
 
-        this.setState({exhibitions: res.data})
-        const empty = []
+          })
 
-        this.state.exhibitions.filter(exhibition =>{
-
-          axios.get(`https://api.opencagedata.com/geocode/v1/json?q=${exhibition.venue}&key=7be1f0737d694364bb498795cd346bf3`)
-            .then(res => {
-              const venueCoordinates = res.data.results[0].geometry
-              console.log(venueCoordinates)
-              console.log(exhibition)
-
-              if (calculateDistance(this.state.location.lon,this.state.location.lat, venueCoordinates.lng, venueCoordinates.lat, 3 ) < 2000){
-
-                console.log('done')
-
-                console.log(exhibition)
-
-                console.log(this.state)
-                empty.push(exhibition)
-
-              }
-            })
-
+          this.setState({ nearby })
         })
-        this.setState( {nearby: empty}  )
       })
-
 
 
   }
@@ -76,19 +59,25 @@ class NearMe extends React.Component {
     if ( !this.state.nearby) return null
     console.log(this.state.nearby)
     return(
-      <div className="container">
-        <h1 className="title">Near you</h1>
-        <div className="columns is-multiline">
-          {this.state.nearby.map(exhibition =>
-            <div key={exhibition.id} className="column is-one-quarter-desktop">
-              <figure>
-                <img src={exhibition.image}/>
-              </figure>
-              <h1 className="title is-4">{exhibition.name}</h1>
-            </div>
-          )}
+      <section className="section">
+        <div className="container home">
+          <h1 className="title">Near you</h1>
+          <div className="tile is-ancestor">
+            {this.state.nearby.slice(0, 10).map(exhibition =>
+              <div key={exhibition.id} className="tile is-2 baby">
+                <Link to={`/events/${exhibition.id}`}>
+                  <figure>
+                    <img src={exhibition.image}/>
+                  </figure>
+                </Link>
+                <h2 className="title is-4">{exhibition.name}</h2>
+                <p className="date"> {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
+                <p>{exhibition.venue}</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
     )
   }
 

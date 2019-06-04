@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom'
 import Auth from '../../lib/Auth'
 
 
-class Navbar extends React.Component {
+class HomeNavbar extends React.Component {
   constructor(){
     super()
     this.state = {}
@@ -16,7 +16,7 @@ class Navbar extends React.Component {
   }
 
   render(){
-    if (this.props.location.pathname === '/') return null
+
     return(
       <section className="section navbar-section">
         <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -36,7 +36,7 @@ class Navbar extends React.Component {
           <div id="navbarBasicExample" className="navbar-menu">
             <div className="navbar-start">
               <Link to="/events" className="navbar-item">
-                Browse exhibitions
+              Browse exhibitions
               </Link>
               {Auth.isAuthenticated() && <Link to="/events/new" className="navbar-item">Add new event</Link>}
             </div>
@@ -63,4 +63,4 @@ class Navbar extends React.Component {
   }
 }
 
-export default withRouter(Navbar)
+export default withRouter(HomeNavbar)

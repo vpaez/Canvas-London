@@ -15,14 +15,14 @@ class Login extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
 
   }
-  handleChange(e){
-    const data = {...this.state.data, [e.target.name]: e.target.value}
+
+  handleChange({target}){
+    const data = {...this.state.data, [target.name]: target.value}
     this.setState({data})
   }
 
   handleSubmit(e){
     e.preventDefault()
-    console.log(this.state)
     axios.post('/api/login', this.state.data)
       .then(res => {
         Auth.setToken(res.data.token)
@@ -34,40 +34,36 @@ class Login extends React.Component {
 
   render(){
     return(
-      <section className="section">
-        <div className="columns">
-          <div className="column is-one-third-desktop">
-          </div>
-          <div className="column is-one-third-desktop">
-            <form onSubmit={this.handleSubmit}>
-              <div className="field">
-                <label className="label">Email</label>
-                <div className="control">
-                  <input className="input"
-                    type="text"
-                    placeholder="Email..."
-                    name="email"
-                    onChange={this.handleChange}
-                  />
-                </div>
+      <section className="section login-form">
+        <div className="container">
+          <form onSubmit={this.handleSubmit}>
+            <div className="field">
+              <label className="label">Email</label>
+              <div className="control">
+                <input className="input"
+                  type="text"
+                  placeholder="Email..."
+                  name="email"
+                  onChange={this.handleChange}
+                />
               </div>
-              <div className="field">
-                <label className="label">Password</label>
-                <div className="control">
-                  <input className="input"
-                    type="password"
-                    placeholder="Password..."
-                    name="password"
-                    onChange={this.handleChange}
-                  />
-                </div>
+            </div>
+            <div className="field">
+              <label className="label">Password</label>
+              <div className="control">
+                <input className="input"
+                  type="password"
+                  placeholder="Password..."
+                  name="password"
+                  onChange={this.handleChange}
+                />
               </div>
-              {this.state.error && <div className="help is-danger">{this.state.error}</div>}
-              <button className="button is-info">Submit</button>
-            </form>
-          </div>
-          <div className="column is-one-third-desktop">
-          </div>
+            </div>
+            {this.state.error && <div className="help is-danger">{this.state.error}</div>}
+            <div className="control has-text-centered">
+              <button className="button is-dark">Submit</button>
+            </div>
+          </form>
         </div>
       </section>
     )
