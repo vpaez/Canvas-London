@@ -51,9 +51,8 @@ class RecommendedEvents extends React.Component {
                   <figure>
                     <img src={exhibition.image}/>
                   </figure>
-                  <h1 className="title is-4">{exhibition.name}</h1>
                 </Link >
-                <h2 className="title is-4">{exhibition.name}</h2>
+                <h1 className="title is-4">{exhibition.name}</h1>
                 <p className="date"> {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
                 <p>{exhibition.venue}</p>
               </div>
