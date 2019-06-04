@@ -58,6 +58,7 @@ class EventSchema(Schema):
     lng = fields.Float(dump_only=True)
     image = fields.Str()
     artists = fields.Nested('ArtistSchema', many=True, exclude=('events', ), dump_only=True)
+    artist_ids = fields.List(fields.Int(), load_only=True)
     keywords = fields.Nested('KeywordSchema', many=True, exclude=('events', 'users',), dump_only=True)
     keyword_ids = fields.List(fields.Int(), load_only=True)
     user = fields.Nested('UserSchema', exclude=('events', 'email', 'keywords'), dump_only=True)
@@ -67,5 +68,10 @@ class EventSchema(Schema):
     def load_keywords(self, data):
         data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']]
         del data['keyword_ids']
+
+    @post_load
+    def load_artists(self, data):
+        data['artists'] = [Artist.get(id=artist_id) for artist_id in data['artist_ids']]
+        del data['artist_ids']
 
         return data

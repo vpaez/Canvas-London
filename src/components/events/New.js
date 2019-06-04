@@ -20,6 +20,7 @@ class New extends React.Component {
     this.handleSelect = this.handleSelect.bind(this)
   }
 
+  
   handleSelect(keywords){
     const keywordIds = keywords.map(keyword => keyword.value)
     const data = { ...this.state.data, keyword_ids: keywordIds }

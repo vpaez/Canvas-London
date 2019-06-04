@@ -4,7 +4,7 @@ import Select from 'react-select'
 
 
 
-const Form = ({ handleSelect, handleChange, handleSubmit, data, errors, options}) => {
+const Form = ({ handleSelect, artistsOptions, handleChange, handleSubmit, data, errors, options}) => {
   console.log(data.name)
   return (
     <section className="section">
@@ -115,6 +115,18 @@ const Form = ({ handleSelect, handleChange, handleSubmit, data, errors, options}
                 />
               </div>
               {errors.artists && <div className="help is-danger">{errors.artists}</div>}
+            </div>
+            <div className="field">
+              <label className="label">Artists</label>
+              <div className="control">
+                <Select
+                  name="artists"
+                  options={artistsOptions}
+                  isMulti
+                  onChange={handleSelect}
+                />
+              </div>
+              {errors.keywords && <div className="help is-danger">{errors.keywords}</div>}
             </div>
             <div className="field">
               <label className="label">Keywords</label>
