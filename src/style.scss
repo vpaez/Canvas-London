@@ -44,6 +44,15 @@
   }
 }
 
+.register-form, .login-form {
+  .container {
+    max-width: 500px;
+  }
+  .label {
+    padding: 10px 0;
+    font-size: 18px;
+  }
+}
 
 .avatar-form {
   .label {
