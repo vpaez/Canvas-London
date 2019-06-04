@@ -110,7 +110,7 @@ class UserProfile extends React.Component {
           <div className="columns">
             <div className="column is-one-third-desktop has-text-centered">
               <div className="container profile-info">
-                <Avatar name={user.username} value="100%" size="200" round={true} src={`../assets/${user.avatar}`} className="user-avatar"/>
+                <Avatar name={user.username} value="100%" size="200" round={true} src={user.avatar} className="user-avatar"/>
                 <div className="title is-2" name="username">{user.username}</div>
                 <div className="subtitle" name="email">{user.email}</div>
               </div>
