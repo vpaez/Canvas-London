@@ -9,7 +9,7 @@ const Team = () => {
             <article className="media">
               <div className="media-left">
                 <figure className="image is-128x128">
-                  <img  className="is-rounded" src="https://i.imgur.com/fZXBxMO.jpg" alt="Image"/>
+                  <img  className="is-rounded" src="https://i.imgur.com/HlUepA4.jpg" alt="Image"/>
                 </figure>
               </div>
               <div className="media-content">
@@ -29,7 +29,7 @@ const Team = () => {
             <article className="media">
               <div className="media-left">
                 <figure className="image is-128x128">
-                  <img className="is-rounded" src="https://i.imgur.com/Nj2rE9g.jpg" alt="Image"/>
+                  <img className="is-rounded" src="https://pixel.nymag.com/imgs/fashion/daily/2016/04/20/20-david-hockney.w700.h700.jpg" alt="Image"/>
                 </figure>
               </div>
               <div className="media-content">

@@ -4,6 +4,10 @@
   font-family: 'Work Sans', sans-serif;
 }
 
+.hero-body{
+  background-image: url('https://jojud265nia2bj9sy4ah9b61-wpengine.netdna-ssl.com/wp-content/uploads/2018/08/Roi-Soleil-1600x900-c-default.jpg')
+}
+
 #flexColumn{
   display: flex;
   flex-direction: column;
@@ -24,23 +28,15 @@
 
 .events-index {
   .column {
-    height: 500px;
     display: flex;
     flex-direction: column;
-    margin-bottom: 40px;
     .title {
       margin-top: 10px;
     }
-    .exhibition-description {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-    }
-    .image {
-      max-height: 300px;
+
+    .exhibition-index {
       align-self: flex-start;
     }
-  padding: 20px;
   }
 }
 
@@ -151,21 +147,23 @@
 
 .artist-show {
   .container {
-    max-width: 400px;
+    max-width: 350px;
   }
   .title {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
   }
   .image {
-    height: 50px;
-    width: 80px;
+    max-width: 200px;
+    max-height: 300px;
     margin: 50px auto;
   }
+
+
+}
 
 .is-ancestor {
   flex-wrap: wrap;
 
-}
 }
 
 .baby {
@@ -182,4 +180,18 @@
   border-top: solid;
   padding-bottom: 10px;
   padding-top: 10px;
+}
+
+.navbar-section {
+  padding-bottom: 0px;
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
+a.navbar-item {
+  font-size: 20px;
+}
+
+.is-48x48 {
+  margin-right: 10px;
 }

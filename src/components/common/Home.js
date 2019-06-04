@@ -4,6 +4,7 @@ import RecommendedEvents from '../../components/events/RecommendedEvents'
 import NearMe from '../../components/events/NearMe'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
+import HomeNavbar from '../common/HomeNavbar'
 
 
 
@@ -69,7 +70,18 @@ class Home extends React.Component {
     return(
       <div>
         <section className="hero is-fullheight">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title has-text-light is-1">
+      Canvas
+              </h1>
+              <h2 className="subtitle has-text-light">
+      Art Shows in London
+              </h2>
+            </div>
+          </div>
         </section>
+        <HomeNavbar />
         <FeaturedEvents
           exhibitions={currentSorted}/>
         {Auth.getToken() && <RecommendedEvents />}
