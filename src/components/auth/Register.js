@@ -17,9 +17,13 @@ class Register extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
 
   }
+
   handleChange(e){
-    const data = {...this.state.data, [e.target.name]: e.target.value}
-    this.setState({ data })
+
+    let data = {...this.state.data}
+    if(e.target.dataset) data = {...this.state.data, [e.target.name]: e.target.dataset.value}
+    else data = {...this.state.data, [e.target.name]: e.target.value}
+      .then(() => this.setState({data}))
   }
 
   handleSubmit(e){
@@ -39,6 +43,61 @@ class Register extends React.Component {
           </div>
           <div className="column is-one-third-desktop">
             <form onSubmit={this.handleSubmit}>
+              <div className="field avatar-form">
+                <div className="columns">
+                  <div className="column">
+                    <div className="control">
+                    <button type="button" className="image is-128x128" onClick={this.handleChange}>
+                      <figure className="image is-128x128">
+                        <img
+                          src="/../../assets/avatar1.jpg"
+                          alt="Orange avatar"
+                          name="avatar"
+                          data-value="avatar1.jpg"
+                          />
+                      </figure>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="column">
+                    <div className="control">
+                      <input type="image"
+                        className="image is-128x128 is-success"
+                        onChange={this.handleChange}
+                        value="avatar2.jpg"
+                        src="/../../assets/avatar2.jpg"
+                        alt="Pink avatar"
+                        name="avatar"
+                      />
+                    </div>
+                  </div>
+                  <div className="column">
+                    <div className="control">
+                      <input type="image"
+                        className="image is-128x128 is-success"
+                        onChange={this.handleChange}
+                        value="avatar3.jpg"
+                        src="/../../assets/avatar3.jpg"
+                        alt="Blue avatar"
+                        name="avatar"
+                      />
+                    </div>
+                  </div>
+                  <div className="column">
+                    <div className="control">
+                      <input type="image"
+                        className="image is-128x128 is-success"
+                        onChange={this.handleChange}
+                        value="avatar4.jpg"
+                        src="/../../assets/avatar4.jpg"
+                        alt="Green avatar"
+                        name="avatar"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <label className="label has-text-centered">Select an avatar</label>
+              </div>
               <div className="field">
                 <label className="label">Username</label>
                 <div className="control">
@@ -113,3 +172,22 @@ class Register extends React.Component {
 }
 
 export default Register
+
+
+
+
+// <div className="field">
+//   <div className="file">
+//     <label className="file-label">
+//       <input className="file-input" type="file" name="resume"/>
+//       <span className="file-cta">
+//         <span className="file-icon">
+//           <i className="fas fa-upload"></i>
+//         </span>
+//         <span className="file-label">
+//           Choose a file…
+//         </span>
+//       </span>
+//     </label>
+//   </div>
+// </div>
