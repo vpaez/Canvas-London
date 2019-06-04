@@ -9,7 +9,7 @@ const AvatarsForm = ({handleChange}) => {
             <button type="button" onClick={handleChange}>
               <figure className="image is-96x96">
                 <img
-                  src="/assets/avatar1.jpg"
+                  src="https://i.imgur.com/vjvpOox.jpg"
                   alt="Orange avatar"
                   name="avatar"
                   data-value="avatar1.jpg"
@@ -23,7 +23,7 @@ const AvatarsForm = ({handleChange}) => {
             <button type="button" onClick={handleChange}>
               <figure className="image is-96x96">
                 <img
-                  src="/../../assets/avatar2.jpg"
+                  src="https://i.imgur.com/iwYxNbB.jpg"
                   alt="Pink avatar"
                   name="avatar"
                   data-value="avatar2.jpg"
@@ -37,7 +37,7 @@ const AvatarsForm = ({handleChange}) => {
             <button type="button" onClick={handleChange}>
               <figure className="image is-96x96">
                 <img
-                  src="/../../assets/avatar3.jpg"
+                  src="https://i.imgur.com/GkO3ix0.jpg"
                   alt="Blue avatar"
                   name="avatar"
                   data-value="avatar3.jpg"
@@ -51,7 +51,7 @@ const AvatarsForm = ({handleChange}) => {
             <button type="button" onClick={handleChange}>
               <figure className="image is-96x96">
                 <img
-                  src="/../../assets/avatar4.jpg"
+                  src="https://i.imgur.com/p25szCt.jpg"
                   alt="Green avatar"
                   name="avatar"
                   data-value="avatar4.jpg"
