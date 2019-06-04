@@ -18,7 +18,7 @@ def geolocate(record):
         print(res)
         json = res.json()
 
-        
+
 
         if json['results']:
 
@@ -88,13 +88,6 @@ class EventSchema(Schema):
     def load_keywords(self, data):
         data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']]
         del data['keyword_ids']
-
-    @post_load
-    def load_artists(self, data):
-        data['artists'] = [Artist.get(id=artist_id) for artist_id in data['artist_ids']]
-        del data['artist_ids']
-
-        return data
 
     @post_load
     def load_artists(self, data):
