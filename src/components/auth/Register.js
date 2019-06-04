@@ -20,10 +20,10 @@ class Register extends React.Component {
 
   handleChange(e){
 
-    let data = {...this.state.data}
-    if(e.target.dataset) data = {...this.state.data, [e.target.name]: e.target.dataset.value}
-    else data = {...this.state.data, [e.target.name]: e.target.value}
-      .then(() => this.setState({data}))
+    // let data = {...this.state.data}
+    // if(e.target.dataset) data = {...this.state.data, [e.target.name]: e.target.dataset.value}
+    const data = {...this.state.data, [e.target.name]: e.target.value}
+    this.setState({data})
   }
 
   handleSubmit(e){
