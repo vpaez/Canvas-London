@@ -19,15 +19,13 @@ class Register extends React.Component {
   }
 
   handleChange(e){
-
-    // let data = {...this.state.data}
-    // if(e.target.dataset) data = {...this.state.data, [e.target.name]: e.target.dataset.value}
-    const data = {...this.state.data, [e.target.name]: e.target.value}
+    let data = {}
+    if(e.target.dataset.value) data = {...this.state.data, [e.target.name]: e.target.dataset.value}
+    else data = {...this.state.data, [e.target.name]: e.target.value}
     this.setState({data})
   }
 
   handleSubmit(e){
-    console.log(this.state.data)
     e.preventDefault()
     axios.post('/api/register', this.state.data)
       .then(() => this.props.history.push('/login'))
@@ -47,52 +45,58 @@ class Register extends React.Component {
                 <div className="columns">
                   <div className="column">
                     <div className="control">
-                    <button type="button" className="image is-128x128" onClick={this.handleChange}>
-                      <figure className="image is-128x128">
-                        <img
-                          src="/../../assets/avatar1.jpg"
-                          alt="Orange avatar"
-                          name="avatar"
-                          data-value="avatar1.jpg"
+                      <button type="button" onClick={this.handleChange}>
+                        <figure className="image is-96x96">
+                          <img
+                            src="/../../assets/avatar1.jpg"
+                            alt="Orange avatar"
+                            name="avatar"
+                            data-value="avatar1.jpg"
                           />
-                      </figure>
+                        </figure>
                       </button>
                     </div>
                   </div>
                   <div className="column">
                     <div className="control">
-                      <input type="image"
-                        className="image is-128x128 is-success"
-                        onChange={this.handleChange}
-                        value="avatar2.jpg"
-                        src="/../../assets/avatar2.jpg"
-                        alt="Pink avatar"
-                        name="avatar"
-                      />
+                      <button type="button" onClick={this.handleChange}>
+                        <figure className="image is-96x96">
+                          <img
+                            src="/../../assets/avatar2.jpg"
+                            alt="Pink avatar"
+                            name="avatar"
+                            data-value="avatar2.jpg"
+                          />
+                        </figure>
+                      </button>
                     </div>
                   </div>
                   <div className="column">
                     <div className="control">
-                      <input type="image"
-                        className="image is-128x128 is-success"
-                        onChange={this.handleChange}
-                        value="avatar3.jpg"
-                        src="/../../assets/avatar3.jpg"
-                        alt="Blue avatar"
-                        name="avatar"
-                      />
+                      <button type="button" onClick={this.handleChange}>
+                        <figure className="image is-96x96">
+                          <img
+                            src="/../../assets/avatar3.jpg"
+                            alt="Blue avatar"
+                            name="avatar"
+                            data-value="avatar3.jpg"
+                          />
+                        </figure>
+                      </button>
                     </div>
                   </div>
                   <div className="column">
                     <div className="control">
-                      <input type="image"
-                        className="image is-128x128 is-success"
-                        onChange={this.handleChange}
-                        value="avatar4.jpg"
-                        src="/../../assets/avatar4.jpg"
-                        alt="Green avatar"
-                        name="avatar"
-                      />
+                      <button type="button" onClick={this.handleChange}>
+                        <figure className="image is-96x96">
+                          <img
+                            src="/../../assets/avatar4.jpg"
+                            alt="Green avatar"
+                            name="avatar"
+                            data-value="avatar4.jpg"
+                          />
+                        </figure>
+                      </button>
                     </div>
                   </div>
                 </div>
