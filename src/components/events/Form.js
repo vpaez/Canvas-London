@@ -4,7 +4,7 @@ import Select from 'react-select'
 
 
 
-const Form = ({ handleSelect, handleChange, handleSubmit, data, errors, options}) => {
+const Form = ({ handleSelect, handleArtistSelect,handleChange, handleSubmit, data, errors, options, artistOptions}) => {
   console.log(data.name)
   return (
     <section className="section">
@@ -106,12 +106,11 @@ const Form = ({ handleSelect, handleChange, handleSubmit, data, errors, options}
             <div className="field">
               <label className="label">Artist(s)</label>
               <div className="control">
-                <input
-                  className="input"
-                  name="artists"
-                  placeholder="eg: https://www.tate.org.uk/sites/default/files/styles/width-420/public/le_jardin_v.2_1.jpg"
-                  onChange={handleChange}
-                  value={data.artists || ''}
+                <Select
+                  name="keywords"
+                  options={artistOptions}
+                  isMulti
+                  onChange={handleArtistSelect}
                 />
               </div>
               {errors.artists && <div className="help is-danger">{errors.artists}</div>}

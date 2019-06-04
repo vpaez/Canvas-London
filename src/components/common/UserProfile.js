@@ -25,6 +25,7 @@ class UserProfile extends React.Component {
     this.handlePreferences = this.handlePreferences.bind(this)
     this.handleAdmissionType = this.handleAdmissionType.bind(this)
     this.editUser = this.editUser.bind(this)
+    this.getContacts = this.getContacts.bind(this)
   }
 
 
@@ -55,6 +56,7 @@ class UserProfile extends React.Component {
       .then((res)=> {
         this.setState({data: {...this.state.data, user: res.data}})
       })
+      .then(() => this.getContacts())
   }
 
   handleSave(){
@@ -68,6 +70,16 @@ class UserProfile extends React.Component {
 
   }
 
+  getContacts(){
+    console.log('contacts')
+    const token = Auth.getToken()
+    axios.get('/api/contacts', { headers: {'Authorization': `Bearer ${token}` }})
+      .then(res => {
+        console.log(res.data)
+        const data = {...this.state.data, contacts: res.data.users}
+        this.setState({ data })
+      })
+  }
 
 
   componentDidMount(){
@@ -85,6 +97,8 @@ class UserProfile extends React.Component {
       .then(() =>console.log(this.state))
       .catch(err => console.log(err))
   }
+
+
 
   render(){
     if(!this.state.data.contacts) return null
@@ -153,7 +167,7 @@ class UserProfile extends React.Component {
           </div>
         </section>
         <section className="section contacts">
-          {contacts && <div className="container has-text-centered contacts">
+          {contacts.length > 0 && <div className="container has-text-centered contacts">
             <h2 className="title heading-section is-3">Other users with similar taste</h2>
             <div className="columns">
               {contacts.map(contact =>

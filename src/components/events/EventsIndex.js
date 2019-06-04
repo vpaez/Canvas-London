@@ -125,16 +125,14 @@ class EventsIndex extends React.Component {
               <div className="column is-one-quarter-desktop is-one-third-tablet" key={exhibition.id}>
                 <Link to={`/events/${exhibition.id}`}>
                   <figure className="image">
-                    <img className="image" src={exhibition.image} alt={exhibition.name}/>
+                    <img className="exhibition-index" src={exhibition.image} alt={exhibition.name}/>
                   </figure>
                 </Link>
-                <div className="container exhibition-description">
-                  <h2 className="title is-4">{exhibition.name}</h2>
-                  <p>Date: {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
-                  <p>{exhibition.venue}</p>
-                  <p>{exhibition.area}</p>
-                  <p>Entry fee: {exhibition.entry_fee}</p>
-                </div>
+                <h2 className="title is-4">{exhibition.name}</h2>
+                <p className="date">{`${exhibition.start_date} - ${exhibition.end_date}`}</p>
+                <p>{exhibition.venue}</p>
+                <p>{exhibition.area}</p>
+                <p>Entry Fee: {exhibition.entry_fee > 0? `£${exhibition.entry_fee}`: 'Free'}</p>
               </div>
             )}
           </div>

@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import Form from './Form'
 import Auth from '../../lib/Auth'
+import Promise from 'bluebird'
 
 class New extends React.Component {
 
@@ -12,17 +13,25 @@ class New extends React.Component {
       data: {},
       errors: {},
       events: null,
-      options: null
+      options: null,
+      artistOptions: null
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleSelect = this.handleSelect.bind(this)
+    this.handleArtistSelect = this.handleArtistSelect.bind(this)
   }
 
   handleSelect(keywords){
     const keywordIds = keywords.map(keyword => keyword.value)
     const data = { ...this.state.data, keyword_ids: keywordIds }
+    this.setState({ data })
+  }
+
+  handleArtistSelect(artists){
+    const artistIds = artists.map(artist => artist.value)
+    const data = { ...this.state.data, artist_ids: artistIds }
     this.setState({ data })
   }
 
@@ -50,15 +59,20 @@ class New extends React.Component {
   }
 
   componentDidMount() {
-    axios.get('/api/keywords')
-      .then(res => {
-        const keywords = res.data.map(keyword => {
+
+    Promise.props({
+      artists: axios.get('api/artists')
+        .then(res => res.artists = res.data.map(artist => {
+          return { value: artist.id, label: artist.name }
+        })),
+      keywords: axios.get('api/keywords')
+        .then(res => res.keywords = res.data.map(keyword => {
           console.log(keyword)
           return { value: keyword.id, label: keyword.name }
-        })
-        return keywords
-      })
-      .then(res => this.setState({ options: res }))
+        }))
+    })
+
+      .then(res => this.setState({ options: res.keywords, artistOptions: res.artists }))
   }
 
   render() {
@@ -71,11 +85,13 @@ class New extends React.Component {
             <div className="column is-half-desktop is-two-thirds-tablet">
               <Form
                 handleSelect={this.handleSelect}
+                handleArtistSelect={this.handleArtistSelect}
                 handleChange={this.handleChange}
                 handleSubmit={this.handleSubmit}
                 data={this.state.data}
                 errors={this.state.errors}
                 options={this.state.options}
+                artistOptions={this.state.artistOptions}
               />
             </div>
           </div>

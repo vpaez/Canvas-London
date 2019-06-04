@@ -19,11 +19,11 @@ class ArtistShow extends React.Component {
     return(
       <section className="section artist-show">
         <div className="container has-text-justified">
-          {artist.image && <figure>
-            <img className="image" src={artist.image} alt={artist.name} />
+          {artist.image && <figure className="image">
+            <img src={artist.image} alt={artist.name} />
           </figure>}
           <h1 className="title is-2 has-text-centered">{artist.name}</h1>
-          <p>{artist.description? artist.description:'No description available for this artist' }</p>
+          <p>{artist.description}</p>
         </div>
       </section>
     )
