@@ -173,13 +173,17 @@ class UserProfile extends React.Component {
         </section>
         <section className="section events-created">
           <h2 className="title is-3 heading-section has-text-centered">Events created by you</h2>
-          <div className="columns events-by-you">
+          <div className="tile is-ancestor">
             {user.events.map(exhibition=>
-              <div key={exhibition.id} className="column is-one-quarter-desktop">
+              <div key={exhibition.id} className="tile is-2 baby">
+                <Link to={`/events/${exhibition.id}`}>
+                  <figure >
+                    <img src={exhibition.image} alt={exhibition.name} />
+                  </figure>
+                </Link>
                 <h1 className="title is-6">{exhibition.name}</h1>
-                <figure className="image is-3by4">
-                  <img src={exhibition.image} alt={exhibition.name} />
-                </figure>
+                <p className="date"> {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
+                <p>{exhibition.venue}</p>
               </div>
             )}
             {user.events.length < 4 && <div className="column new-event-link is-one-quarter-desktop">

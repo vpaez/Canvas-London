@@ -125,6 +125,7 @@
   max-width: 500px;
 }
 
+<<<<<<< HEAD
 
 
 
@@ -148,6 +149,7 @@
 .marker {
   max-width: 60px;
 }
+
 .artist-show {
   .container {
     max-width: 400px;
@@ -160,4 +162,24 @@
     width: 80px;
     margin: 50px auto;
   }
+
+.is-ancestor {
+  flex-wrap: wrap;
+
+}
+
+.baby {
+  padding: 20px 30px;
+  flex-direction: column;
+}
+
+.date {
+  font-weight: 600;
+}
+
+.home {
+  border-bottom: solid;
+  border-top: solid;
+  padding-bottom: 10px;
+  padding-top: 10px;
 }

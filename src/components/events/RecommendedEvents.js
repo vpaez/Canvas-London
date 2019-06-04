@@ -41,21 +41,26 @@ class RecommendedEvents extends React.Component {
     if(!this.state.exhibitions) return null
     if(this.state.keywords.length === 0) return null
     return(
-      <div className="container">
-        <h1 className="title">Recommended for you</h1>
-        <div className="columns is-multiline">
-          {this.matchedEvents().map(exhibition =>
-            <div key={exhibition.id} className="column is-one-quarter-desktop">
-              <Link to={`/events/${exhibition.id}`}>
-                <figure>
-                  <img src={exhibition.image}/>
-                </figure>
-                <h1 className="title is-4">{exhibition.name}</h1>
-              </Link >
-            </div>
-          )}
+      <section className="section">
+        <div className="container home">
+          <h1 className="title">Recommended for you</h1>
+          <div className="tile is-ancestor">
+            {this.matchedEvents().slice(0, 10).map(exhibition =>
+              <div key={exhibition.id} className="tile is-2 baby">
+                <Link to={`/events/${exhibition.id}`}>
+                  <figure>
+                    <img src={exhibition.image}/>
+                  </figure>
+                  <h1 className="title is-4">{exhibition.name}</h1>
+                </Link >
+                <h2 className="title is-4">{exhibition.name}</h2>
+                <p className="date"> {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
+                <p>{exhibition.venue}</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
     )
   }
 }
