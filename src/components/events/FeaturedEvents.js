@@ -5,7 +5,7 @@ const FeaturedEvents = ({exhibitions}) => {
   return(
 
     <section className="section">
-      <div className="container">
+      <div className="container home">
         <h1 className="title is-2"> Whats on</h1>
         <div className="tile is-ancestor">
           {exhibitions.map(exhibition =>
@@ -21,7 +21,7 @@ const FeaturedEvents = ({exhibitions}) => {
               </Link>
 
               <h2 className="title is-4">{exhibition.name}</h2>
-              <p className="date">Date: {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
+              <p className="date"> {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
               <p>{exhibition.venue}</p>
 
             </div>

@@ -59,7 +59,7 @@ class NearMe extends React.Component {
     console.log(this.state.nearby)
     return(
       <section className="section">
-        <div className="container">
+        <div className="container home">
           <h1 className="title">Near you</h1>
           <div className="tile is-ancestor">
             {this.state.nearby.slice(0, 10).map(exhibition =>
@@ -70,6 +70,9 @@ class NearMe extends React.Component {
                   </figure>
                   <h1 className="title is-4">{exhibition.name}</h1>
                 </Link>
+                <h2 className="title is-4">{exhibition.name}</h2>
+                <p className="date"> {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
+                <p>{exhibition.venue}</p>
               </div>
             )}
           </div>
