@@ -1,14 +1,12 @@
 import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
-import editableContent from './editableContent'
 import Select from 'react-select'
 import Promise from 'bluebird'
 import Avatar from 'react-avatar'
 import { Link } from 'react-router-dom'
 
-const EditableUsername = editableContent('div')
-const EditableEmail = editableContent('div')
+
 class UserProfile extends React.Component {
 
   constructor(){
@@ -99,8 +97,8 @@ class UserProfile extends React.Component {
             <div className="column is-one-third-desktop has-text-centered">
               <div className="container profile-info">
                 <Avatar name={user.username} value="100%" size="200" round={true} src={`../assets/${user.avatar}`} className="user-avatar"/>
-                <EditableUsername className="title is-2" name="username" value={user.username}/>
-                <EditableEmail className="subtitle" name="email" value={user.email} />
+                <div className="title is-2" name="username">{user.username}</div>
+                <div className="subtitle" name="email">{user.email}</div>
               </div>
             </div>
             <div className="column is-two-thirds-desktop">
