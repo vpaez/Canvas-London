@@ -2,7 +2,6 @@ import React from 'react'
 import FeaturedEvents from '../../components/events/FeaturedEvents'
 import RecommendedEvents from '../../components/events/RecommendedEvents'
 import NearMe from '../../components/events/NearMe'
-import SearchBar from '../../components/common/SearchBar'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
 
@@ -64,28 +63,17 @@ class Home extends React.Component {
   render(){
     if(!this.state.exhibitions) return null
     const current = whatsOn(this.state.exhibitions)
-    const currentSorted = orderByDate(current)
+    const currentSorted = orderByDate(current).slice(0, 10)
     console.log(current, 'current')
     console.log(currentSorted, 'currentSorted')
     return(
       <div>
-        <section className="hero is-fullheight video">
-          <div className="hero-video">
-            <video poster="https://img.artrabbit.com/events/a-painted-touch-of-life/images/anCzLibCkeak/1080x1080/artrabbit.webp" id="home-video" playsInline autoPlay muted loop>
-              <source src="../../assets/hero.mov" type="video/webm" />
-            </video>
-            <div className="container">
-              <h1 className="title">
-                Title Home
-              </h1>
-            </div>
-          </div>
+        <section className="hero is-fullheight">
         </section>
         <FeaturedEvents
           exhibitions={currentSorted}/>
         {Auth.getToken() && <RecommendedEvents />}
         <NearMe />
-        <SearchBar />
       </div>
     )
   }

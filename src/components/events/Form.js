@@ -5,6 +5,7 @@ import Select from 'react-select'
 
 
 const Form = ({ handleSelect, handleChange, handleSubmit, data, errors, options}) => {
+  console.log(data.name)
   return (
     <section className="section">
       <div className="container is-fluid">

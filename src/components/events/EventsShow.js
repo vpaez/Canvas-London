@@ -41,31 +41,28 @@ class EventsShow extends React.Component {
   }
 
   render(){
-    console.log(this.state.exhibition)
-    console.log(this.state)
     if(!this.state.exhibition || !this.state.coordinates || !mapBoxToken) return null
     const entryFee = this.state.exhibition.entry_fee
     const concessionFee = this.state.exhibition.concession_fee
     const {concession} = this.state.exhibition.user
-    const {name, image, artists, venue, area, keywords, id} = this.state.exhibition
+    const {name, image, artists, venue, area, keywords} = this.state.exhibition
     return(
       <section className="section">
         <div className="container">
-          {this.isEditable() && <Link to={`/events/${id}/edit`} className="button is-success">Edit</Link>}
           <hr />
           <div className="columns">
-            <div className="column is-half-desktop is-flex">
+            <div className="column is-half-desktop">
               <figure className="image">
                 <img src={image} alt={name} />
               </figure>
             </div>
-            <div className="column is-half-desktop" id='flexColumn'>
+            <div className="column is-half-desktop">
               <h1 className="title is-3">{name}</h1>
               <p>{venue}</p>
               <p>{area}</p>
               <p>{keywords[0].name}</p>
               {concession && concessionFee? <div>
-                <p>Concession ticket: £{concessionFee > 0? `£${concessionFee}`: 'Free'}</p>
+                <p>Concession ticket: {concessionFee > 0? `£${concessionFee}`: 'Free'}</p>
                 <p className="is-size-7 has-text-danger">This is a concession fee. If you would like to see full price tickets displayed, you can change your preferences in your profile page.</p>
               </div>: <p>Admission price: {entryFee > 0? `£${entryFee}`: 'Free'}</p>}
               <hr />
@@ -98,6 +95,8 @@ class EventsShow extends React.Component {
                 <Marker key={this.state.exhibition.id}
                   coordinates={[this.state.coordinates.lng, this.state.coordinates.lat]}
                   anchor="bottom">
+                  <img src="../../assets/marker.png"
+                    className="marker"/>
                 </Marker>
 
               </Map>
@@ -105,13 +104,12 @@ class EventsShow extends React.Component {
             </div>
           </div>
         </div>
-
       </section>
-
-
-
     )
   }
 }
 
 export default EventsShow
+
+
+// {this.isEditable() && <Link to={`/events/${id}/edit`} className="button is-success">Edit</Link>}

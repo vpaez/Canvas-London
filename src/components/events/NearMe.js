@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 Math.radians = function(degrees) {
@@ -58,19 +59,25 @@ class NearMe extends React.Component {
     if ( !this.state.nearby) return null
     console.log(this.state.nearby)
     return(
-      <div className="container">
-        <h1 className="title">Near you</h1>
-        <div className="columns is-multiline">
-          {this.state.nearby.map(exhibition =>
-            <div key={exhibition.id} className="column is-one-quarter-desktop">
-              <figure>
-                <img src={exhibition.image}/>
-              </figure>
-              <h1 className="title is-4">{exhibition.name}</h1>
-            </div>
-          )}
+      <section className="section">
+        <div className="container home">
+          <h1 className="title">Near you</h1>
+          <div className="tile is-ancestor">
+            {this.state.nearby.slice(0, 10).map(exhibition =>
+              <div key={exhibition.id} className="tile is-2 baby">
+                <Link to={`/events/${exhibition.id}`}>
+                  <figure>
+                    <img src={exhibition.image}/>
+                  </figure>
+                </Link>
+                <h2 className="title is-4">{exhibition.name}</h2>
+                <p className="date"> {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
+                <p>{exhibition.venue}</p>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      </section>
     )
   }
 

@@ -17,7 +17,7 @@ const Team = () => {
                   <p>
                     <strong>Violeta Paez Armando</strong> <small>violetapaezarmando@gmail.com</small>
                     <br />
-                        API ninja
+                        Programming Picasso
                   </p>
                 </div>
               </div>
