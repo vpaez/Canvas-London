@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-
+import AvatarsForm from './AvatarsForm'
 
 class Register extends React.Component {
 
@@ -18,10 +18,10 @@ class Register extends React.Component {
 
   }
 
-  handleChange(e){
+  handleChange({ target }){
     let data = {}
-    if(e.target.dataset.value) data = {...this.state.data, [e.target.name]: e.target.dataset.value}
-    else data = {...this.state.data, [e.target.name]: e.target.value}
+    if(target.dataset.value) data = {...this.state.data, [target.name]: target.dataset.value}
+    else data = {...this.state.data, [target.name]: target.value}
     this.setState({data})
   }
 
@@ -38,67 +38,9 @@ class Register extends React.Component {
       <section className="section register-form">
         <div className="container">
           <form onSubmit={this.handleSubmit}>
-            <div className="field avatar-form">
-              <div className="columns">
-                <div className="column">
-                  <div className="control">
-                    <button type="button" onClick={this.handleChange}>
-                      <figure className="image is-96x96">
-                        <img
-                          src="/../../assets/avatar1.jpg"
-                          alt="Orange avatar"
-                          name="avatar"
-                          data-value="avatar1.jpg"
-                        />
-                      </figure>
-                    </button>
-                  </div>
-                </div>
-                <div className="column">
-                  <div className="control">
-                    <button type="button" onClick={this.handleChange}>
-                      <figure className="image is-96x96">
-                        <img
-                          src="/../../assets/avatar2.jpg"
-                          alt="Pink avatar"
-                          name="avatar"
-                          data-value="avatar2.jpg"
-                        />
-                      </figure>
-                    </button>
-                  </div>
-                </div>
-                <div className="column">
-                  <div className="control">
-                    <button type="button" onClick={this.handleChange}>
-                      <figure className="image is-96x96">
-                        <img
-                          src="/../../assets/avatar3.jpg"
-                          alt="Blue avatar"
-                          name="avatar"
-                          data-value="avatar3.jpg"
-                        />
-                      </figure>
-                    </button>
-                  </div>
-                </div>
-                <div className="column">
-                  <div className="control">
-                    <button type="button" onClick={this.handleChange}>
-                      <figure className="image is-96x96">
-                        <img
-                          src="/../../assets/avatar4.jpg"
-                          alt="Green avatar"
-                          name="avatar"
-                          data-value="avatar4.jpg"
-                        />
-                      </figure>
-                    </button>
-                  </div>
-                </div>
-              </div>
-              <label className="label has-text-centered">Select an avatar</label>
-            </div>
+            <AvatarsForm
+              handleChange={this.handleChange}
+            />
             <div className="field">
               <label className="label">Username</label>
               <div className="control">
