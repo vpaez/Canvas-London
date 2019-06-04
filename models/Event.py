@@ -89,6 +89,8 @@ class EventSchema(Schema):
         data['keywords'] = [Keyword.get(id=keyword_id) for keyword_id in data['keyword_ids']]
         del data['keyword_ids']
 
+        return data
+
     @post_load
     def load_artists(self, data):
         data['artists'] = [Artist.get(id=artist_id) for artist_id in data['artist_ids']]
