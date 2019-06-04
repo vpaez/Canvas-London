@@ -29,7 +29,7 @@ class App extends React.Component {
           <Navbar />
           <Switch>
             <SecureRoute path="/events/new" component={EventsNew} />
-            <SecureRoute path='/events/:id' component={EventsShow} />
+            <Route path='/events/:id' component={EventsShow} />
             <Route path='/team' component={Team} />
             <Route path='/events' component={EventsIndex} />
             <Route path='/artists/:id' component={ArtistShow} />

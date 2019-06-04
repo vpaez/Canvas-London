@@ -9,7 +9,7 @@ const AvatarsForm = ({handleChange}) => {
             <button type="button" onClick={handleChange}>
               <figure className="image is-96x96">
                 <img
-                  src="/../../assets/avatar1.jpg"
+                  src="/assets/avatar1.jpg"
                   alt="Orange avatar"
                   name="avatar"
                   data-value="avatar1.jpg"
