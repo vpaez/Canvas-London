@@ -102,3 +102,17 @@
 .line-break {
   max-width: 500px;
 }
+
+.is-ancestor {
+  flex-wrap: wrap;
+
+}
+
+.baby {
+  padding: 20px 30px;
+  flex-direction: column;
+}
+
+.date {
+  font-weight: 600;
+}

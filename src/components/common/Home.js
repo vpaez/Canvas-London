@@ -63,7 +63,7 @@ class Home extends React.Component {
   render(){
     if(!this.state.exhibitions) return null
     const current = whatsOn(this.state.exhibitions)
-    const currentSorted = orderByDate(current)
+    const currentSorted = orderByDate(current).slice(0, 10)
     console.log(current, 'current')
     console.log(currentSorted, 'currentSorted')
     return(

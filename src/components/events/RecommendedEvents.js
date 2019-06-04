@@ -43,9 +43,9 @@ class RecommendedEvents extends React.Component {
     return(
       <div className="container">
         <h1 className="title">Recommended for you</h1>
-        <div className="columns is-multiline">
-          {this.matchedEvents().map(exhibition =>
-            <div key={exhibition.id} className="column is-one-quarter-desktop">
+        <div className="tile is-ancestor">
+          {this.matchedEvents().slice(0, 10).map(exhibition =>
+            <div key={exhibition.id} className="tile is-2 baby">
               <Link to={`/events/${exhibition.id}`}>
                 <figure>
                   <img src={exhibition.image}/>
