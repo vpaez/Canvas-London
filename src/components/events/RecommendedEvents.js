@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
 import Promise from 'bluebird'
+import { Link } from 'react-router-dom'
 
 
 class RecommendedEvents extends React.Component {
@@ -45,10 +46,12 @@ class RecommendedEvents extends React.Component {
         <div className="columns is-multiline">
           {this.matchedEvents().map(exhibition =>
             <div key={exhibition.id} className="column is-one-quarter-desktop">
-              <figure>
-                <img src={exhibition.image}/>
-              </figure>
-              <h1 className="title is-4">{exhibition.name}</h1>
+              <Link to={`/events/${exhibition.id}`}>
+                <figure>
+                  <img src={exhibition.image}/>
+                </figure>
+                <h1 className="title is-4">{exhibition.name}</h1>
+              </Link >
             </div>
           )}
         </div>

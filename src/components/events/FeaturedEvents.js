@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 const FeaturedEvents = ({exhibitions}) => {
   return(
+    
     <section className="section">
       <h1 className="title is-2"> Whats on</h1>
       <div className="container">
