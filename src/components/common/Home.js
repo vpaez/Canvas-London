@@ -68,15 +68,7 @@ class Home extends React.Component {
     console.log(currentSorted, 'currentSorted')
     return(
       <div>
-        <section className="hero is-fullheight video">
-          <div className="hero-video">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/QcaaVZrUC44?controls=0&amp;start=8" allowFullScreen></iframe>
-            <div className="container">
-              <h1 className="title">
-                Title Home
-              </h1>
-            </div>
-          </div>
+        <section className="hero is-fullheight">
         </section>
         <FeaturedEvents
           exhibitions={currentSorted}/>
