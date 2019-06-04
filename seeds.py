@@ -11,10 +11,10 @@ db.drop_all_tables(with_all_data=True)
 db.create_tables()
 
 
-avatar_1 = 'avatar1.jpg'
-avatar_2 = 'avatar2.jpg'
-avatar_3 = 'avatar3.jpg'
-avatar_4 = 'avatar4.jpg'
+avatar_1 = 'https://i.imgur.com/vjvpOox.jpg'
+avatar_2 = 'https://i.imgur.com/iwYxNbB.jpg'
+avatar_3 = 'https://i.imgur.com/GkO3ix0.jpg'
+avatar_4 = 'https://i.imgur.com/p25szCt.jpg'
 with db_session():
 
     schema = UserSchema()
