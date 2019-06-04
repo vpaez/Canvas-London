@@ -4,7 +4,8 @@ import Auth from '../../lib/Auth'
 import editableContent from './editableContent'
 import Select from 'react-select'
 import Promise from 'bluebird'
-
+import Avatar from 'react-avatar'
+import { Link } from 'react-router-dom'
 
 const EditableUsername = editableContent('div')
 const EditableEmail = editableContent('div')
@@ -74,94 +75,121 @@ class UserProfile extends React.Component {
   componentDidMount(){
     const token = Auth.getToken()
     const headers = { headers: {'Authorization': `Bearer ${token}` }}
-    
+
     Promise.props({
       user: axios.get('/api/me', {...headers}).then(res => res.data),
-      contacts: axios.get('/api/contacts', {...headers}).then(res => res.data.contacts),
+      contacts: axios.get('/api/contacts', {...headers}).then(res => res.data),
       keywords: axios.get('/api/keywords').then(res => res.data =  res.data.map(keyword =>{
         return {label: keyword.name, value: keyword.id}
       }))
     })
-      .then(res => this.setState({ data: {...this.state.data, options: res.keywords, user: res.user, contacts: res.contacts}}))
+      .then(res => this.setState({ data: {...this.state.data, options: res.keywords, user: res.user, contacts: [...res.contacts.users]}}))
       .then(() =>console.log(this.state))
       .catch(err => console.log(err))
   }
 
   render(){
-    if(!this.state.data.user) return null
+    if(!this.state.data.contacts) return null
     const { user, contacts } = this.state.data
     const admissionType = user.concession? 'Concession': 'Full'
     return(
-      <section className="section">
-        <h1 className="title is-2">Profile info</h1>
-        <h1 className="title is-4">Username:</h1>
-        <EditableUsername name="username" value={user.username} />
-        <h1 className="title is-4">Email:</h1>
-        <EditableEmail name="email" value={user.email} />
-        <h1 className="title is-4">Admission type:</h1>
-        <p>Tickets are currently displayed at <strong>{admissionType}</strong> price.</p>
-        <button onClick={this.toggleDropdown}>Change</button>
-        {this.state.dropdown &&
-          <div className="control">
-            <label className="radio">
-              <input type="radio" name="concession" value='true' onClick={this.handleAdmissionType}/>
-              Concession
-            </label>
-            <label className="radio">
-              <input type="radio" name="concession" value='false' onClick={this.handleAdmissionType}/>
-              Full Price
-            </label>
-          </div>}
-        <hr />
-        <h2 className="title is-4">Your preferences</h2>
-        {user.keywords.length === 0 && <p>You have no preferences set up yet...</p>}
-        <div className="tags are-medium">
-          {user.keywords.map(keyword =>
-            <span className="tag is-primary" key={keyword.id}>{keyword.name}</span>
-          )}
-        </div>
-        <hr />
-        {!this.state.editPreferences && <button className="button" onClick={this.handlePreferences}>Add more preferences</button>}
-        {this.state.editPreferences &&
-          <div>
-            <h2 className="title is-4">Add preferences</h2>
-            <p>Set type of exhibitions you would like to be displayed first</p>
-            <div>
-              <Select
-                isMulti
-                name="keywords"
-                options={this.state.data.options}
-                onChange={this.handleSelect}
-              />
-              <button className="button" onClick={this.handleSave}>Save</button>
-            </div>
-          </div>
-        }
-        <hr />
-        {contacts && <div>
-          <h2 className="title is-4">Other users with similar taste</h2>
-          {contacts.map(contact =>
-            <div key={contact.id}>
-              <h1 className="title">{contact.username}</h1>
-              <div className="tags are-normal">{contact.interests.map(interest =>
-                <span className="tag is-primary"key={interest}>{interest}</span>)}
+      <section className="section user-page">
+        <section className="section user-info">
+          <div className="columns">
+            <div className="column is-one-third-desktop has-text-centered">
+              <div className="container profile-info">
+                <Avatar name={user.username} value="100%" size="200" round={true} src={`../assets/${user.avatar}`} className="user-avatar"/>
+                <EditableUsername className="title is-2" name="username" value={user.username}/>
+                <EditableEmail className="subtitle" name="email" value={user.email} />
               </div>
             </div>
-          )}
-        </div>
-        }
-        <hr />
-        <h2 className="title is-4">Events created by you</h2>
-        <div className="columns">
-          {user.events.map(exhibition=>
-            <div key={exhibition.id} className="column is-one-quarter-desktop">
-              <h1 className="title is-6">{exhibition.name}</h1>
-              <figure>
-                <img src={exhibition.image} alt={exhibition.name} />
-              </figure>
+            <div className="column is-two-thirds-desktop">
+              <div className="container admission-preferences">
+                <h1 className="title is-4 is-spaced">Admission type</h1>
+                <p className="subtitle is-6">Tickets are currently displayed at <strong>{admissionType}</strong> price. <a className="subtitle is-6 has-text-link" onClick={this.toggleDropdown}>Change</a></p>
+                {this.state.dropdown &&
+              <form>
+                <div className="control has-addons-centered">
+                  <label className="radio">
+                    <input type="radio" name="concession" value='true' onClick={this.handleAdmissionType}/>
+                  Concession
+                  </label>
+                  <label className="radio">
+                    <input type="radio" name="concession" value='false' onClick={this.handleAdmissionType}/>
+                  Full Price
+                  </label>
+                </div>
+              </form>}
+                <hr className='line-break' />
+                <div className="columns">
+                  <div className="column">
+                    <h2 className="title is-4">Your preferences</h2>
+                    {user.keywords.length === 0 && <p>You have no preferences set up yet...</p>}
+                    <div className="tags are-medium">
+                      {user.keywords.map(keyword =>
+                        <span className="tag is-dark is-rounded" key={keyword.id}>{keyword.name}</span>
+                      )}
+                    </div>
+                    <div className="column">
+                      {!this.state.editPreferences && <button className="button" onClick={this.handlePreferences}>Add more preferences</button>}
+                    </div>
+                    {this.state.editPreferences &&
+                  <div>
+                    <h2 className="title is-4 is-spaced">Add preferences</h2>
+                    <p className="subtitle is-6">Set type of exhibitions you would like to be displayed in your recomended list</p>
+                    <div>
+                      <Select
+                        isMulti
+                        name="keywords"
+                        options={this.state.data.options}
+                        onChange={this.handleSelect}
+                      />
+                      <button className="button is-light" onClick={this.handleSave}>Save</button>
+                    </div>
+                  </div>
+                    }
+                  </div>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
+          </div>
+        </section>
+        <section className="section contacts">
+          {contacts && <div className="container has-text-centered contacts">
+            <h2 className="title heading-section is-3">Other users with similar taste</h2>
+            <div className="columns">
+              {contacts.map(contact =>
+                <div className="column has-text-centered" key={contact.id}>
+                  <figure className="image is-128x128">
+                    <img src={`/../../../assets/${contact.avatar}`} />
+                  </figure>
+                  <h1 className="title is-4">{contact.username}</h1>
+                  {contact.matches.map(keyword =>
+                    <p key={keyword.id}>{keyword.name}</p>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+          }
+        </section>
+        <section className="section events-created">
+          <h2 className="title is-3 heading-section has-text-centered">Events created by you</h2>
+          <div className="columns events-by-you">
+            {user.events.map(exhibition=>
+              <div key={exhibition.id} className="column is-one-quarter-desktop">
+                <h1 className="title is-6">{exhibition.name}</h1>
+                <figure className="image is-3by4">
+                  <img src={exhibition.image} alt={exhibition.name} />
+                </figure>
+              </div>
+            )}
+            {user.events.length < 4 && <div className="column new-event-link is-one-quarter-desktop">
+              <p>This looks a bit empty</p>
+              <Link to='/events/new'><p>add a new event</p></Link>
+            </div>}
+          </div>
+        </section>
       </section>
     )
   }

@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 import bcrypt
 import jwt
-from pony.orm import Required, Set
+from pony.orm import Required, Set, Optional
 from marshmallow import Schema, fields, post_load, validates_schema, ValidationError
 from app import db
 from config.environment import secret
@@ -14,6 +14,7 @@ class User(db.Entity):
     concession = Required(bool)
     events = Set('Event')
     keywords = Set('Keyword')
+    avatar = Optional(str)
 
     def is_password_valid(self, plaintext):
         return bcrypt.checkpw(plaintext.encode('utf8'), self.password_hash.encode('utf8'))
@@ -40,6 +41,7 @@ class UserSchema(Schema):
     password = fields.Str(load_only=True)
     password_confirmation = fields.Str(load_only=True)
     concession = fields.Bool(required=True)
+    avatar = fields.Str()
     events = fields.Nested('EventSchema', many=True, exclude=('user',))
     keywords = fields.Nested('KeywordSchema', many=True, exclude=('users',), dump_only=True)
     keyword_ids = fields.List(fields.Int(), load_only=True)
