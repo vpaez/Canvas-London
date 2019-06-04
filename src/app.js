@@ -25,7 +25,6 @@ class App extends React.Component {
         <div>
           <Navbar />
           <Switch>
-            <SecureRoute path="/events/:id/edit" component={EventsEdit} />
             <SecureRoute path="/events/new" component={EventsNew} />
             <SecureRoute path='/events/:id' component={EventsShow} />
             <Route path='/events' component={EventsIndex} />
@@ -46,3 +45,7 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 )
+
+
+
+// <SecureRoute path="/events/:id/edit" component={EventsEdit} />

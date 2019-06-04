@@ -41,16 +41,14 @@ class EventsShow extends React.Component {
   }
 
   render(){
-
     if(!this.state.exhibition || !this.state.coordinates || !mapBoxToken) return null
     const entryFee = this.state.exhibition.entry_fee
     const concessionFee = this.state.exhibition.concession_fee
     const {concession} = this.state.exhibition.user
-    const {name, image, artists, venue, area, keywords, id} = this.state.exhibition
+    const {name, image, artists, venue, area, keywords} = this.state.exhibition
     return(
       <section className="section">
         <div className="container">
-          {this.isEditable() && <Link to={`/events/${id}/edit`} className="button is-success">Edit</Link>}
           <hr />
           <div className="columns">
             <div className="column is-half-desktop">
@@ -64,7 +62,7 @@ class EventsShow extends React.Component {
               <p>{area}</p>
               <p>{keywords[0].name}</p>
               {concession && concessionFee? <div>
-                <p>Concession ticket: £{concessionFee > 0? `£${concessionFee}`: 'Free'}</p>
+                <p>Concession ticket: {concessionFee > 0? `£${concessionFee}`: 'Free'}</p>
                 <p className="is-size-7 has-text-danger">This is a concession fee. If you would like to see full price tickets displayed, you can change your preferences in your profile page.</p>
               </div>: <p>Admission price: {entryFee > 0? `£${entryFee}`: 'Free'}</p>}
               <hr />
@@ -112,3 +110,6 @@ class EventsShow extends React.Component {
 }
 
 export default EventsShow
+
+
+// {this.isEditable() && <Link to={`/events/${id}/edit`} className="button is-success">Edit</Link>}
