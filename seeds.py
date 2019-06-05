@@ -104,6 +104,7 @@ with db_session():
     west = Artist(name='Franz West', description='From abstract and interactive sculpture to furniture and collage, Franz West’s oeuvre possesses a character that is at once lighthearted and deeply philosophical. Belonging to a generation of artists exposed to the Actionist and Performance Art of the 1960s and 70s, West instinctively rejected the idea of a passive relationship between artwork and viewer. Opposed to the existential intensity requisite to his performative forebears (such as Actionism), he produced work that was vigorous and imposing yet unbounded and buoyant. In the seventies, he began creating compact, portable, mixed media sculptures called “Adaptives” (“Passstücke”).', image='https://upload.wikimedia.org/wikipedia/commons/a/ac/West%2CFranz-museum-ludwig-koeln-111209-web.jpg', dob='16 February 1947', dod='25 July 2012')
     fitzsimmons = Artist(name='Naomi Fitzsimmons')
     hibbs = Artist(name='Justin Hibbs')
+    jackson = Artist(name='Sam Jackson')
     davis = Artist(name='Rosalind Davis')
     bowles = Artist(name='Sasha Bowles')
     martelli = Artist(name='Gibson/Martelli')
@@ -160,6 +161,8 @@ with db_session():
     Event(name='A human touch', start_date=datetime.date(2019, 7, 2).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 7, 2).strftime("%d/%m/%Y"), venue='Bankside Gallery', area='Central London', keywords=[painting, drawing], entry_fee=0, user=gabe, image='https://img.artrabbit.com/events/juliet-wood-a-human-touch/images/r3djk1fbHcNE/1323x1500/JW-English-With-Ourmala-DSC-0048-copy.webp', artists=[wood])
 
     Event(name='City Poems and City Music', start_date=datetime.date(2019, 4, 11).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 6, 9).strftime("%d/%m/%Y"), venue='Whitechapel Gallery', area='East London', keywords=[painting, sound], entry_fee=0, user=gabe, image='https://www.whitechapelgallery.org/wp-content/uploads/2019/02/City-Poems-and-City-Music-AH-with-light-show-background_370x280-570x428.jpg', artists=[henri])
+
+    Event(name='Chronicles', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 6, 29).strftime("%d/%m/%Y"), venue='Old Street', area='East London', keywords=[painting], entry_fee=0, user=gabe, image='https://charliesmithlondon.com/wp-content/uploads/2014/02/Homeslider-SJ-19-1.jpg', artists=[jackson])
 
     #Event(name='Michael Rakowitz', start_date=datetime.date(2019, 4, 11).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 6, 9).strftime("%d/%m/%Y"), venue='Whitechapel Gallery', area='East London', keywords=[painting, sound], entry_fee=0, user=gabe, image='https://www.whitechapelgallery.org/wp-content/uploads/2019/02/City-Poems-and-City-Music-AH-with-light-show-background_370x280-570x428.jpg', artists=[henri])
 
