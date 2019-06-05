@@ -12,7 +12,7 @@ const AvatarsForm = ({handleChange}) => {
                   src="https://i.imgur.com/vjvpOox.jpg"
                   alt="Orange avatar"
                   name="avatar"
-                  data-value="avatar1.jpg"
+                  data-value="https://i.imgur.com/vjvpOox.jpg"
                 />
               </figure>
             </button>
@@ -26,7 +26,7 @@ const AvatarsForm = ({handleChange}) => {
                   src="https://i.imgur.com/iwYxNbB.jpg"
                   alt="Pink avatar"
                   name="avatar"
-                  data-value="avatar2.jpg"
+                  data-value="https://i.imgur.com/iwYxNbB.jpg"
                 />
               </figure>
             </button>
@@ -40,7 +40,7 @@ const AvatarsForm = ({handleChange}) => {
                   src="https://i.imgur.com/GkO3ix0.jpg"
                   alt="Blue avatar"
                   name="avatar"
-                  data-value="avatar3.jpg"
+                  data-value="https://i.imgur.com/GkO3ix0.jpg"
                 />
               </figure>
             </button>
@@ -54,7 +54,7 @@ const AvatarsForm = ({handleChange}) => {
                   src="https://i.imgur.com/p25szCt.jpg"
                   alt="Green avatar"
                   name="avatar"
-                  data-value="avatar4.jpg"
+                  data-value="https://i.imgur.com/p25szCt.jpg"
                 />
               </figure>
             </button>
