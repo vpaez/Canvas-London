@@ -15,8 +15,6 @@ bcrypt = "*"
 pyjwt = "*"
 requests = "*"
 opencage = "*"
-python = "*"
-seeds-py = "*"
 
 [requires]
 python_version = "3.7"
