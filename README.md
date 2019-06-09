@@ -3,7 +3,11 @@
 
 ![Homepage](readme-assets/cover.png)
 
+
+
+
 Canvas showcases art exhibitions and events in London, based on user preferences and location.
+[Link to Live Website](https://canvas-london.herokuapp.com)
 
 ## Timeframe
 7 days
@@ -17,12 +21,13 @@ Canvas showcases art exhibitions and events in London, based on user preferences
 * Webpack
 * Pipenv and yarn
 * Git
-* Mapbox GL
 * Ajax
 * Python
 * Flask
 * PonyORM
 * Marshmallow
+* OpenCage API
+* Mapbox API
 
 
 ## Installation
@@ -36,14 +41,17 @@ Canvas showcases art exhibitions and events in London, based on user preferences
 
 ## Introduction
 
-We created our own database using Postgress to handle exhibitions, user data, and preferences.
-This was a week long project in collaboration with Gabe Naughton.  We separated our workload into frontend and backend. We switched roles frequently, so we could both work on both parts of the website.
+Week long project in collaboration with Gabe Naughton.
+
+We separated our workload into frontend and backend. We switched roles frequently, so we could both work on both parts of the website.
 Canvas is a website to search for art events and exhibitions. The homepage has customised results for the logged in user, a recommended for you section based on their set preferences (painting, live art, photography) and a near you section for exhibitions happening within a … mile radius from their location.
 
 In the browse exhibitions page, they can search for past, current and upcoming events.
 Our concept is that the results and exhibitions results are customised to suit the user preferences. The user can also choose to see ticket price at full or concession price.
 
-## Customised results
+## Personalised Results
+
+The different exhibition lists on canvas respond to the user. They're based on their location and their set preferences.
 
 ## Based on location
 ![Events near you](readme-assets/near-you.png)
@@ -61,22 +69,21 @@ With the option to filter by past, current and upcoming exhibitions using React 
 
 
 ## User Profile
-In their user profile they can see the events they created, view and edit their preferences and see other users with same preferences.
+
+Because customisation based on the user was really important to our project, we dedicated a substantial amount of time to develop a user profile page where the users could see events created by them, view and edit their preferences and see other users with same preferences. The user can also choose to see ticket prices displayed on the exhibition at full or concession price.
+
 ![User details page](readme-assets/user-info.png)
 ![User contacts page](readme-assets/user-contacts.png)
 
 
 
+
 ## Future Features
 
-We planned to do a messaging service using a third-party API but, given the short time span to deliver the project, we didn’t manage.
+### Messaging service
 
+Messaging service using a third-party API to connect the user with users with similar taste.
 
+### More accurate map results
 
-
-
-
-
-
-
-Future features messaging service
+Implement an option for when the user is creating a new event, to double check the position in the map, before setting the address for the event. This would fix a small issue with the wrong coordinates being set for the event location, as certain galleries not being recognised by OpenCage API.
