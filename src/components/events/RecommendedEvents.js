@@ -16,7 +16,6 @@ class RecommendedEvents extends React.Component {
 
     const exhibitions = this.state.exhibitions
     return exhibitions.filter(exhibition => {
-    //   console.log(exhibition.keywords)
       const match = exhibition.keywords.filter(keyword =>{
         if(this.state.keywords.includes(keyword.id)) return keyword
       }).length
