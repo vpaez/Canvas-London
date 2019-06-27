@@ -7,6 +7,7 @@
 
 
 Canvas showcases art exhibitions and events in London, based on user preferences and location.
+
 [Link to Live Website](https://canvas-london.herokuapp.com)
 
 ## Timeframe
@@ -45,7 +46,11 @@ Week long project in collaboration with [Gabe Naughton](https://github.com/gabel
 
 At university we both came into regular contact with the art world. London possesses a dizzying range of galleries and events. Sometimes sifting through these different options can feel a touch overwhelming. Working as part of a pair, we designed an app to help users filter art events around the city, making use of a ‘keywords’ model to connect users with similar taste and to provide tailored recommendations based on their interests.
 
-Initially we divided responsibilities across the front and back ends. I was excited by Python and so took the lead in creating our initial models, as we worked towards our minimum viable product. After we reached this point, however, we swapped over roles, adding a new artist model on the backend, while I got the opportunity to use Mapbox for the first time and work on filtering events by date, which required me to adapt the models on the backend while working with Javascript’s sometimes unwieldy Date functionality on the front end. I then focused on the ‘events near you’ section of the homepage, the first time I had been required to make third party API requests from the back end.
+We separated our responsibilities into back end and front end and switched regularly. I mainly focused on everything user related.
+
+In the backend, using Python and Flask, I built the user controller, to retrieve and edit users’ details and preferences. I also made a separate contacts controller that matches the logged in user with other users with similar taste using our 'keywords' model.
+In the front end, using React, I made the user profile page that displays personal information, users with similar tastes, and allows the user to change their preferences. I’ve also worked on a recommended for you exhibition list, a showcase of exhibitions based on the user’s set preferences.
+
 
 
 ## Tailored Results
@@ -79,11 +84,11 @@ def geolocate(record):
             record.lng = -0.118092
 ```
 
-## Based on taste
+## Based on user's preferences
 
 ![Recommended events](readme-assets/recommended.png)
 
-The user has associated keywords (preferences that they set when registering or in their profile page) stating their taste in art (performance art, painting, photography). On componentDidMount, we made an axios request to our own api to fetch the user's preferences (this.state.keywords) and the exhibitions (this.state.exhibitions). The function matchedEvents checks filters any exhibition that matches any of the user's keywords. We had to use an includes() function within the filter because the user can have many keywords and the exhibitions can have many keywords as well.
+The user has associated keywords (preferences that they set when registering or in their profile page) stating their taste in art (performance art, painting, photography). On componentDidMount, we made an axios request to our own API to fetch the user's preferences (this.state.keywords) and the exhibitions (this.state.exhibitions). The function matchedEvents checks and filters any exhibition that matches any of the user's keywords. We had to use an includes() function within the filter because the user can have many keywords and the exhibitions can have many keywords as well.
 
 
 ```
@@ -142,22 +147,18 @@ Because customisation based on the user was really important to our project, we 
 The user can edit their profile information, ticket type (concession or full price) and set new preferences.
 
 
-When the user edits their profile, a put request is made to our API.
+When the user edits any part of their profile, a put request is made to our API.
 
 
-There was two specific cases that we had to work with: the user setting new preferences and the user changing ticket type.
+There was two specifically challenging cases we had to work with: the user setting new preferences(keywords) and the user changing ticket type.
 
-The ticket type was a boolean set to True or False. As the put request had a json format (true or false would be a string), when the backend received the request it had to set data['concession'] to be a python true or false, before updating the user.
+### Setting new preferences: the keyword model
 
-```
-if data.get('concession'):
-    data['concession'] = data['concession'] == 'true'
-```
+The keywords are a list of referenced data, so we would send the request in json as ids that would then get populated in post_load with the corresponding keyword's data.
 
-When the user set new preferences (or keywords), we wanted for them to be added to the existing ones rather than overwriting them. We had to create a new list that concatenated the previous keywords of the current user with the new keywords before updating the user.
-Because the keywords were referenced data, they were written in json as ids to then in post_load populate them with the corresponding keyword data.
+With this structure, when the user set new preferences(or keywords) it would just replace the existing ones with the new.
 
-
+However, we wanted for them to be added to the existing ones rather than overwriting them. We had to create a new list that concatenated the previous keywords of the current user with the new keywords before updating the user.
 
 ```
     if data.get('keyword_ids'):
@@ -173,6 +174,17 @@ Because the keywords were referenced data, they were written in json as ids to t
     return schema.dumps(user_info)
 ```
 
+
+### Changing ticket type: converting JSON string to Python boolean
+
+In the backend model, the ticket type was a boolean set to True or False. If the user wanted tickets at concession price displayed, it would be true.
+We were sending the put request with a JSON format, which meant that setting it to true or false would send a string, however the backend was expecting a boolean because of the way we set up our model.
+This meant that we had to modify the data on post load so when the backend received the JSON request it would set data['concession'] to be a python true or false, before updating the user.
+
+```
+if data.get('concession'):
+    data['concession'] = data['concession'] == 'true'
+```
 
 ### Match users with similar interests
 
@@ -204,6 +216,11 @@ def get_contacts():
     return jsonify({'users': users})
 ```
 
+
+## Data model diagram
+
+![Data model diagram](readme-assets/model-structure.png)
+
 ## Future Features
 
 ### Messaging service
@@ -214,7 +231,7 @@ Messaging service using a third-party API to connect the user with users with si
 
 There is a small bug with the wrong coordinates being set for the event location, as certain galleries are currently not being recognised by OpenCage API.
 
-Implement an option for when the user is creating a new event, to double check the position in the map, before setting the address for the event.
+When creating a new event, we would like to implement an option for the user to double check the position in the map, before setting the address for the event.
 
 ### Incorporating museums API
 
