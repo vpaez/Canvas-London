@@ -188,8 +188,6 @@ if data.get('concession'):
 
 ### Match users with similar interests
 
-
-
 ![User contacts page](readme-assets/user-contacts.png)
 
 
@@ -217,9 +215,21 @@ def get_contacts():
 ```
 
 
-## Data model diagram
+## Wins
+
+My biggest achievement was to make the contacts controller that matches users to the logged in user based on common preferences. It was my first time using Python and Flask on the back end, and this controller allowed me to work with lists and lists comparison.
+
+My main takeaway from this project was the distribution of responsibilities as a team.
+I was in charge of everything user related both in front and back end, whereas Gabe was more focused on everything location related. This meant that both of us had an overall understanding of how our full stack application worked, from a client side as well as server side perspective, yet, as we were in charge of specific sections of our code, we also had autonomy to work independently. 
+
+
+## Challenges
+
+We had a complex back end, several many to many relationships between models and a lot of referencing between models that made it difficult to make controllers that would deal with the data appropriately. We spent time planning out the relations between the models and controllers in the back end, not only before starting to code but also throughout the project as the project and its complexity evolved.
 
 ![Data model diagram](readme-assets/model-structure.png)
+
+
 
 ## Future Features
 
