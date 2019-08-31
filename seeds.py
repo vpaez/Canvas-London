@@ -172,14 +172,14 @@ with db_session():
 
     Event(name='KEMANG WA LEHULERE', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 10, 6).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[sculpture], entry_fee=0, user=gabe, image='https://www.tate.org.uk/sites/default/files/styles/width-600/public/thumbnail_8_1.jpg', artists=[lehulere])
 
-    Event(name='Nan Goldin', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 10, 27).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[photography], entry_fee=20, user=gabe, image='https://www.tate.org.uk/art/images/work/P/P78/P78046_9.jpg', artists=[goldin], description='Nan Goldin’s The Ballad of Sexual Dependency is a visual diary portraying the life of the artist and her friends through the 1970s and 1980s')
+    Event(name='Nan Goldin', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 10, 27).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[photography], entry_fee=20, user=gabe, image='https://www.tate.org.uk/art/images/work/P/P78/P78046_9.jpg', artists=[goldin])
 
     Event(name='Spotlights: Gillian Ayres', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 10, 31).strftime("%d/%m/%Y"), venue='Tate Britain', area='Central London', keywords=[painting], entry_fee=20, user=gabe, image='https://www.tate.org.uk/art/images/work/T/T06/T06994_9.jpg', artists=[ayres])
 
-    Event(name='In the studio: Bridget Riley', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 11, 10).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[painting], entry_fee=20, user=violeta, image='https://www.tate.org.uk/art/images/work/T/T06/T06994_9.jpg', artists=[riley], description='Line, shape and colour are manipulated by Bridget Riley to develop elegantly complex patterns that draw attention to the physical process of perception.')
+    Event(name='In the studio: Bridget Riley', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 11, 10).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[painting], entry_fee=20, user=violeta, image='https://www.tate.org.uk/art/images/work/T/T06/T06859_9.jpg', artists=[riley])
 
 
-    Event(name='Artists and Society: Catherine Opie', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 11, 17).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[photography], entry_fee=20, user=violeta, image='https://www.tate.org.uk/sites/default/files/styles/width-600/public/thumbnail_5.png', artists=[opie], description='Catherine Opie creates an intimate portrait of a Hollywood star by photographing the actor’s home and possessions')
+    Event(name='Artists and Society: Catherine Opie', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 11, 17).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[photography], entry_fee=20, user=violeta, image='https://www.tate.org.uk/sites/default/files/styles/width-600/public/thumbnail_5.png', artists=[opie])
 
 
 
