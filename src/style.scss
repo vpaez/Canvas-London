@@ -16,6 +16,10 @@
   flex-direction: column;
 }
 
+.section {
+  padding-top: 0px;
+}
+
 .venueMap {
   margin-top: auto;
 }
@@ -126,24 +130,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .marker {
   max-width: 60px;
 }
@@ -179,16 +165,22 @@
 }
 
 .home {
-  border-bottom: solid;
   border-top: solid;
   padding-bottom: 10px;
   padding-top: 10px;
+  h1 {
+    margin: 50px auto;
+  }
+  .tile {
+    margin-top: 20px;
+  }
 }
 
 .navbar-section {
   padding-bottom: 0px;
   padding-left: 40px;
   padding-right: 40px;
+  margin: 30px 0;
 }
 
 a.navbar-item {

@@ -21,11 +21,6 @@ class HomeNavbar extends React.Component {
       <section className="section navbar-section">
         <nav className="navbar" role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
-            <Link to="/">
-              <figure className="image is-48x48">
-                <img src="http://www.clker.com/cliparts/8/5/7/2/13448089181230741562black-circle-md[1]-hi.png" />
-              </figure>
-            </Link>
             <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
               <span aria-hidden="true"></span>
               <span aria-hidden="true"></span>

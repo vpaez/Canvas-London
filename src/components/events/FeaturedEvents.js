@@ -5,13 +5,13 @@ const FeaturedEvents = ({exhibitions}) => {
   return(
 
     <section className="section">
-      <div className="container home">
+      <div className="container home has-text-centered">
         <h1 className="title is-2"> Whats on</h1>
         <div className="tile is-ancestor">
           {exhibitions.map(exhibition =>
 
 
-            <div key={exhibition.id}className="tile is-2 baby">
+            <div key={exhibition.id}className="tile is-3 baby">
               <Link to={`/events/${exhibition.id}`}>
                 <figure>
 

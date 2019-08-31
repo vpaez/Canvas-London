@@ -69,7 +69,7 @@ class Home extends React.Component {
     console.log(currentSorted, 'currentSorted')
     return(
       <div>
-        <section className="hero is-fullheight">
+        <section className="hero is-medium">
           <div className="hero-body">
             <div className="container">
               <h1 className="title has-text-light is-1">
