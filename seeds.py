@@ -1,11 +1,11 @@
 import datetime
 from app import db
+from datetime import date
+from pony.orm import db_session
 from models.Event import Event
 from models.User import User, UserSchema
 from models.Keyword import Keyword
 from models.Artist import Artist
-from pony.orm import db_session
-from datetime import date
 
 db.drop_all_tables(with_all_data=True)
 db.create_tables()
@@ -90,15 +90,18 @@ with db_session():
     arbus = Artist(name='Diane Arbus', description='Diane Arbus was an American photographer. Arbus famously worked to normalize marginalized groups and highlight the importance of proper representation of all people. She worked with a wide range of subjects including members of the LGBTQ+ community, strippers, carnival performers, nudists, dwarves, children, mothers, couples, elderly people, and middle-class families.', image='https://upload.wikimedia.org/wikipedia/en/thumb/a/ac/Diane-Arbus-1949.jpg/220px-Diane-Arbus-1949.jpg', dob='March 14, 1923 ', dod='July 26, 1971')
     hefuna = Artist(name='Susan Hefuna', dob='1962', description='Susan Hefuna is fascinated in the networks and structures of connection that inhabit public spaces and how they become the framework for peoples\' interactions with each other, in particular how these networks become visible through and influenced by architectural models and city planning. Upon arriving at a city, she spends a few days traversing its streets and squares until this calmative process lulls her into a state in which she feels ready to compose work that will capture the atmosphere of the location.')
     lippard = Artist(name='Hanne Lippard')
+    riley = Artist(name='Bridget Riley')
     satoru = Artist(name='Noda Satoru', image='https://66.media.tumblr.com/a818bbef343c8d34fa1b89e0f4853585/tumblr_inline_ovxswirs7D1qld5ui_1280.jpg')
     mccullin = Artist(name='Don Mccullin')
     humeau = Artist(name='Marguerite Humeau')
     bakker = Artist(name='Conrad Bakker')
     bejenaru = Artist(name='Matei Bejenaru')
     davis = Artist(name='Tim Davis')
+    ayres = Artist(name='Gillian Ayres')
     fontaine = Artist(name='Claire Fontaine', description='Paris-based collective founded in 2004. She describes herself in her biography as a ready-made artist stripped of use-value who intervenes in a world characterized, in part, by a ‘crisis of singularities’, or fixed identities.')
     rottenberg = Artist(name='Mika Rottenberg', description='Mika Rottenberg (born 1976) is a contemporary Argentine-Israeli video artist who lives and works in New York City. Rottenberg is best known for her surreal video and installation work that often deals with the subject of female labor. Her work has been exhibited both nationally and internationally.', dob='1976', image='https://cdn.magasin3.com/wp-content/uploads/2014/08/multimedia-17041-img.jpg')
     stevenson = Artist(name='Michael Stevenson')
+    goldin = Artist(name='Nan Goldin')
     werthein = Artist(name='Judi Werthein')
     eliasson = Artist(name='Olafur Eliasson', description='Olafur Eliasson (Icelandic: Ólafur Elíasson; born 1967) is an Icelandic-Danish artist known for sculptures and large-scale installation art employing elemental materials such as light, water, and air temperature to enhance the viewer’s experience. In 1995 he established Studio Olafur Eliasson in Berlin, a laboratory for spatial research. Olafur represented Denmark at the 50th Venice Biennale in 2003 and later that year installed The Weather Project in the Turbine Hall of Tate Modern, London.', image='https://static01.nyt.com/images/2016/05/21/arts/21ELIASSON/21ELIASSON-articleLarge.jpg?quality=75&auto=webp&disable=upscale', dob='1967')
     west = Artist(name='Franz West', description='From abstract and interactive sculpture to furniture and collage, Franz West’s oeuvre possesses a character that is at once lighthearted and deeply philosophical. Belonging to a generation of artists exposed to the Actionist and Performance Art of the 1960s and 70s, West instinctively rejected the idea of a passive relationship between artwork and viewer. Opposed to the existential intensity requisite to his performative forebears (such as Actionism), he produced work that was vigorous and imposing yet unbounded and buoyant. In the seventies, he began creating compact, portable, mixed media sculptures called “Adaptives” (“Passstücke”).', image='https://upload.wikimedia.org/wikipedia/commons/a/ac/West%2CFranz-museum-ludwig-koeln-111209-web.jpg', dob='16 February 1947', dod='25 July 2012')
@@ -114,6 +117,8 @@ with db_session():
     wood = Artist(name='Juliet Wood')
     henri = Artist(name='Adrian Henri')
     rako = Artist(name='Michael Rakowitz')
+    lehulere = Artist(name='Kemang Wa Lehulere')
+    opie = Artist(name='Catherine Opie', description='Catherine Opie is an American fine-art photographer. She lives and works in West Adams, Los Angeles.She is currently a tenured professor of photography at University of California at Los Angeles (UCLA). Opie studies the relationships between mainstream and infrequent society, with a large emphasis on sexual identity, specializing in portraiture, studio, and landscape photography. Through photography Opie documents the connections between the individual and the space inhabited.', image='https://d3rtf5gv0re40d.cloudfront.net/anzax/55/559c0ad4-3290-466b-b4e7-39e03e7b6874_600_446.jpg', dob='1961')
 
 
     Event(name='Van Gogh in Britain', start_date=datetime.date(2019, 3, 27).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 11, 8).strftime("%d/%m/%Y"), venue='Tate Britain', area='Central', keywords=[post_impressionism, dutch, painting], entry_fee=22, concession_fee=20, user=gabe, image="https://www.tate.org.uk/sites/default/files/styles/width-600/public/van_gogh_self_portrait.jpg", artists=van_gogh)
@@ -164,7 +169,20 @@ with db_session():
 
     Event(name='Chronicles', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 6, 29).strftime("%d/%m/%Y"), venue='Old Street', area='East London', keywords=[painting], entry_fee=0, user=gabe, image='https://charliesmithlondon.com/wp-content/uploads/2014/02/Homeslider-SJ-19-1.jpg', artists=[jackson])
 
-    #Event(name='Michael Rakowitz', start_date=datetime.date(2019, 4, 11).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 6, 9).strftime("%d/%m/%Y"), venue='Whitechapel Gallery', area='East London', keywords=[painting, sound], entry_fee=0, user=gabe, image='https://www.whitechapelgallery.org/wp-content/uploads/2019/02/City-Poems-and-City-Music-AH-with-light-show-background_370x280-570x428.jpg', artists=[henri])
+
+    Event(name='KEMANG WA LEHULERE', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 10, 6).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[sculpture], entry_fee=0, user=gabe, image='https://www.tate.org.uk/sites/default/files/styles/width-600/public/thumbnail_8_1.jpg', artists=[lehulere])
+
+    Event(name='Nan Goldin', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 10, 27).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[photography], entry_fee=20, user=gabe, image='https://www.tate.org.uk/art/images/work/P/P78/P78046_9.jpg', artists=[goldin], description='Nan Goldin’s The Ballad of Sexual Dependency is a visual diary portraying the life of the artist and her friends through the 1970s and 1980s')
+
+    Event(name='Spotlights: Gillian Ayres', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 10, 31).strftime("%d/%m/%Y"), venue='Tate Britain', area='Central London', keywords=[painting], entry_fee=20, user=gabe, image='https://www.tate.org.uk/art/images/work/T/T06/T06994_9.jpg', artists=[ayres])
+
+    Event(name='In the studio: Bridget Riley', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 11, 10).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[painting], entry_fee=20, user=violeta, image='https://www.tate.org.uk/art/images/work/T/T06/T06994_9.jpg', artists=[riley], description='Line, shape and colour are manipulated by Bridget Riley to develop elegantly complex patterns that draw attention to the physical process of perception.')
+
+
+    Event(name='Artists and Society: Catherine Opie', start_date=datetime.date(2019, 5, 31).strftime("%d/%m/%Y"), end_date=datetime.date(2019, 11, 17).strftime("%d/%m/%Y"), venue='Tate Modern', area='Central London', keywords=[photography], entry_fee=20, user=violeta, image='https://www.tate.org.uk/sites/default/files/styles/width-600/public/thumbnail_5.png', artists=[opie], description='Catherine Opie creates an intimate portrait of a Hollywood star by photographing the actor’s home and possessions')
+
+
+
 
 
 
