@@ -6,29 +6,34 @@ import Auth from '../../lib/Auth'
 class HomeNavbar extends React.Component {
   constructor(){
     super()
-    this.state = {}
+    this.state = {
+      activeBurger: false
+    }
     this.logout = this.logout.bind(this)
+    this.handleBurgerMenu = this.handleBurgerMenu.bind(this)
   }
 
   logout(){
     Auth.removeToken()
     this.props.history.push('/')
   }
-
+  handleBurgerMenu() {
+    this.setState({ activeBurger: !this.state.activeBurger})
+  }
   render(){
 
     return(
-      <section className="section navbar-section">
+      <section className="navbar-section">
         <nav className="navbar" role="navigation" aria-label="main navigation">
           <div className="navbar-brand">
-            <a role="button" className="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
-              <span aria-hidden="true"></span>
+            <a role="button" className={`navbar-burger ${this.state.activeBurger? 'is-active':''}`} aria-label="menu" aria-expanded={this.state.activeBurger} onClick={this.handleBurgerMenu} data-target="navbarBasicExample">
+              <span aria-hidden='false'></span>
+              <span aria-hidden='false'></span>
+              <span aria-hidden='false'></span>
             </a>
           </div>
 
-          <div id="navbarBasicExample" className="navbar-menu">
+          <div className={`navbar-menu ${this.state.activeBurger? 'is-active': ''}`}>
             <div className="navbar-start">
               <Link to="/events" className="navbar-item">
               Browse exhibitions
