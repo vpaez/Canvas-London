@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import ExhibitionsDisplay from './ExhibitionsDisplay'
 
 
 Math.radians = function(degrees) {
@@ -24,17 +24,14 @@ class NearMe extends React.Component {
     this.state = {}
   }
   componentDidMount(){
+
     axios.get('/api/events')
       .then(res => this.setState({exhibitions: res.data }))
       .then(() => {
         navigator.geolocation.getCurrentPosition((position) => {
           const { latitude, longitude } = position.coords
-          console.log(this.state)
           const nearby = this.state.exhibitions.filter(exhibition =>{
-            console.log(longitude, exhibition.lng)
-            console.log('yoooooo')
             return (calculateDistance(longitude, latitude, exhibition.lng, exhibition.lat, 3 ) < 2000)
-
           })
 
           this.setState({ nearby })
@@ -46,38 +43,15 @@ class NearMe extends React.Component {
 
 
   render(){
-    console.log(this.state)
-
-
-
-
-
-
-
-
-
-    if ( !this.state.nearby) return null
+    if (!this.state.nearby) return null
     console.log(this.state.nearby)
+    const exhibitions = this.state.nearby.slice(0, 10)
     return(
-      <section className="section">
-        <div className="container home">
-          <h1 className="title">Near you</h1>
-          <div className="tile is-ancestor">
-            {this.state.nearby.slice(0, 10).map(exhibition =>
-              <div key={exhibition.id} className="tile is-2 baby">
-                <Link to={`/events/${exhibition.id}`}>
-                  <figure>
-                    <img src={exhibition.image}/>
-                  </figure>
-                </Link>
-                <h2 className="title is-4">{exhibition.name}</h2>
-                <p className="date"> {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
-                <p>{exhibition.venue}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
+      <ExhibitionsDisplay
+        exhibitions = {exhibitions}
+        sectionTitle = 'Near me'
+        errorMessage = {'Unfortunately, there aren\'t any exhibitions on display near you.'}
+      />
     )
   }
 

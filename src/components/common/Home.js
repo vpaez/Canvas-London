@@ -1,11 +1,10 @@
 import React from 'react'
-import FeaturedEvents from '../../components/events/FeaturedEvents'
-import RecommendedEvents from '../../components/events/RecommendedEvents'
-import NearMe from '../../components/events/NearMe'
 import axios from 'axios'
+import Promise from 'bluebird'
 import Auth from '../../lib/Auth'
 import HomeNavbar from '../common/HomeNavbar'
-
+import { Link } from 'react-router-dom'
+import ExhibitionsDisplay from '../../components/events/ExhibitionsDisplay'
 
 
 function whatsOn(arr) {
@@ -47,24 +46,75 @@ function orderByDate(arr) {
   })
 }
 
+Math.radians = function(degrees) {
+  return degrees * Math.PI / 180
+}
+
+
+function calculateDistance(lat,lon,userLat,userLon){
+
+  var distance = ( 6371 * Math.acos( Math.cos( Math.radians(lat) ) * Math.cos( Math.radians( userLat ) )
+                    * Math.cos( Math.radians( userLon) - Math.radians(lon) ) + Math.sin( Math.radians(lat) ) * Math.sin(Math.radians(userLat)) ) )*1000
+  console.log(distance+'  meter')
+  console.log(distance)
+  return distance
+}
+
+
 class Home extends React.Component {
 
   constructor(){
     super()
     this.state = {
-      exhibitions: null
+      exhibitions: null,
+      nearby: null,
+      keywords: null,
+      exhibitionsForYou: null
     }
   }
 
   componentDidMount(){
-    axios.get('/api/events')
-      .then(res => this.setState({exhibitions: res.data}))
+    Promise.props({
+      keywords: axios.get('/api/me', { headers: {
+        'Authorization': `Bearer ${Auth.getToken()}`}
+      }).then(res => res.data.keywords),
+      exhibitions: axios.get('/api/events').then(res => res.data)
+    })
+      .then(res => {
+        const keywords = res.keywords.map(keyword => keyword.id)
+        const exhibitions = res.exhibitions
+        const exhibitionsForYou = this.matchedEvents(res.exhibitions, keywords).slice(0, 10)
+
+        this.setState({keywords, exhibitions, exhibitionsForYou})
+      })
+      .then(() => {
+        console.log(this.state.exhibitions, 'EXH')
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords
+          const nearby = this.state.exhibitions.filter(exhibition =>{
+            return (calculateDistance(longitude, latitude, exhibition.lng, exhibition.lat, 3 ) < 2000)
+          })
+
+          this.setState({ nearby })
+        })
+      })
+      .catch(err => this.setState({ errors: err.response.data.errors}))
+  }
+
+  matchedEvents(exhibitions, keywords){
+    return exhibitions.filter(exhibition => {
+      const match = exhibition.keywords.filter(keyword =>{
+        if(keywords.includes(keyword.id)) return keyword
+      }).length
+      if(match) return exhibition
+    })
   }
 
   render(){
-    if(!this.state.exhibitions) return null
+    if(!this.state.exhibitions || !this.state.nearby) return null
     const current = whatsOn(this.state.exhibitions)
     const currentSorted = orderByDate(current).slice(0, 10)
+    // const exhibitionsNearYou = this.state.nearby.slice(0, 10)
     console.log(current, 'current')
     console.log(currentSorted, 'currentSorted')
     return(
@@ -73,19 +123,30 @@ class Home extends React.Component {
           <div className="hero-body">
             <div className="container">
               <h1 className="title has-text-light is-1">
-      Canvas
+                Canvas
               </h1>
               <h2 className="subtitle has-text-light">
-      Art Shows in London
+                Art Shows in London
               </h2>
             </div>
           </div>
         </section>
         <HomeNavbar />
-        <FeaturedEvents
-          exhibitions={currentSorted}/>
-        {Auth.getToken() && <RecommendedEvents />}
-        <NearMe />
+        <ExhibitionsDisplay
+          sectionTitle='Whats On'
+          exhibitions = {currentSorted}
+          errorMessage = {'Unfortunately, there aren\'t any exhibitions on display at the moment.'}/>
+        {Auth.isAuthenticated &&
+        <ExhibitionsDisplay
+          sectionTitle = 'Recommended for you'
+          errorMessage = {`Unfortunately, we don't have any recommendations for you at the moment, try ${<Link to={'/me'}>adding preferences</Link>}.`}
+          exhibitions = {this.state.exhibitionsForYou}
+        />}
+        <ExhibitionsDisplay
+          exhibitions = {this.state.nearby}
+          sectionTitle = 'Near me'
+          errorMessage = {'Unfortunately, there aren\'t any exhibitions on display near you.'}
+        />
       </div>
     )
   }

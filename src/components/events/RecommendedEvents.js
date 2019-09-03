@@ -3,6 +3,7 @@ import axios from 'axios'
 import Auth from '../../lib/Auth'
 import Promise from 'bluebird'
 import { Link } from 'react-router-dom'
+import ExhibitionsDisplay from './ExhibitionsDisplay'
 
 
 class RecommendedEvents extends React.Component {
@@ -39,26 +40,13 @@ class RecommendedEvents extends React.Component {
   render(){
     if(!this.state.exhibitions) return null
     if(this.state.keywords.length === 0) return null
+    const exhibitions = this.matchedEvents().slice(0, 10)
     return(
-      <section className="section">
-        <div className="container home">
-          <h1 className="title">Recommended for you</h1>
-          <div className="tile is-ancestor">
-            {this.matchedEvents().slice(0, 10).map(exhibition =>
-              <div key={exhibition.id} className="tile is-2 baby">
-                <Link to={`/events/${exhibition.id}`}>
-                  <figure>
-                    <img src={exhibition.image}/>
-                  </figure>
-                </Link >
-                <h1 className="title is-4">{exhibition.name}</h1>
-                <p className="date"> {`${exhibition.start_date} - ${exhibition.end_date}`}</p>
-                <p>{exhibition.venue}</p>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
+      <ExhibitionsDisplay
+        sectionTitle = 'Recommended for you'
+        errorMessage = {`Unfortunately, we don't have any recommendations for you at the moment, try ${<Link to={'/me'}>adding preferences</Link>}.`}
+        exhibitions = {exhibitions}
+      />
     )
   }
 }
