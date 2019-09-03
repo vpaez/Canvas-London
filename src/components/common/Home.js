@@ -5,7 +5,7 @@ import Auth from '../../lib/Auth'
 import HomeNavbar from '../common/HomeNavbar'
 import { Link } from 'react-router-dom'
 import ExhibitionsDisplay from '../../components/events/ExhibitionsDisplay'
-
+import WithLoading from './Loader'
 
 function whatsOn(arr) {
   return arr.filter(exhib => {
@@ -55,11 +55,10 @@ function calculateDistance(lat,lon,userLat,userLon){
 
   var distance = ( 6371 * Math.acos( Math.cos( Math.radians(lat) ) * Math.cos( Math.radians( userLat ) )
                     * Math.cos( Math.radians( userLon) - Math.radians(lon) ) + Math.sin( Math.radians(lat) ) * Math.sin(Math.radians(userLat)) ) )*1000
-  console.log(distance+'  meter')
-  console.log(distance)
   return distance
 }
 
+const ExhibitionsDisplayWithLoading = WithLoading(ExhibitionsDisplay)
 
 class Home extends React.Component {
 
@@ -69,11 +68,13 @@ class Home extends React.Component {
       exhibitions: null,
       nearby: null,
       keywords: null,
-      exhibitionsForYou: null
+      exhibitionsForYou: null,
+      isLoading: false
     }
   }
 
   componentDidMount(){
+    this.setState({ isLoading: true })
     Promise.props({
       keywords: axios.get('/api/me', { headers: {
         'Authorization': `Bearer ${Auth.getToken()}`}
@@ -95,7 +96,7 @@ class Home extends React.Component {
             return (calculateDistance(longitude, latitude, exhibition.lng, exhibition.lat, 3 ) < 2000)
           })
 
-          this.setState({ nearby })
+          this.setState({ nearby, isLoading: false})
         })
       })
       .catch(err => this.setState({ errors: err.response.data.errors}))
@@ -132,17 +133,20 @@ class Home extends React.Component {
           </div>
         </section>
         <HomeNavbar />
-        <ExhibitionsDisplay
+        <ExhibitionsDisplayWithLoading
+          isLoading={this.state.isLoading}
           sectionTitle='Whats On'
           exhibitions = {currentSorted}
           errorMessage = {'Unfortunately, there aren\'t any exhibitions on display at the moment.'}/>
         {Auth.isAuthenticated &&
-        <ExhibitionsDisplay
+        <ExhibitionsDisplayWithLoading
+          isLoading={this.state.isLoading}
           sectionTitle = 'Recommended for you'
           errorMessage = {`Unfortunately, we don't have any recommendations for you at the moment, try ${<Link to={'/me'}>adding preferences</Link>}.`}
           exhibitions = {this.state.exhibitionsForYou}
         />}
-        <ExhibitionsDisplay
+        <ExhibitionsDisplayWithLoading
+          isLoading={this.state.isLoading}
           exhibitions = {this.state.nearby}
           sectionTitle = 'Near me'
           errorMessage = {'Unfortunately, there aren\'t any exhibitions on display near you.'}
