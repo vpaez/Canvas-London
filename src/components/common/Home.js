@@ -1,64 +1,32 @@
 import React from 'react'
 import axios from 'axios'
-import Promise from 'bluebird'
 import Auth from '../../lib/Auth'
 import HomeNavbar from '../common/HomeNavbar'
 import { Link } from 'react-router-dom'
 import ExhibitionsDisplay from '../../components/events/ExhibitionsDisplay'
 import WithLoading from './Loader'
-
-function whatsOn(arr) {
-  return arr.filter(exhib => {
-
-    const startSplitDate = exhib.start_date.split('/')
-    const startMonth = startSplitDate[1] - 1
-    const startDate = new Date(startSplitDate[2], startMonth, startSplitDate[0])
-
-    const endSplitDate = exhib.end_date.split('/')
-    const endMonth = endSplitDate[1] - 1
-    const endDate = new Date(endSplitDate[2], endMonth, endSplitDate[0])
-
-    const startParsed = Date.parse(startDate)
-    const endParsed = Date.parse(endDate)
-    const currentParsed = Date.parse(new Date())
-
-    if (currentParsed > startParsed && currentParsed < endParsed ){
-      return exhib
-    }
-  })
-}
-
-function orderByDate(arr) {
-  return arr.slice().sort(function (a, b) {
-
-    const aSplitDate = a.start_date.split('/')
-    const aMonth = aSplitDate[1] - 1
-    const aDate = new Date(aSplitDate[2], aMonth, aSplitDate[0])
-
-    const bSplitDate = b.start_date.split('/')
-    const bMonth = bSplitDate[1] - 1
-    const bDate = new Date(bSplitDate[2], bMonth, bSplitDate[0])
-
-    const parsedaDate = Date.parse(aDate)
-    const parsedbDate = Date.parse(bDate)
-
-    return parsedbDate - parsedaDate
-  })
-}
+import WithRecommendedFilter from './WithRecommendedFilter'
+import WithCurrentFilter from './WithCurrentFilter'
+import WithNearbyFilter from './WithNearbyFilter'
+import { compose } from 'recompose'
 
 Math.radians = function(degrees) {
   return degrees * Math.PI / 180
 }
 
 
-function calculateDistance(lat,lon,userLat,userLon){
-
-  var distance = ( 6371 * Math.acos( Math.cos( Math.radians(lat) ) * Math.cos( Math.radians( userLat ) )
-                    * Math.cos( Math.radians( userLon) - Math.radians(lon) ) + Math.sin( Math.radians(lat) ) * Math.sin(Math.radians(userLat)) ) )*1000
-  return distance
-}
-
-const ExhibitionsDisplayWithLoading = WithLoading(ExhibitionsDisplay)
+const RecommendedExhibitions = compose(
+  WithLoading,
+  WithRecommendedFilter
+)(ExhibitionsDisplay)
+const CurrentExhibitions = compose(
+  WithLoading,
+  WithCurrentFilter
+)(ExhibitionsDisplay)
+const NearbyExhibitions = compose(
+  WithLoading,
+  WithNearbyFilter
+)(ExhibitionsDisplay)
 
 class Home extends React.Component {
 
@@ -74,50 +42,32 @@ class Home extends React.Component {
   }
 
   componentDidMount(){
-    this.setState({ isLoading: true })
-    Promise.props({
-      keywords: axios.get('/api/me', { headers: {
-        'Authorization': `Bearer ${Auth.getToken()}`}
-      }).then(res => res.data.keywords),
-      exhibitions: axios.get('/api/events').then(res => res.data)
-    })
+    this.setState({ isLoading: false })
+    axios.get('/api/events')
       .then(res => {
-        const keywords = res.keywords.map(keyword => keyword.id)
-        const exhibitions = res.exhibitions
-        const exhibitionsForYou = this.matchedEvents(res.exhibitions, keywords).slice(0, 10)
-
-        this.setState({keywords, exhibitions, exhibitionsForYou})
+        if(Auth.getToken()) {
+          axios.get('/api/me', { headers: {
+            'Authorization': `Bearer ${Auth.getToken()}`}
+          })
+            .then(res => {
+              const keywords = res.data.keywords.map(keyword => keyword.id)
+              this.setState({keywords})
+            })
+        }
+        this.setState({exhibitions: res.data})
       })
       .then(() => {
-        console.log(this.state.exhibitions, 'EXH')
         navigator.geolocation.getCurrentPosition((position) => {
           const { latitude, longitude } = position.coords
-          const nearby = this.state.exhibitions.filter(exhibition =>{
-            return (calculateDistance(longitude, latitude, exhibition.lng, exhibition.lat, 3 ) < 2000)
-          })
-
-          this.setState({ nearby, isLoading: false})
+          this.setState({ coordinates: {latitude, longitude} })
         })
       })
-      .catch(err => this.setState({ errors: err.response.data.errors}))
-  }
-
-  matchedEvents(exhibitions, keywords){
-    return exhibitions.filter(exhibition => {
-      const match = exhibition.keywords.filter(keyword =>{
-        if(keywords.includes(keyword.id)) return keyword
-      }).length
-      if(match) return exhibition
-    })
+      .catch(err => this.setState({ errors: err.response.data.errors})
+      )
   }
 
   render(){
-    if(!this.state.exhibitions || !this.state.nearby) return null
-    const current = whatsOn(this.state.exhibitions)
-    const currentSorted = orderByDate(current).slice(0, 10)
-    // const exhibitionsNearYou = this.state.nearby.slice(0, 10)
-    console.log(current, 'current')
-    console.log(currentSorted, 'currentSorted')
+    if(!this.state.exhibitions || !this.state.keywords) return null
     return(
       <div>
         <section className="hero is-medium">
@@ -133,21 +83,23 @@ class Home extends React.Component {
           </div>
         </section>
         <HomeNavbar />
-        <ExhibitionsDisplayWithLoading
+        <CurrentExhibitions
           isLoading={this.state.isLoading}
           sectionTitle='Whats On'
-          exhibitions = {currentSorted}
+          exhibitions = {this.state.exhibitions}
           errorMessage = {'Unfortunately, there aren\'t any exhibitions on display at the moment.'}/>
-        {Auth.isAuthenticated &&
-        <ExhibitionsDisplayWithLoading
+        {Auth.isAuthenticated() &&
+        <RecommendedExhibitions
           isLoading={this.state.isLoading}
           sectionTitle = 'Recommended for you'
           errorMessage = {`Unfortunately, we don't have any recommendations for you at the moment, try ${<Link to={'/me'}>adding preferences</Link>}.`}
-          exhibitions = {this.state.exhibitionsForYou}
+          exhibitions = {this.state.exhibitions}
+          keywords = {this.state.keywords}
         />}
-        <ExhibitionsDisplayWithLoading
+        <NearbyExhibitions
           isLoading={this.state.isLoading}
-          exhibitions = {this.state.nearby}
+          exhibitions = {this.state.exhibitions}
+          userLocation = {this.state.coordinates}
           sectionTitle = 'Near me'
           errorMessage = {'Unfortunately, there aren\'t any exhibitions on display near you.'}
         />

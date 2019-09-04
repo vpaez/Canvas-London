@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const ExhibitionsDisplay = ({ sectionTitle, exhibitions, errorMessage }) => {
-
+const ExhibitionsDisplay = ({ sectionTitle, filteredExhibitions, errorMessage }) => {
+  const exhibitions = filteredExhibitions
   return(
     <section className="section">
       <div className="container home has-text-centered">
