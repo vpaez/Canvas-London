@@ -36,16 +36,22 @@ class Home extends React.Component {
       exhibitions: null,
       nearby: null,
       keywords: null,
-      exhibitionsForYou: null,
-      isLoading: false
+      isLoading: false,
+      coordinates: null
     }
   }
 
   componentDidMount(){
     this.setState({ isLoading: false })
+    navigator.geolocation.getCurrentPosition((position) => {
+      const { latitude, longitude } = position.coords
+      this.setState({ coordinates: {latitude, longitude} })
+    })
     axios.get('/api/events')
-      .then(res => {
+      .then(res => this.setState({exhibitions: res.data}))
+      .then(() => {
         if(Auth.getToken()) {
+          console.log('yes')
           axios.get('/api/me', { headers: {
             'Authorization': `Bearer ${Auth.getToken()}`}
           })
@@ -54,20 +60,14 @@ class Home extends React.Component {
               this.setState({keywords})
             })
         }
-        this.setState({exhibitions: res.data})
-      })
-      .then(() => {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const { latitude, longitude } = position.coords
-          this.setState({ coordinates: {latitude, longitude} })
-        })
       })
       .catch(err => this.setState({ errors: err.response.data.errors})
       )
   }
 
   render(){
-    if(!this.state.exhibitions || !this.state.keywords) return null
+    if(!this.state.exhibitions) return null
+    if(Auth.getToken() && !this.state.keywords) return null
     return(
       <div>
         <section className="hero is-medium">

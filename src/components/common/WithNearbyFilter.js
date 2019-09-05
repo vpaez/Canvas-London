@@ -20,6 +20,10 @@ function handleNearbyExhibitions(exhibitions, userLocation) {
 
 function WithFilter(Component) {
   return function WithFilterComponent({ exhibitions, userLocation, ...props }) {
+    if(!userLocation) return (<Component
+      filteredExhibitions={exhibitions}
+      {...props}
+    />)
     return (<Component
       filteredExhibitions={handleNearbyExhibitions(exhibitions, userLocation)}
       {...props}
