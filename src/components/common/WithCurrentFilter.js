@@ -1,7 +1,6 @@
 import React from 'react'
 
 
-// function handleCurrentExhibitions(exhibitions, keywords) {
 function whatsOn(arr) {
   return arr.filter(exhib => {
 
@@ -23,33 +22,13 @@ function whatsOn(arr) {
   })
 }
 
-function orderByDate(arr) {
-  return arr.slice().sort(function (a, b) {
-
-    const aSplitDate = a.start_date.split('/')
-    const aMonth = aSplitDate[1] - 1
-    const aDate = new Date(aSplitDate[2], aMonth, aSplitDate[0])
-
-    const bSplitDate = b.start_date.split('/')
-    const bMonth = bSplitDate[1] - 1
-    const bDate = new Date(bSplitDate[2], bMonth, bSplitDate[0])
-
-    const parsedaDate = Date.parse(aDate)
-    const parsedbDate = Date.parse(bDate)
-
-    return parsedbDate - parsedaDate
-  })
-}
-
 
 
 
 function WithCurrentFilter(Component) {
   return function WithCurrentFilterComponent({ exhibitions, ...props }) {
-    const current = whatsOn(exhibitions)
-    const currentSorted = orderByDate(current).slice(0, 10)
     return (<Component
-      filteredExhibitions={currentSorted}
+      filteredExhibitions={whatsOn(exhibitions)}
       {...props}
     />)
   }

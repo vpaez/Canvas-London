@@ -2,31 +2,16 @@ import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
 import HomeNavbar from '../common/HomeNavbar'
-import { Link } from 'react-router-dom'
 import ExhibitionsDisplay from '../../components/events/ExhibitionsDisplay'
-import WithLoading from './Loader'
 import WithRecommendedFilter from './WithRecommendedFilter'
 import WithCurrentFilter from './WithCurrentFilter'
 import WithNearbyFilter from './WithNearbyFilter'
-import { compose } from 'recompose'
 
 Math.radians = function(degrees) {
   return degrees * Math.PI / 180
 }
 
 
-const RecommendedExhibitions = compose(
-  WithLoading,
-  WithRecommendedFilter
-)(ExhibitionsDisplay)
-const CurrentExhibitions = compose(
-  WithLoading,
-  WithCurrentFilter
-)(ExhibitionsDisplay)
-const NearbyExhibitions = compose(
-  WithLoading,
-  WithNearbyFilter
-)(ExhibitionsDisplay)
 
 class Home extends React.Component {
 
@@ -36,13 +21,13 @@ class Home extends React.Component {
       exhibitions: null,
       nearby: null,
       keywords: null,
-      isLoading: false,
+      isLoading: true,
       coordinates: null
     }
+    this.removeUserPreferences = this.removeUserPreferences.bind(this)
   }
 
   componentDidMount(){
-    this.setState({ isLoading: false })
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords
       this.setState({ coordinates: {latitude, longitude} })
@@ -61,13 +46,14 @@ class Home extends React.Component {
             })
         }
       })
+      .then(()=> this.setState({ isLoading: false }))
       .catch(err => this.setState({ errors: err.response.data.errors})
       )
   }
-
+  removeUserPreferences(){
+    this.setState({keywords: null})
+  }
   render(){
-    if(!this.state.exhibitions) return null
-    if(Auth.getToken() && !this.state.keywords) return null
     return(
       <div>
         <section className="hero is-medium">
@@ -82,25 +68,30 @@ class Home extends React.Component {
             </div>
           </div>
         </section>
-        <HomeNavbar />
-        <CurrentExhibitions
-          isLoading={this.state.isLoading}
+        <HomeNavbar
+          removeUserPreferences={this.removeUserPreferences}
+        />
+        <ExhibitionsDisplay
           sectionTitle='Whats On'
+          isLoading={this.state.isLoading}
           exhibitions = {this.state.exhibitions}
-          errorMessage = {'Unfortunately, there aren\'t any exhibitions on display at the moment.'}/>
-        {Auth.isAuthenticated() &&
-        <RecommendedExhibitions
+          filterFunction = {WithCurrentFilter}
+          errorMessage = {'Unfortunately, there aren\'t any exhibitions on display at the moment.'}
+        />
+        <ExhibitionsDisplay
           isLoading={this.state.isLoading}
           sectionTitle = 'Recommended for you'
-          errorMessage = {`Unfortunately, we don't have any recommendations for you at the moment, try ${<Link to={'/me'}>adding preferences</Link>}.`}
+          errorMessage = {`Unfortunately, we don't have any recommendations for you at the moment, try logging in.`}
           exhibitions = {this.state.exhibitions}
           keywords = {this.state.keywords}
-        />}
-        <NearbyExhibitions
+          filterFunction = {WithRecommendedFilter}
+        />
+        <ExhibitionsDisplay
+          sectionTitle = 'Near me'
           isLoading={this.state.isLoading}
           exhibitions = {this.state.exhibitions}
           userLocation = {this.state.coordinates}
-          sectionTitle = 'Near me'
+          filterFunction = {WithNearbyFilter}
           errorMessage = {'Unfortunately, there aren\'t any exhibitions on display near you.'}
         />
       </div>

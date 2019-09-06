@@ -4,8 +4,8 @@ import Auth from '../../lib/Auth'
 
 
 class HomeNavbar extends React.Component {
-  constructor(){
-    super()
+  constructor(props){
+    super(props)
     this.state = {
       activeBurger: false
     }
@@ -15,7 +15,7 @@ class HomeNavbar extends React.Component {
 
   logout(){
     Auth.removeToken()
-    this.props.history.push('/')
+    this.props.removeUserPreferences()
   }
   handleBurgerMenu() {
     this.setState({ activeBurger: !this.state.activeBurger})
