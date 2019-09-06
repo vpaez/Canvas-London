@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom'
 import ReactMapboxGl, { Marker } from 'react-mapbox-gl'
 
 const mapBoxToken = 'pk.eyJ1IjoiZ2FiZWx0b24iLCJhIjoiY2p3YXZ0bHM4MGQ3MTQzczZkaWNsb3IxNSJ9.TBiLFbNMgrlaqk8tnU1VkA'
-console.log(mapBoxToken)
 
 const Map = ReactMapboxGl({
   accessToken: mapBoxToken

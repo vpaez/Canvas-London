@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 import Auth from '../../lib/Auth'
-import HomeNavbar from '../common/HomeNavbar'
 import ExhibitionsDisplay from '../../components/events/ExhibitionsDisplay'
 import WithRecommendedFilter from './WithRecommendedFilter'
 import WithCurrentFilter from './WithCurrentFilter'
@@ -56,21 +55,18 @@ class Home extends React.Component {
   render(){
     return(
       <div>
-        <section className="hero is-medium">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title has-text-light is-1">
+        <section className='hero is-medium has-navbar-fixed-top'>
+          <div className='hero-body'>
+            <div className='container'>
+              <h1 className='title has-text-light is-1'>
                 Canvas
               </h1>
-              <h2 className="subtitle has-text-light">
+              <h2 className='subtitle has-text-light'>
                 Art Shows in London
               </h2>
             </div>
           </div>
         </section>
-        <HomeNavbar
-          removeUserPreferences={this.removeUserPreferences}
-        />
         <ExhibitionsDisplay
           sectionTitle='Whats On'
           isLoading={this.state.isLoading}

@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans&display=swap');
 
+.navbar {
+  background-color: transparent;
+}
+
 * {
   font-family: 'Work Sans', sans-serif;
 }
@@ -11,6 +15,9 @@
   background-size: cover;
 }
 
+.logo {
+  margin: 10px;
+}
 #flexColumn{
   display: flex;
   flex-direction: column;
@@ -174,12 +181,12 @@
   }
 }
 
-.navbar-section {
-  padding-bottom: 0px;
-  padding-left: 40px;
-  padding-right: 40px;
-  margin: 30px 0;
-}
+// .navbar-section {
+//   padding-bottom: 0px;
+//   padding-left: 40px;
+//   padding-right: 40px;
+//   margin: 30px 0;
+// }
 
 a.navbar-item {
   font-size: 20px;
